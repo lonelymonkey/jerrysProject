@@ -1,0 +1,291 @@
+body{ background-color :#ffffe6;
+}
+div.topp{
+background-color : DarkCyan;
+position: absolute;
+top : 0px;
+right :0px;
+width: 1980px;
+padding: 50px;
+}
+div.mid{
+	background-color :white;
+	position: absolute;
+	top: 300px;
+	right:190px;
+	width: 1500px;
+	height : 356px
+	padding: 45px;
+	border-style: solid;
+	border-width: 2px;
+	color :DarkCyan;
+}
+div.midparagraph{
+	position: absolute;
+	top: 400px;
+	right:590px;
+	color : #000066;
+	font-size: 40px;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+div.firstblock{
+	position: absolute;
+	top: 800px;
+	right:1475px;
+}
+div.firstimg{
+	position: absolute;
+	top: 805px;
+	right:1480px;
+}
+div.firstpara{
+	position: absolute;
+	top: 1005px;
+	right:1425px;
+}
+div.secondblock{
+	position: absolute;
+	top: 800px;
+	right:1025px;
+}
+div.secondimg{
+	position: absolute;
+	top: 805px;
+	right:1030px;
+}
+div.secondpara{
+	position: absolute;
+	top: 1005px;
+	right:975px;
+}
+div.thirdblock{
+	position: absolute;
+	top: 800px;
+	right:590px;
+}
+div.thirdimg{
+	position: absolute;
+	top: 805px;
+	right:595px;
+}
+div.thirdpara{
+	position: absolute;
+	top: 1005px;
+	right:540px;
+}
+
+div.lastblock{
+	position: absolute;
+	top: 800px;
+	right:195px;
+}
+div.lastimg{
+	position: absolute;
+	top: 805px;
+	right:200px;
+}
+div.lastpara{
+	position: absolute;
+	top: 1005px;
+	right:170px;
+}
+
+div.featured{
+	font-family: Arial, Helvetica, sans-serif;
+	background-color :white;
+	position: absolute;
+	top: 1400px;
+	right:950px;
+	width: 750px;
+	height : 856px
+	padding: 45px;
+	border-style: solid;
+	border-width: 5px;
+	color :DarkCyan;
+	letter-spacing: 3px;
+}
+div.hairstyle{
+	font-family: Arial, Helvetica, sans-serif;
+	background-color :Darkcyan;
+	position: absolute;
+	top: 1400px;
+	right:150px;
+	width: 550px;
+	padding: 45px;
+	border-style: solid;
+	border-width: 5px;
+	color :#29a3a3;
+	letter-spacing: 3px;
+}
+div.skinhead{
+	font-family: Arial, Helvetica, sans-serif;
+	background-color :Darkcyan;
+	position: absolute;
+	top: 1800px;
+	right:150px;
+	width: 640px;
+	height : 230px;
+	border-style: solid;
+	border-width: 5px;
+	color :#29a3a3;
+	letter-spacing: 3px;
+}
+div.bott{
+background-color : DarkCyan;
+position: absolute;
+top : 2200px;
+right :0px;
+width: 1980px;
+padding: 50px;
+}
+div.icon{
+	position: absolute;
+	top : 2240px;
+	right:400px;
+	background-color : #006666;
+	width: 200px;
+	height :50px;
+}
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: -5px;
+    right: 1300px;
+    width: 400px;
+    height: 100px;
+    background-color : #00004d;
+	font-size : 80px;
+	text-align: center;
+	color : white;
+}
+h2{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 80px;
+    right: 900px;
+    width: 80px;
+    height: 20px;
+    background-color : #00004d;
+	font-size : 20px;
+	text-align: center;
+	color : white;
+}
+h4{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 70px;
+    right: 750px;
+    width: 80px;
+    height: 20px;
+    background-color : #00004d;
+	font-size : 20px;
+	text-align: center;
+	color : white;
+}
+h5{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 64px;
+    right:550px;
+    width: 140px;
+    height: 20px;
+    background-color : #00004d;
+	font-size : 20px;
+	text-align: center;
+	color : white;
+}
+h6{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 50px;
+    right: 400px;
+    width: 80px;
+    height: 20px;
+    background-color : #00004d;
+	font-size : 20px;
+	text-align: center;
+	color : white;
+}
+h7{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 96px;
+    right: 210px;
+    width: 100px;
+    height: 20px;
+    background-color : #00004d;
+	font-size : 20px;
+	text-align: center;
+	color : white;
+}
+h8{
+	font-family: Arial, Helvetica, sans-serif;
+	color :#00004d;
+	font-weight:bold;
+}
+
+h.featured{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 1350px;
+    right: 1300px;
+    width: 300px;
+    height: 100px;
+    background-color : #00004d;
+	font-size : 70px;
+	text-align: center;
+	color : white;
+}
+h.insidefeatured{
+	font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 1520px;
+    right: 1100px;
+    width: 300px;
+    height: 100px;
+	font-size : 30px;
+	text-align: center;
+	color : #00004d;
+}
+h.hairstyle{
+    font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 1350px;
+    right: 400px;
+    width: 300px;
+    height: 100px;
+    background-color : #00004d;
+	font-size : 70px;
+	text-align: center;
+	color : white;
+}
+h.skinhead{
+	font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 1850px;
+    right: 180px;
+	color : white;
+	font-size : 25px;
+	letter-spacing: 3px;
+}
+h.bott{
+	font-family: Arial, Helvetica, sans-serif;
+	position: absolute;
+    top: 2250px;
+    right:900px;
+	color : white;
+
+}
+
+
+p{
+	color : black;
+	font-weight : normal;
+}
+
+p2{
+	color : white;
+	font-weight : normal;
+	letter-spacing: 5px;
+}
