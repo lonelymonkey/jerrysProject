@@ -106,7 +106,7 @@ ul.content-a > li:last-child{
 	width :40%
 }
 .bot{
-	
+	overflow:auto;
 }
 .bot .left_part{
 	width:40%;
@@ -145,8 +145,33 @@ ul.pic_title > li:last-child{
 
 .bot .right_part{
 	width:50%;
+	float: right;
 }
-
+.hairstyle{
+	
+	margin-top: 40px;
+   
+	overflow:auto;
+	border-style: solid;
+    border-color: #3A7C7D;
+}
+.hairstyle .big_title{
+	background-color: blue;
+    padding: 20;
+    position: relative;
+    width: 40%;
+    top: -29px;
+    left: 60px;
+}
+.hairstyle .para{
+    margin: 30;
+}
+.hairstyle .Signature{
+    float: right;
+    margin-right: 20px;
+    margin-bottom: 10px;
+	
+}
     /* ---------------------------------- 3 blocks parts-----------------------------------------------------------*/
 	
 	    /* ----------------------------------end of content-----------------------------------------------------------*/
