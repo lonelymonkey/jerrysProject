@@ -92,11 +92,12 @@ ul.content-a {
   margin:0px;
   padding-bottom: 40px;
   overflow: auto;
+  padding-left :0px;
 }
 ul.content-a > li {
   float: left;
   list-style: outside none none;
-  margin-right: 60px;
+  margin-right: 72px;
   
 }
 ul.content-a > li:last-child{
