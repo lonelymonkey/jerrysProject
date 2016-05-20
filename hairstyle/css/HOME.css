@@ -102,11 +102,15 @@ ul.content-a > li:last-child{
   margin-right:0px;
 }
 .content .pics1{
-	
+	position: absolute; 
+	z-index: 1;
 	
 }.content .pics2{
+	position: relative;
+	z-index: 5;
+	top: 9;
+	left: 5px;
 	
-	z-index:-1;
 }
 
     /* ---------------------------------- big pic part-----------------------------------------------------------*/

@@ -86,58 +86,31 @@ a.menutab {
     padding-top: 30px;
     padding-bottom: 30px;
 }
-ul.para{
-	padding-bottom: 40px;
-	list-style : none;
-	padding-left: 0;
-}
-.container .right_part >.title
-{
-	font-weight: bold;
-	font-size: 20;
-	padding-bottom: 30px;
-	
-}
-.container .left_part .title
-{
-	font-weight: bold;
-	font-size: 25;
-	padding-bottom: 30px;
-	padding-top :43px;
-
-}
-ul.para> li
-{
-	margin-bottom :30px;
-	padding-right:19px;
-	
-}
-ul.para> li:last-child {
+ul.content-a {
   
-	margin-bottom :0px;
+  list-style: none;
+  margin:0px;
+  padding-bottom: 40px;
+  overflow: auto;
 }
-.left_part{
-	width: 60%;
-    float: left;
+ul.content-a > li {
+  float: left;
+  list-style: outside none none;
+  margin-right: 60px;
+  
 }
-.container .right_part {
-	width: 35%;
-    float: right;
-    border-style: solid;
-    border-color: #42B9BB;
-    border-width: 5;
-	margin-top : 20;
-	background-color: white;
-	padding-left:15px;
+ul.content-a > li:last-child{
+  margin-right:0px;
 }
-.content .container {
-	overflow: auto;
-}
-.container .left_part .para{
-	margin-top : 40px;
-}
-.title_para{
-	padding-bottom:14px;
+.content .pics1{
+	position: absolute; 
+	z-index: 1;
+	
+}.content .pics2{
+	position: relative;
+	z-index: 5;
+	width :200;
+	height:160;
 }
 
     /* ---------------------------------- 4 pics part-----------------------------------------------------------*/
