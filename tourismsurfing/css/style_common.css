@@ -1,0 +1,147 @@
+body {
+     margin: 0px;
+     padding: 0px;
+}
+.header {
+     background-color: #001e60;
+     height: 150px;
+     left: 0px;
+     overflow: visible;
+	 color : white;
+}
+.header .image{
+	position: relative;
+    top: 20px;
+    left:-103px;
+	
+}
+.header .title{
+	position:relative;
+	width:10%;
+	float : left;
+	top:15;
+	left:70px;
+	font-weight:bold;
+	font-size:60;
+	letter-spacing:2px;
+	font-family: Arial;
+}
+.header .sub_title{
+	position:relative;
+	width:20%;
+	left:135px;
+	font-size:20;
+	font-family: Arial;
+}
+.content{
+	background-image : url(../images/Common/Content_background.jpg);
+	position:relative;
+	padding-top: 1px;
+	z-index:-2;
+	
+}
+
+.content .container::after {
+  content: "";
+  background-image : url(../images/Common/Content.jpg);
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index:-1;
+    
+}
+.container {
+    margin: 0px auto;
+    position: relative;
+    width: 1080px;
+	padding-bottom: 1px;
+	padding-top: 1;
+	z-index:2;
+}
+ul.menu {
+	list-style : none;
+	padding-left :0;
+	width : 15%;
+	padding-top:40;
+	position:relative;
+}
+
+ul.menu > li {
+   background-color: #001f64;
+   text-align: center;
+   padding:20;
+   color:#d1d3d4;
+}
+ul.menu > li:nth-child(2){
+     background-color: #02164d;
+}
+ul.menu > li:nth-child(4){
+     background-color: #02164d;
+}
+a.menutab{
+	text-decoration :none;
+	color :white;
+}
+
+
+.footer {
+     background-color: #001e60;
+     height: 200px;
+     left: 0px;
+     overflow: visible;
+	 color : white;  
+}
+.footer .NewsLetter{
+	width:40%;
+	float:left;
+	position:relative;
+	top:40;
+}
+.NewsLetter .title{
+	color:#fff799;
+}
+.email_address{
+	width:30%;
+	float:left;
+	color:#94a6b6;
+	background-color:#325c85;
+	text-align: center;
+    padding:10;
+	position:relative;
+	top:65;
+}
+.social{
+	width: 20%;
+    float: left;
+	position: relative;
+    left: 60px;
+}
+.social .title{
+	color:#fff799;
+	font-size:20px;
+	position: relative;
+    top: 40;
+    left: 60px;
+}
+ul.icon{
+	list-style:none;
+	float:left;
+	position: relative;
+    top: 35px;
+    left: 25;
+}
+ul.icon >li{
+	float:left;
+	margin-right:10;
+}
+.copyright{
+	color:0f378f;
+	width:40%;
+	position:relative;
+	float:right;
+	top: 65px;
+    right: 156px;
+}
