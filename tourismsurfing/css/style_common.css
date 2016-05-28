@@ -2,6 +2,7 @@ body {
      margin: 0px;
      padding: 0px;
 }
+/* ---------------------------------- Common  -----------------------------------------------------------------------------------*/
 .header {
      background-color: #001e60;
      height: 150px;
@@ -34,25 +35,20 @@ body {
 	font-family: Arial;
 }
 .content{
-	background-image : url(../images/Common/Content_background.jpg);
+	
 	position:relative;
 	padding-top: 1px;
-	z-index:-2;
-	
+}
+.background{
+	background-image : url(../images/Common/Content_background.jpg);
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
 }
 
-.content .container::after {
-  content: "";
-  background-image : url(../images/Common/Content.jpg);
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index:-1;
-    
-}
+
 .container {
     margin: 0px auto;
     position: relative;
@@ -60,6 +56,16 @@ body {
 	padding-bottom: 1px;
 	padding-top: 1;
 	z-index:2;
+}
+.content .container .containerBG{
+	background-color:#01306e;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	opacity:0.7;
+	z-index:-1;
 }
 ul.menu {
 	list-style : none;
@@ -83,8 +89,15 @@ ul.menu > li:nth-child(4){
 }
 a.menutab{
 	text-decoration :none;
-	color :white;
+	color:fff799;
 }
+a.menutab:active{
+	text-decoration :none;
+	color:#02164d;
+	background-color:d1d3d4;
+	
+}
+
 
 
 .footer {
@@ -126,16 +139,40 @@ a.menutab{
     top: 40;
     left: 60px;
 }
-ul.icon{
-	list-style:none;
-	float:left;
-	position: relative;
-    top: 35px;
-    left: 25;
+.icon{
+	position:relative;
+	top:60;
+	right:90;
 }
-ul.icon >li{
-	float:left;
-	margin-right:10;
+.Facebook_imgbox{
+	width:12;
+	height:25;
+	background-image:url(../images/Common/Facebook.png);
+	float:right;
+	margin-left:5;
+}
+.Facebook_imgbox:hover{
+	background-image:url(../images/Common/facebook_hover.png);
+}
+.Twitter_imgbox{
+	width:32;
+	height:26;
+	background-image:url(../images/Common/twitter.png);
+	float:right;
+	margin-left:5;
+}
+.Twitter_imgbox:hover{
+	background-image:url(../images/Common/twitter_hover.png);
+}
+.Google_imgbox{
+	width:26;
+	height:26;
+	background-image:url(../images/Common/google.png);
+	float:right;
+	margin-left:5;
+}
+.Google_imgbox:hover{
+	background-image:url(../images/Common/google_hover.png);
 }
 .copyright{
 	color:0f378f;
@@ -145,3 +182,102 @@ ul.icon >li{
 	top: 65px;
     right: 156px;
 }
+/* ---------------------------------- Home-----------------------------------------------------------*/
+.Home_title{
+	width: 80%;
+    float: left;
+    position: relative;
+    bottom: 318px;
+    left: 221px;
+    color: fff799;
+    font-weight: bold;
+    font-size: 90px;
+    font-family: Arial;
+}
+.Home_para{
+	width: 40%;
+    position: relative;
+    bottom: 274px;
+    left: 224px;
+    color: d1d3d4;
+    opacity: 0.9;
+}
+.Home_para:hover{
+	opacity: 1;
+}
+p.inside{
+	text-decoration:underline;
+	color:ac9c55;
+	opacity:0.9;
+	float:left;
+}
+p.inside:hover{
+	opacity:1;
+}
+.Home_First_pic{
+	position: relative;
+    bottom: 250px;
+    left: 202px;
+    width: 50%;
+    float: left;
+}
+.Home_Second_pic{
+	width: 50%;
+    float: left;
+    position: relative;
+    bottom: 205px;
+    left: 70px;
+}
+.Home_mid_circle{
+	width: 10%;
+    float: left;
+    position: relative;
+    bottom: 310px;
+    opacity: 0.9;
+}
+a.go_to_SURF{
+	color: fff799;
+	font-size:20;
+	width:5%;
+	text-align:center;
+	position:relative;
+	text-decoration:none;
+	bottom:270;
+	right:100;
+}
+.Home_second_part_pic{
+	width: 20%;
+    position: relative;
+    bottom: 193px;
+    left: 201px;
+}
+.Home_second_title{
+	color: fff799;
+	font-weight:bold;
+	font-size:20;
+	position: relative;
+    bottom: 360px;
+    left: 205px;
+    width: 50%;
+}
+.second_part{
+	color: d1d3d4;
+	opacity:0.9;
+	position: relative;
+    bottom: 300px;
+    left: 360px;
+	width:50%;
+}
+.second_part:hover{
+	opacity:1;
+	
+}
+
+.Home_second_part_subtitle:hover{
+	color: fff799;
+	opacity:1;
+}
+.Home_second_part_para:hover{
+	opacity:1;
+}
+/* ---------------------------------- Surf Base-----------------------------------------------------------*/
