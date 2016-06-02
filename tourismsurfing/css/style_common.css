@@ -48,10 +48,7 @@ body {
 	left:0px;
 	right:0px;
 }
-.sub_container{
-	width: 70%;
-    float: right;
-}
+
 
 
 .container {
@@ -72,6 +69,16 @@ body {
 	right:0px;
 	opacity:0.7;
 	z-index:-1;
+}
+.container .right{
+	float: left;
+    width: 70%;
+	margin-left:40px;
+	
+}
+.container .left{
+	width: 20%;
+    float: left;
 }
 ul.menu {
 	list-style : none;
@@ -116,49 +123,57 @@ a.menutab:active{
      overflow: visible;
 	 color : white;  
 }
-.footer .NewsLetter{
-	width:40%;
+.footer_first{
 	float:left;
-	position:relative;
-	top:40;
+	width:33%
+}.footer_second{
+	float:left;
+	width:33%
+}.footer_third{
+	float:left;
+	width:33%
+}
+.footer .NewsLetter{
+	
+	float:left;
 }
 .NewsLetter .title{
 	color:#fff799;
 }
 .email_address{
-	width:30%;
+	width:45%;
 	float:left;
 	color:#94a6b6;
 	background-color:#325c85;
 	text-align: center;
     padding:10;
-	position:relative;
-	top:65;
+	margin: 40px;
 }
-.social{
-	width: 20%;
-    float: left;
-	position: relative;
-    left: 60px;
+.copyright{
+	color:0f378f;
+	width:70%;
+    margin-left: 65px;
 }
-.social .title{
+
+
+.footer_third .title{
 	color:#fff799;
 	font-size:20px;
-	position: relative;
-    top: 40;
-    left: 60px;
+    float:right;
+	margin: 40px;
+    position: relative;
+    right: 90px;
 }
 .icon{
-	position:relative;
-	top:60;
-	right:90;
+	float:right;
+	margin-top: 80px;
 }
 .Facebook_imgbox{
 	width:12;
 	height:25;
 	background-image:url(../images/Common/Facebook.png);
 	float:right;
-	margin-left:5;
+	margin-left:15;
 }
 .Facebook_imgbox:hover{
 	background-image:url(../images/Common/facebook_hover.png);
@@ -168,7 +183,7 @@ a.menutab:active{
 	height:26;
 	background-image:url(../images/Common/twitter.png);
 	float:right;
-	margin-left:5;
+	margin-left:15;
 }
 .Twitter_imgbox:hover{
 	background-image:url(../images/Common/twitter_hover.png);
@@ -178,36 +193,25 @@ a.menutab:active{
 	height:26;
 	background-image:url(../images/Common/google.png);
 	float:right;
-	margin-left:5;
+	margin-left:15;
 }
 .Google_imgbox:hover{
 	background-image:url(../images/Common/google_hover.png);
 }
-.copyright{
-	color:0f378f;
-	width:40%;
-	position:relative;
-	float:right;
-	top: 65px;
-    right: 156px;
-}
+
 /* ---------------------------------- Home-----------------------------------------------------------*/
+.home_second{
+	overflow: auto;
+}
 .Home_title{
-	width: 80%;
-    float: left;
-    position: relative;
-    bottom: 318px;
-    left: 221px;
+    
     color: fff799;
     font-weight: bold;
     font-size: 90px;
     font-family: Arial;
 }
 .Home_para{
-	width: 40%;
-    position: relative;
-    bottom: 274px;
-    left: 224px;
+	
     color: d1d3d4;
     opacity: 0.9;
 }
@@ -224,62 +228,71 @@ p.inside:hover{
 	opacity:1;
 }
 .Home_First_pic{
-	position: relative;
-    bottom: 250px;
-    left: 202px;
+
     width: 50%;
     float: left;
 }
 .Home_Second_pic{
-	width: 50%;
-    float: left;
-    position: relative;
-    bottom: 205px;
-    left: 70px;
+	width: 45%;
+    float: right;
+
 }
 .Home_mid_circle{
-	width: 10%;
+	width: 16%;
     float: left;
     position: relative;
-    bottom: 310px;
     opacity: 0.9;
+	position: relative;
+    bottom: 80px;
+    right: 28px;
 }
 a.go_to_SURF{
 	color: fff799;
 	font-size:20;
-	width:5%;
+	width:20%;
 	text-align:center;
-	position:relative;
 	text-decoration:none;
-	bottom:270;
-	right:100;
+	float: left;
+	position: relative;
+    bottom: 45px;
+    right: 165px;
+
 }
-.Home_second_part_pic{
-	width: 20%;
-    position: relative;
-    bottom: 193px;
-    left: 201px;
+.home_third{
+	overflow:auto;
+
 }
 .Home_second_title{
 	color: fff799;
 	font-weight:bold;
 	font-size:20;
-	position: relative;
-    bottom: 360px;
-    left: 205px;
+
     width: 50%;
 }
 .second_part{
 	color: d1d3d4;
 	opacity:0.9;
-	position: relative;
-    bottom: 300px;
-    left: 360px;
+
 	width:50%;
 }
 .second_part:hover{
 	opacity:1;
 	
+}
+.home_third{
+	padding-bottom:300;
+}
+.home_third .second_left{
+	float:left;
+	width:38%;
+}
+.home_third .second_right{
+	float:left;
+	width:60%;
+	position:relative;
+	top:40px;
+	right:90px;
+
 }
 
 .Home_second_part_subtitle:hover{
