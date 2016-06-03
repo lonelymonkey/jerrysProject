@@ -521,7 +521,8 @@ ul.pics > li:last-child{
 	opacity:1;
 }
 .contact_bot{
-
+	padding-bottom:60;
+	overflow:auto;
 }
 
 .contact_bot .bot_left{
