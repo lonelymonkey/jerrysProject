@@ -425,3 +425,143 @@ ul.pics > li:last-child{
 	text-decoration:underline;
 	opacity:1;
 }
+/* ---------------------------------- about-----------------------------------------------------------*/
+.about_top{
+	overflow:auto;
+	padding-top:40;
+}
+.about_top .about_words{
+	width:45%;
+	float:left;
+}
+.about_top .about_words .title{
+	color:fff799;
+	font-size:26;
+	
+}
+.about_top .about_words .para{
+	float:left;
+	width:45%;
+	color:d1d2d3;
+	opacity:0.9;
+}
+.about_top .about_words .para:hover{
+	opacity:1;
+}
+.about_top .about_top_img{
+	float:left;
+	width:55%;
+}
+.about_bot{
+	overflow:auto;
+}
+.about_bot .about_bot_img {
+	width: 30%;
+    float: left;
+	overflow: auto;
+}
+.about_bot .about_bot_words {
+	width: 70%;
+    float: left;
+}
+.call_circle{
+	float: right;
+    position: relative;
+    bottom: 75px;
+    
+}
+.call_circle .circle{
+	opacity:0.9;
+}
+.call_circle .call{
+	color: #fff799;
+	font-size: 26;
+	position:relative;
+	text-align:center;
+	bottom: 70px;
+}
+.about_bot .about_bot_words .title{
+	color:fff799;
+	font-size:46;
+	 font-family: Arial;
+}
+.about_bot .about_bot_words .para{
+	color:d1d2d3;
+	opacity:0.9;
+	padding-bottom:20;
+}
+.about_bot .about_bot_words .para:hover{
+	color:d1d2d3;
+	opacity:01;
+}
+.about_bot .about_bot_words .sub_title{
+	color:fff799;
+	font-size : 24;
+}
+
+/* ---------------------------------- contact-----------------------------------------------------------*/
+.contact_top{
+	padding-bottom:40px;
+}
+.contact_top .title{
+	color:fff799;
+	font-size:30;
+	padding-bottom:10;
+}
+.contact_top .sub_title{
+	color:fff799;
+	font-size:20;
+}
+.contact_top .para{
+	color:d1d2d3;
+	opacity:0.9
+}
+.contact_top .para:hover{
+
+	opacity:1;
+}
+.contact_bot{
+
+}
+
+.contact_bot .bot_left{
+	width:50%;
+	float:left;
+	overflow:auto;
+	color:d1d2d3;
+	opacity:0.9;
+}
+.contact_bot .bot_left:hover{
+	opacity:1;
+}
+.contact_bot .bot_right{
+	width:50%;
+	float:left;
+	background-color:022a5d;
+}
+.contact_bot .bot_left .detail_title{
+	color:fff799;
+	padding-bottom:15;
+	opacity:1;
+}
+p.email:hover{
+	text-decoration:underline;
+	color:f5c31b;
+}
+p.input_title{
+	margin:0;
+	color:d1d2d3;
+	padding-top:10;
+	padding-bottom:0;
+}
+.message{
+	height:200;
+}
+.send{
+	background-color:fff799;
+	color:112d67;
+}
+
+
+
+
