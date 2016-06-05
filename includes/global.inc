@@ -1,8 +1,11 @@
 <?php
 
-function printHeader($msg) {
+echo '<link href="../tourismsurfing/css/style_common.css" rel="stylesheet">';
+	
+
+function printHeader() {
   echo <<<EOB
-  $msg
+  
   <div class = "header">
 		<div class ="container">
 			<img class = "image" src = "images/Common/title_image.png" >
@@ -16,6 +19,7 @@ function printHeader($msg) {
 	</div>
 EOB;
 }
+
 
 
 function printFooter() {
@@ -56,4 +60,24 @@ echo <<<EOB
 </div>
 EOB;
 }
+
+function printbackground() {
+	echo <<< EOB
+	<div class = "content">
+	<div class = "background">
+	</div>
+		<div class = "container">
+		<div class ="containerBG">
+		</div>
+			
+			<div class = "right">
+				
+			</div>			
+		</div>
+		
+	</div>
+EOB;
+}
+
+
 ?>
