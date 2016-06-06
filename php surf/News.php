@@ -1,7 +1,7 @@
 <?php
 
-include '../includes/global.inc';
-include '../includes/home.inc';
+include '../includes/surf/global.inc';
+include '../includes/surf/blog.inc';
 printHeader();
 printbackground();
 printcontent();
