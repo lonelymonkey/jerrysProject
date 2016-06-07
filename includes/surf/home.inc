@@ -9,11 +9,11 @@ function printcontent() {
 		</div>
 			<div class = "left">
 				<ul class = "menu">
-					<li><a class = "menutab" href ="/tourismsurfing/index.html"> HOME </a></li>
-					<li><a class = "menutab" href ="/tourismsurfing/SURF_BASE.html"> SURF BASE </a></li>
-					<li><a class = "menutab" href ="/tourismsurfing/NEWS_BLOG.html"> NEWS & BLOG </a></li>
-					<li><a class = "menutab" href ="/tourismsurfing/ABOUT.html"> ABOUT </a></li>
-					<li><a class = "menutab" href ="/tourismsurfing/CONTACT.html"> CONTACT </a></li>
+					<li><a class = "menutab" href ="/php surf/index.php"> HOME </a></li>
+					<li><a class = "menutab" href ="/php surf/surf.php"> SURF BASE </a></li>
+					<li><a class = "menutab" href ="/php surf/News.php"> NEWS & BLOG </a></li>
+					<li><a class = "menutab" href ="/php surf/about.php"> ABOUT </a></li>
+					<li><a class = "menutab" href ="/php surf/CONTACT.php"> CONTACT </a></li>
 				</ul>
 			</div>
 			<div class = "right">
