@@ -97,6 +97,10 @@ ul.menu > li {
    color:#d1d3d4;
    
 }
+ul.menu > li.active > a.menutab{
+	color:blue;
+}
+
 ul.menu > li:nth-child(2){
      background-color: #02164d;
 }
@@ -105,14 +109,13 @@ ul.menu > li:nth-child(4){
 }
 a.menutab{
 	text-decoration :none;
-	color:fff799;
+	color:#fff799;
 }
-a.menutab:active{
-	text-decoration :none;
-	color:#02164d;
-	background-color:d1d3d4;
-	
+ul.menu > li.active{
+	background-color:#d1d3d4;
+	color:white;
 }
+
 
 
 
