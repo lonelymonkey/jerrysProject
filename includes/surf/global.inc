@@ -1,11 +1,11 @@
 <?php
 
-function style(){
-	echo '<link href="css/style_common.css" rel="stylesheet">';
-}
+echo '<link href="../tourismsurfing/css/style_common.css" rel="stylesheet">';
+	
+
 function printHeader() {
   echo <<<EOB
-
+  
   <div class = "header">
 		<div class ="container">
 			<img class = "image" src = "images/Common/title_image.png" >
@@ -19,6 +19,7 @@ function printHeader() {
 	</div>
 EOB;
 }
+
 
 
 function printFooter() {
@@ -59,51 +60,24 @@ echo <<<EOB
 </div>
 EOB;
 }
-function printcontent($msg, $active, $decide) {
-	$active1 = $active2 =$active3 =$active4 =$active5 = "";
 
-	if ($decide == 1){
-		$active1 = $active ;
-	//	echo "first <br>";
-
-	}elseif($decide == 2){
-		$active2 = $active;
-	//	echo "second <br>";
-
-	}elseif($decide ==3){
-		$active3 = $active;
-	//	echo "third <br>";
-
-	}elseif($decide == 4){
-		$active4 = $active;
-	//	echo "forth <br>";
-
-	}elseif($decide == 5){
-	$active5 = $active;
-//	echo "fifth <br>";
-
-	}
-
-echo <<<EOB
-<div class = "content">
+function printbackground() {
+	echo <<< EOB
+	<div class = "content">
 	<div class = "background">
 	</div>
 		<div class = "container">
 		<div class ="containerBG">
 		</div>
-			<div class = "left">
-				<ul class = "menu">
-					<li $active1><a class = "menutab" href ="/php surf/index.php"> HOME </a></li>
-					<li $active2><a class = "menutab" href ="/php surf/SURF_BASE.php"> SURF BASE </a></li>
-					<li $active3><a class = "menutab" href ="/php surf/NEWS_BLOG.php"> NEWS & BLOG </a></li>
-					<li $active4><a class = "menutab" href ="/php surf/ABOUT.php"> ABOUT </a></li>
-					<li $active5><a class = "menutab" href ="/php surf/CONTACT.php"> CONTACT </a></li>
-				</ul>
-			</div>
-			$msg
+			
+			<div class = "right">
+				
+			</div>			
 		</div>
-
+		
 	</div>
 EOB;
 }
+
+
 ?>
