@@ -14,7 +14,7 @@ body {
 	position: relative;
     top: 20px;
     left:-103px;
-	
+
 }
 .header .title{
 	position:relative;
@@ -35,7 +35,7 @@ body {
 	font-family: Arial;
 }
 .content{
-	
+
 	position:relative;
 	padding-top: 1px;
 	overflow:auto;
@@ -74,7 +74,7 @@ body {
 	float: left;
     width: 70%;
 	margin-left:40px;
-	
+
 }
 .container .left{
 	width: 20%;
@@ -95,7 +95,7 @@ ul.menu > li {
    text-align: center;
    padding:20;
    color:#d1d3d4;
-   
+
 }
 ul.menu > li.active > a.menutab{
 	color:blue;
@@ -124,7 +124,7 @@ ul.menu > li.active{
      height: 200px;
      left: 0px;
      overflow: visible;
-	 color : white;  
+	 color : white;
 }
 .footer_first{
 	float:left;
@@ -137,7 +137,7 @@ ul.menu > li.active{
 	width:33%
 }
 .footer .NewsLetter{
-	
+
 	float:left;
 }
 .NewsLetter .title{
@@ -207,14 +207,14 @@ ul.menu > li.active{
 	overflow: auto;
 }
 .Home_title{
-    
+
     color: fff799;
     font-weight: bold;
     font-size: 90px;
     font-family: Arial;
 }
 .Home_para{
-	
+
     color: d1d3d4;
     opacity: 0.9;
 }
@@ -280,7 +280,7 @@ a.go_to_SURF{
 }
 .second_part:hover{
 	opacity:1;
-	
+
 }
 .home_third{
 	padding-bottom:300;
@@ -347,7 +347,7 @@ a.go_to_blog{
 	position:relative;
 	bottom: 75px;
     left: 25px;
-	
+
 }
 .surf_bot{
 	overflow:auto;
@@ -375,7 +375,7 @@ ul.pics > li:last-child{
 	opacity:0.9;
 }
 .surf_bot .bot_para:hover{
-	
+
 	opacity:1;
 }
 /* ---------------------------------- news and blog-----------------------------------------------------------*/
@@ -440,7 +440,7 @@ ul.pics > li:last-child{
 .about_top .about_words .title{
 	color:fff799;
 	font-size:26;
-	
+
 }
 .about_top .about_words .para{
 	float:left;
@@ -471,7 +471,7 @@ ul.pics > li:last-child{
 	float: right;
     position: relative;
     bottom: 75px;
-    
+
 }
 .call_circle .circle{
 	opacity:0.9;
@@ -565,7 +565,7 @@ p.input_title{
 	background-color:fff799;
 	color:112d67;
 }
+span.error{
+  color:red;
 
-
-
-
+}

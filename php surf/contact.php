@@ -1,6 +1,38 @@
 <?php
 
 include '../includes/surf_global.inc';
+$nameErr = $emailErr =  "Please field the information";
+$name = $email = $comment =  "";
+$temp = array();
+$outcome = "";
+$newline = "\n";
+
+$test = array();
+$test2 = '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);
+
+  }
+
+  if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+  } else {
+    $email = test_input($_POST["email"]);
+
+  }
+
+  if (empty($_POST["comment"])) {
+    $comment = "No Comment submitted";
+  } else {
+    $comment = test_input($_POST["comment"]);
+  }
+}
+
+
+
 $active = 'class = "active"';
 $var1 ='<div class = "right">
 				<div class = "contact_top">
@@ -41,15 +73,18 @@ $var1 ='<div class = "right">
 					</div>
 					<div class = "bot_right">
 
-						<form action="action_page.php">
+						<form action="contact.php" method = "post">
 							<p class = "input_title">Your Name:</p><br>
-							<input type="text" name="firstname" size ="48">
+							<input type="text" name="name" size ="48">
+							<span class = "error">*'.$nameErr.'
 							<br>
 							<p class = "input_title">Email Address:</p><br>
 							<input type="text" name="email" size ="48">
+							<span class = "error"> * '.$emailErr.'
 							<br>
 							<p class = "input_title">Message:</p><br>
-							<textarea class ="message"  rows = "10" cols = "49" name="message" size ="48">
+							<textarea class ="comment"  name="comment" rows = "10" cols = "49"  size ="48">
+
 							</textarea>
 							<br><br>
 							<input class ="send" type="submit" value="Send">
@@ -61,4 +96,23 @@ style();
 printHeader();
 printcontent($var1,$active,5);
 printFooter();
+if ($name != "" and $email!= "" ){
+$J_decode=array();
+
+if(filesize("output.json") !=0){
+  $myfile = fopen("output.json","r") or die( "cant open the file!");
+  $test2 = fread($myfile,filesize("output.json"));
+  $J_decode = json_decode($test2,true);
+  fclose($myfile);
+}
+
+
+$temp = array("Name"=>$name, "email"=>$email,"comment"=>$comment);
+$J_decode[count($J_decode)+1] = $temp;
+$myfile = fopen("output.json","w") or die( "cant open the file!");
+$outcome = json_encode($J_decode) ;
+fwrite($myfile ,$outcome);
+fclose($myfile);
+
+}
 ?>
