@@ -1,7 +1,7 @@
 <?php
 
 include '../includes/surf_global.inc';
-$nameErr = $emailErr =  "Please field the information";
+$nameErr = $emailErr =  "";
 $name = $email = $comment =  "";
 $temp = array();
 $outcome = "";
@@ -19,9 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (empty($_POST["email"])) {
     $emailErr = "Email is required";
-  } else {
-    $email = test_input($_POST["email"]);
+  }
 
+  else {
+    $email = test_input($_POST["email"]);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format";
+    }
   }
 
   if (empty($_POST["comment"])) {
@@ -96,7 +100,7 @@ style();
 printHeader();
 printcontent($var1,$active,5);
 printFooter();
-if ($name != "" and $email!= "" ){
+if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
 $J_decode=array();
 
 if(filesize("output.json") !=0){

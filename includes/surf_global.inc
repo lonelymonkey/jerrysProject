@@ -60,7 +60,7 @@ echo <<<EOB
 EOB;
 }
 function printcontent($msg, $active, $decide) {
-	$active1 = $active2 =$active3 =$active4 =$active5 = "";
+	$active1 = $active2 =$active3 =$active4 =$active5 = $active6 ="";
 
 	if ($decide == 1){
 		$active1 = $active ;
@@ -81,8 +81,11 @@ function printcontent($msg, $active, $decide) {
 	}elseif($decide == 5){
 	$active5 = $active;
 //	echo "fifth <br>";
-
 	}
+elseif($decide == 6){
+		$active6 = $active;
+		//	echo "fifth <br>";
+}
 
 echo <<<EOB
 <div class = "content">
@@ -93,11 +96,12 @@ echo <<<EOB
 		</div>
 			<div class = "left">
 				<ul class = "menu">
-					<li $active1><a class = "menutab" href ="/php surf/index.php"> HOME </a></li>
-					<li $active2><a class = "menutab" href ="/php surf/SURF_BASE.php"> SURF BASE </a></li>
-					<li $active3><a class = "menutab" href ="/php surf/NEWS_BLOG.php"> NEWS & BLOG </a></li>
-					<li $active4><a class = "menutab" href ="/php surf/ABOUT.php"> ABOUT </a></li>
-					<li $active5><a class = "menutab" href ="/php surf/CONTACT.php"> CONTACT </a></li>
+					<li $active1><a class = "menutab" href ="/php_surf/index.php"> HOME </a></li>
+					<li $active2><a class = "menutab" href ="/php_surf/SURF_BASE.php"> SURF BASE </a></li>
+					<li $active3><a class = "menutab" href ="/php_surf/NEWS_BLOG.php"> NEWS & BLOG </a></li>
+					<li $active4><a class = "menutab" href ="/php_surf/ABOUT.php"> ABOUT </a></li>
+					<li $active5><a class = "menutab" href ="/php_surf/CONTACT.php"> CONTACT </a></li>
+					<li $active6><a class = "menutab" href ="/php_surf/Experience_Sharing.php"> Experience Sharing</a></li>
 				</ul>
 			</div>
 			$msg
