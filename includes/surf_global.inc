@@ -97,11 +97,11 @@ echo <<<EOB
 			<div class = "left">
 				<ul class = "menu">
 					<li $active1><a class = "menutab" href ="/php_surf/index.php"> HOME </a></li>
-					<li $active2><a class = "menutab" href ="/php_surf/SURF_BASE.php"> SURF BASE </a></li>
-					<li $active3><a class = "menutab" href ="/php_surf/NEWS_BLOG.php"> NEWS & BLOG </a></li>
-					<li $active4><a class = "menutab" href ="/php_surf/ABOUT.php"> ABOUT </a></li>
-					<li $active5><a class = "menutab" href ="/php_surf/CONTACT.php"> CONTACT </a></li>
-					<li $active6><a class = "menutab" href ="/php_surf/Experience_Sharing.php"> Experience Sharing</a></li>
+					<li $active2><a class = "menutab" href ="/php_surf/surf_base.php"> SURF BASE </a></li>
+					<li $active3><a class = "menutab" href ="/php_surf/news_blog.php"> NEWS & BLOG </a></li>
+					<li $active4><a class = "menutab" href ="/php_surf/about.php"> ABOUT </a></li>
+					<li $active5><a class = "menutab" href ="/php_surf/contact.php"> CONTACT </a></li>
+					<li $active6><a class = "menutab" href ="/php_surf/experiences_sharing.php"> Experience Sharing</a></li>
 				</ul>
 			</div>
 			$msg
