@@ -103,8 +103,8 @@ printFooter();
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
   $J_decode=array();
 
-  if(filesize("output.json") !=0){
-    $myfile = fopen("output.json","r") or die( "cant open the file!");
+if(file_exists("contact_information.json") == TRUE){
+    $myfile = fopen("contact_information.json","r") or die( "cant open the file!");
     $test2 = fread($myfile,filesize("output.json"));
     $J_decode = json_decode($test2,true);
     fclose($myfile);
@@ -113,7 +113,7 @@ if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
 
   $temp = array("Name"=>$name, "email"=>$email,"comment"=>$comment);
   $J_decode[count($J_decode)+1] = $temp;
-  $myfile = fopen("output.json","w") or die( "cant open the file!");
+  $myfile = fopen("contact_information.json","w") or die( "cant open the file!");
   $outcome = json_encode($J_decode) ;
   fwrite($myfile ,$outcome);
   fclose($myfile);
