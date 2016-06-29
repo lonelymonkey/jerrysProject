@@ -1,7 +1,7 @@
 <?php
 
 include '../includes/surf_global.inc';
-$nameErr = $emailErr =  "";
+$nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment =  "";
 $temp = array();
 $outcome = "";
@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   if (empty($_POST["comment"])) {
-    $comment = "No Comment submitted";
+    
+    $commentErr = "Comment is required ";
   } else {
     $comment = test_input($_POST["comment"]);
   }
@@ -78,18 +79,20 @@ $var1 ='<div class = "right">
 					<div class = "bot_right">
 
 						<form action="contact.php" method = "post">
-							<p class = "input_title">Your Name:</p><br>
+							<p class = "input_title">Your Name:</p><br><br>
 							<input type="text" name="name" size ="48">
-							<span class = "error">*'.$nameErr.'
+							<span class = "error">*'.$nameErr.'</span>
 							<br>
 							<p class = "input_title">Email Address:</p><br>
-							<input type="text" name="email" size ="48">
-							<span class = "error"> * '.$emailErr.'
+							<input type="text" name="email" size ="48"><br>
+							<span class = "error"> * '.$emailErr.'</span>
 							<br>
 							<p class = "input_title">Message:</p><br>
 							<textarea class ="comment"  name="comment" rows = "10" cols = "49"  size ="48">
-
 							</textarea>
+              <br>
+              <span class = "error"> * '.$commentErr.'</span>
+
 							<br><br>
 							<input class ="send" type="submit" value="Send">
 						</form>
@@ -100,7 +103,8 @@ style();
 printHeader();
 printcontent($var1,$active,5);
 printFooter();
-if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
+echo "i am $commentErr and GG" ;
+if ($name != "" and $email!= "" and $emailErr != "Invalid email format" and $comment !=""){
   $J_decode=array();
 
 if(file_exists("contact_information.json") == TRUE){

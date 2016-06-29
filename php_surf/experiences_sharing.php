@@ -63,11 +63,11 @@ $var1 ='<div class="right">
                   <input type="radio" name="gender" value="male"><span class = "gender">Male
                   <br><br>
                   <p class = "input_title">Rating:</p>
-                  <input type="radio" name="Rate" value="1 stars"><span class = "rating">*
-                  <input type="radio" name="Rate" value="2 stars"><span class = "rating">**
-                  <input type="radio" name="Rate" value="3 stars"><span class = "ratingr">***
-                  <input type="radio" name="Rate" value="4 stars"><span class = "rating">****
-                  <input type="radio" name="Rate" value="5 stars"><span class = "rating">*****
+                  <input type="radio" name="Rate" value="1"><span class = "rating">*
+                  <input type="radio" name="Rate" value="2"><span class = "rating">**
+                  <input type="radio" name="Rate" value="3"><span class = "ratingr">***
+                  <input type="radio" name="Rate" value="4"><span class = "rating">****
+                  <input type="radio" name="Rate" value="5"><span class = "rating">*****
                   <br><br>
                   <p class = "input_title">comment and Suggestion:</p>
                   <br>
