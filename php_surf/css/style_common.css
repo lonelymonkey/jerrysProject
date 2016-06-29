@@ -529,7 +529,7 @@ ul.pics > li:last-child{
 }
 
 .contact_bot .bot_left{
-	width:50%;
+	width:45%;
 	float:left;
 	overflow:auto;
 	color:d1d2d3;
@@ -542,6 +542,7 @@ ul.pics > li:last-child{
 	width:50%;
 	float:left;
 	background-color:022a5d;
+  padding-left: 10;
 }
 .contact_bot .bot_left .detail_title{
 	color:fff799;
@@ -557,6 +558,17 @@ p.input_title{
 	color:d1d2d3;
 	padding-top:10;
 	padding-bottom:0;
+
+}
+.input_box{
+
+
+}
+.comment_box{
+  width :350px;
+  height:200px;
+  resize : none;
+
 }
 .message{
 	height:200;
@@ -567,6 +579,8 @@ p.input_title{
 }
 span.error{
   color:red;
+
+
 
 }
 span.gender {

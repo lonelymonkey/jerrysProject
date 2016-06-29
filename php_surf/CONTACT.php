@@ -28,9 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
+  $_POST["comment"] = trim($_POST["comment"]);
+
   if (empty($_POST["comment"])) {
-    
+
     $commentErr = "Comment is required ";
+
   } else {
     $comment = test_input($_POST["comment"]);
   }
@@ -80,16 +83,15 @@ $var1 ='<div class = "right">
 
 						<form action="contact.php" method = "post">
 							<p class = "input_title">Your Name:</p><br><br>
-							<input type="text" name="name" size ="48">
-							<span class = "error">*'.$nameErr.'</span>
+							<input type="text" name="name"  class ="input_box">
+							<br><span class = "error">*'.$nameErr.'</span>
 							<br>
 							<p class = "input_title">Email Address:</p><br>
-							<input type="text" name="email" size ="48"><br>
+							<input type="text" name="email"   class ="input_box"><br>
 							<span class = "error"> * '.$emailErr.'</span>
 							<br>
 							<p class = "input_title">Message:</p><br>
-							<textarea class ="comment"  name="comment" rows = "10" cols = "49"  size ="48">
-							</textarea>
+							<textarea class ="comment_box"  name="comment"  ></textarea>
               <br>
               <span class = "error"> * '.$commentErr.'</span>
 
@@ -103,7 +105,6 @@ style();
 printHeader();
 printcontent($var1,$active,5);
 printFooter();
-echo "i am $commentErr and GG" ;
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format" and $comment !=""){
   $J_decode=array();
 
@@ -123,4 +124,5 @@ if(file_exists("contact_information.json") == TRUE){
   fclose($myfile);
 
   }
+
 ?>

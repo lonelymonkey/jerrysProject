@@ -1,7 +1,7 @@
 <?php
 
 include '../includes/surf_global.inc';
-$nameErr = $emailErr =  "";
+$nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment = $rate = $gender =  "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $emailErr = "Invalid email format";
     }
   }
-
+    $_POST["comment"] = trim($_POST["comment"]);
   if (empty($_POST["comment"])) {
-    $comment = "No Comment submitted";
+    $commentErr = "No Comment submitted";
   } else {
     $comment = test_input($_POST["comment"]);
   }
@@ -50,11 +50,13 @@ $var1 ='<div class="right">
                 </div>
                 <form action="experiences_sharing.php" method = "post">
     							<p class = "input_title">Your Name:</p><br>
-    							<input type="text" name="name" size ="48">
+    							<input type="text" name="name" class ="input_box">
+                  <br>
     							<span class = "error">*'. $nameErr.'</span>
     							<br>
     							<p class = "input_title">Email Address:</p><br>
-    							<input type="text" name="email" size ="48">
+    							<input type="text" name="email" class ="input_box">
+                  <br>
     							<span class = "error"> *'. $emailErr.'</span>
     							<br>
     							<p class = "input_title">Message:</p><br>
@@ -71,8 +73,8 @@ $var1 ='<div class="right">
                   <br><br>
                   <p class = "input_title">comment and Suggestion:</p>
                   <br>
-                  <textarea class ="comment"  name="Comment" rows = "10" cols = "49"  size ="48">
-    							</textarea>
+                  <textarea class ="comment_box"  name="comment"  ></textarea>  <br>
+                  <span class = "error"> *'. $commentErr.'</span>
     							<br><br>
 
     							<input class ="send" type="submit" value="Send">
