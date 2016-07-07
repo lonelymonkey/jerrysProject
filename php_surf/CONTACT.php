@@ -110,7 +110,7 @@ if ($name != "" and $email!= "" and $emailErr != "Invalid email format" and $com
 
 if(file_exists("contact_information.json") == TRUE){
     $myfile = fopen("contact_information.json","r") or die( "cant open the file!");
-    $test2 = fread($myfile,filesize("output.json"));
+    $test2 = fread($myfile,filesize("contact_information.json"));
     $J_decode = json_decode($test2,true);
     fclose($myfile);
   }

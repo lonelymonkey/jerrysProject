@@ -60,7 +60,7 @@ echo <<<EOB
 EOB;
 }
 function printcontent($msg, $active, $decide) {
-	$active1 = $active2 =$active3 =$active4 =$active5 = $active6 ="";
+	$active1 = $active2 =$active3 =$active4 =$active5 = $active6 =$active7="";
 
 	if ($decide == 1){
 		$active1 = $active ;
@@ -86,6 +86,10 @@ elseif($decide == 6){
 		$active6 = $active;
 		//	echo "fifth <br>";
 }
+elseif($decide == 7){
+		$active7 = $active;
+		//	echo "fifth <br>";
+}
 
 echo <<<EOB
 <div class = "content">
@@ -102,6 +106,7 @@ echo <<<EOB
 					<li $active4><a class = "menutab" href ="/php_surf/about.php"> ABOUT </a></li>
 					<li $active5><a class = "menutab" href ="/php_surf/contact.php"> CONTACT </a></li>
 					<li $active6><a class = "menutab" href ="/php_surf/experiences_sharing.php"> Experience Sharing</a></li>
+					<li $active7><a class = "menutab" href ="/php_surf/user_blog.php"> Write Your Blogs</a></li>
 				</ul>
 			</div>
 			$msg
@@ -116,5 +121,54 @@ function test_input($data) {
   $data = htmlspecialchars($data);
   return $data;
 }
+function print_blog($name,$comment){
 
+$output = '
+<div class = "blog_para">
+		<div class ="blog_img">
+			<div class ="blog_pic">
+				<img class = "image" src = "images/News/1st pic.png" >
+			</div>
+			<div class = "date_circle">
+				<div class = "circle">
+					<img class = "image" src = "images/News/circle.png" >
+				</div>
+				<div class = "date">
+					SEPT <br>2012
+				</div>
+			</div>
+		</div>
+		<div class = "blog_words">
+			<div class = "blog_title">
+				'.$name.'
+			</div>
+			<div class = "blog_para">
+		 		'.$comment.'
+			</div>
+		</div>
+
+	</div>';
+
+ return $output;
+}
+function print_post($title,$content){
+if ($title ==""){
+		$title = "No Latest Information";
+
+}
+if ($content ==""){
+	 $content = "No futher Detail";
+
+}
+$output = '<div class = "blog_further_info">
+	<div class = "blog_title">
+		'.$title.'
+	</div>
+	<div class = "further_para">
+		'.$content.'
+	</div>
+';
+
+return $output;
+}
 ?>

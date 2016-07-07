@@ -90,7 +90,7 @@ if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
 
   if(file_exists("experience.json") == TRUE){
     $myfile = fopen("experience.json","r") or die( "cant open the file!");
-    $test2 = fread($myfile,filesize("output.json"));
+    $test2 = fread($myfile,filesize("experience.json"));
     $J_decode = json_decode($test2,true);
     fclose($myfile);
   }
