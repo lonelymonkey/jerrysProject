@@ -2,7 +2,8 @@
 
 include '../includes/surf_global.inc';
 $active = 'class = "active"';
-$first["Name"] = $first["comment"]=$Second["Name"] = $Second["comment"] = $Third["Name"] = $Third["comment"] = "";
+$first["Name"] = $Second["Name"] = $Second["comment"] = $Third["Name"] = "No one leave the message";
+$first["comment"]= $Second["comment"] =  $Third["comment"] ="No comment yet";
 if(file_exists("blog.json") == TRUE){
 
 $blogs = json_decode(file_get_contents('blog.json'),true);
