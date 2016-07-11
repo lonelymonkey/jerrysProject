@@ -1,29 +1,32 @@
 <?php
 
-include '../includes/surf_global.inc';
+
+include '../includes/global_v2.inc';
 
 $first["Name"] = $Second["Name"] = $Second["comment"] = $Third["Name"] = "No one leave the message";
 $first["comment"]= $Second["comment"] =  $Third["comment"] ="No comment";
+
 if(file_exists("blog.json") == TRUE){
 
 $blogs = json_decode(file_get_contents('blog.json'),true);
 
 $first= $blogs[count($blogs)];
-if (count($blogs) > 2){
+if (count($blogs) >= 2){
 	$Second= $blogs[count($blogs)-1];
 }
-if (count($blogs)>1){
+if (count($blogs)>=1){
 	$Third= $blogs[count($blogs)-2];
 }
 
 
 }
-$blog_para[0] = print_blog($first["Name"],$first["comment"]);
-$blog_para[1] = print_blog($Second["Name"],$Second["comment"]);
-$blog_para[2] = print_blog($Third["Name"],$Third["comment"]);
+$GetBlog = new function_surf();
+$blog_para[0] = $GetBlog->print_blog($first["Name"],$first["comment"]);
+$blog_para[1] = $GetBlog->print_blog($Second["Name"],$Second["comment"]);
+$blog_para[2] = $GetBlog->print_blog($Third["Name"],$Third["comment"]);
 
 
-$var1 ='<div class = "right">
+$content ='<div class = "right">
 					<div class ="blog_top">
 						'.$blog_para[0].'
 						'.$blog_para[1].'
@@ -59,8 +62,6 @@ $var1 ='<div class = "right">
 				</div>
 				</div>
 			</div>';
-style();
-printHeader();
-printcontent($var1,3);
-printFooter();
+$totalview = new myTemplate($content,3);
+echo $totalview->getView();
 ?>

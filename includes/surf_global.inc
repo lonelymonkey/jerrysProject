@@ -59,7 +59,8 @@ echo <<<EOB
 </div>
 EOB;
 }
-function printcontent($msg, $active, $decide) {
+function printcontent($msg,$decide) {
+	$active = 'class = "active"';
 	$active1 = $active2 =$active3 =$active4 =$active5 = $active6 =$active7="";
 
 	if ($decide == 1){
@@ -153,13 +154,14 @@ $output = '
 }
 function print_post($title,$content){
 if ($title ==""){
-		$title = "No Latest Information";
+		$title = "RECENT POST";
 
 }
 if ($content ==""){
 	 $content = "No futher Detail";
 
 }
+
 $output = '<div class = "blog_further_info">
 	<div class = "blog_title">
 		'.$title.'
@@ -171,4 +173,5 @@ $output = '<div class = "blog_further_info">
 
 return $output;
 }
+
 ?>

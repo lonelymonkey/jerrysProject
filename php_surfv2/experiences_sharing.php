@@ -1,13 +1,14 @@
 <?php
 
-include '../includes/surf_global.inc';
+include '../includes/global_v2.inc';
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment = $rate = $gender =  "";
+$test = new function_surf();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
-    $name = test_input($_POST["name"]);
+    $name = $test->test_input($_POST["name"]);
 
   }
 
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   else {
-    $email = test_input($_POST["email"]);
+    $email =  $test->test_input($_POST["email"]);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $emailErr = "Invalid email format";
     }
@@ -25,22 +26,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["comment"])) {
     $commentErr = "No Comment submitted";
   } else {
-    $comment = test_input($_POST["comment"]);
+    $comment =  $test->test_input($_POST["comment"]);
   }
-  if (empty($_POST["Rate"])) {
+  if (empty($_POST["rate"])) {
     $rate = "no rating";
   } else {
-    $rate = test_input($_POST["Rate"]);
+    $rate =  $test->test_input($_POST["rate"]);
   }
   if (empty($_POST["gender"])) {
     $gender = "Not specific";
   } else {
-    $gender = test_input($_POST["gender"]);
+    $gender =  $test->test_input($_POST["gender"]);
   }
 }
-// pringting HTML..............................................................................................................................................................
-
-$var1 ='<div class="right">
+$content  ='<div class="right">
   				<div class="Experience_title">
               		I hold a title
                 </div>
@@ -65,11 +64,11 @@ $var1 ='<div class="right">
                   <input type="radio" name="gender" value="male"><span class = "gender">Male
                   <br><br>
                   <p class = "input_title">Rating:</p>
-                  <input type="radio" name="Rate" value="1"><span class = "rating">*
-                  <input type="radio" name="Rate" value="2"><span class = "rating">**
-                  <input type="radio" name="Rate" value="3"><span class = "ratingr">***
-                  <input type="radio" name="Rate" value="4"><span class = "rating">****
-                  <input type="radio" name="Rate" value="5"><span class = "rating">*****
+                  <input type="radio" name="rate" value="1"><span class = "rating">*
+                  <input type="radio" name="rate" value="2"><span class = "rating">**
+                  <input type="radio" name="rate" value="3"><span class = "ratingr">***
+                  <input type="radio" name="rate" value="4"><span class = "rating">****
+                  <input type="radio" name="rate" value="5"><span class = "rating">*****
                   <br><br>
                   <p class = "input_title">comment and Suggestion:</p>
                   <br>
@@ -81,26 +80,17 @@ $var1 ='<div class="right">
     						</form>
               	</div>
   			</div>';
-style();
-printHeader();
-printcontent($var1,6);
-printFooter();
+$totalview = new myTemplate($content,6);
+
+echo $totalview->getView();
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
-  $J_decode=array();
 
-  if(file_exists("experience.json") == TRUE){
-    $myfile = fopen("experience.json","r") or die( "cant open the file!");
-    $test2 = fread($myfile,filesize("experience.json"));
-    $J_decode = json_decode($test2,true);
-    fclose($myfile);
+  //public function store_file($filename,$name,$comment,$email,$gender,$rating)
+  $test->store_file("experience.json",$name,$comment,$email,$gender,$rate);
   }
+//echo $totalview->right;
 
-  $temp = array("Name"=>$name, "email"=>$email,"comment"=>$comment, "rate"=>$rate,"gender" => $gender);
-  $J_decode[count($J_decode)+1] = $temp;
-  $myfile = fopen("experience.json","w") or die( "cant open the file!");
-  $outcome = json_encode($J_decode) ;
-  fwrite($myfile ,$outcome);
-  fclose($myfile);
 
-  }
+
+
 ?>

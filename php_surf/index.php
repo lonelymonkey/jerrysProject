@@ -55,6 +55,6 @@ $var1 ='<div class = "right">
 			</div>';
 style();
 printHeader();
-printcontent($var1,$active,1);
+printcontent($var1,1);
 printFooter();
 ?>

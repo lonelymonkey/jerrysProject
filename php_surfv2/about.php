@@ -1,8 +1,9 @@
 <?php
 
-include '../includes/surf_global.inc';
 
-$var1 ='<div class = "right">
+include '../includes/global_v2.inc';
+
+$content  ='<div class = "right">
 				<div class ="about_top">
 					<div class = "about_words">
 						<div class = "title">
@@ -54,8 +55,11 @@ $var1 ='<div class = "right">
 					</div>
 				</div>
 			</div>';
-style();
-printHeader();
-printcontent($var1,4);
-printFooter();
+$totalview = new myTemplate($content,4);
+
+echo $totalview->getView();
+//echo $totalview->right;
+
+?>
+
 ?>

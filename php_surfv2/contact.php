@@ -1,19 +1,19 @@
 <?php
 
-include '../includes/surf_global.inc';
+include '../includes/global_v2.inc';
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment =  "";
 $temp = array();
 $outcome = "";
 $newline = "\n";
-
 $test = array();
 $test2 = '';
+$test = new function_surf();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
-    $name = test_input($_POST["name"]);
+    $name = $test->test_input($_POST["name"]);
 
   }
 
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   else {
-    $email = test_input($_POST["email"]);
+    $email = $test->test_input($_POST["email"]);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $emailErr = "Invalid email format";
     }
@@ -35,14 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $commentErr = "Comment is required ";
 
   } else {
-    $comment = test_input($_POST["comment"]);
+    $comment = $test->test_input($_POST["comment"]);
   }
 }
 
-// pringting HTML
-
-
-$var1 ='<div class = "right">
+$content  ='<div class = "right">
 				<div class = "contact_top">
 					<div class = "title">
 						we want to here from you!
@@ -101,28 +98,15 @@ $var1 ='<div class = "right">
 					</div>
 				</div>
 			</div>';
-style();
-printHeader();
-printcontent($var1,5);
-printFooter();
+$totalview = new myTemplate($content,5);
+
+echo $totalview->getView();
+
+
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format" and $comment !=""){
-  $J_decode=array();
-
-if(file_exists("contact_information.json") == TRUE){
-    $myfile = fopen("contact_information.json","r") or die( "cant open the file!");
-    $test2 = fread($myfile,filesize("contact_information.json"));
-    $J_decode = json_decode($test2,true);
-    fclose($myfile);
+  $test->store_file("contact.json",$name,$comment,$email,'','');
   }
 
 
-  $temp = array("Name"=>$name, "email"=>$email,"comment"=>$comment);
-  $J_decode[count($J_decode)+1] = $temp;
-  $myfile = fopen("contact_information.json","w") or die( "cant open the file!");
-  $outcome = json_encode($J_decode) ;
-  fwrite($myfile ,$outcome);
-  fclose($myfile);
-
-  }
 
 ?>
