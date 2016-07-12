@@ -46,7 +46,8 @@ $content  ='<div class="right">
 $totalview = new myTemplate($content,7);
 
 echo $totalview->getView();
-//echo $totalview->right;
+
+//public function store_file($filename,$name,$comment,$email,$gender,$rating)
 if ($name != "" and $comment!= "" ){
   $test->store_file("blog.json",$name,$comment,"","","");
 

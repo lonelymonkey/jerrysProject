@@ -102,7 +102,7 @@ $totalview = new myTemplate($content,5);
 
 echo $totalview->getView();
 
-
+//public function store_file($filename,$name,$comment,$email,$gender,$rating)
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format" and $comment !=""){
   $test->store_file("contact.json",$name,$comment,$email,'','');
   }
