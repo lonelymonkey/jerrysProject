@@ -4,7 +4,7 @@ include '../includes/global_v2.inc';
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment =  "";
 $ValidandStore = new function_surf();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (!empty($_POST["submit"])) {
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
@@ -88,7 +88,7 @@ $content  ='<div class = "right">
               <span class = "error"> * '.$commentErr.'</span>
 
 							<br><br>
-							<input class ="send" type="submit" value="Send">
+							<input class ="send" name = "submit" type="submit" value="Send">
 						</form>
 					</div>
 				</div>

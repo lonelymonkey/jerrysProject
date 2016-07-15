@@ -30,6 +30,7 @@
 *.log
 *.sql
 *.sqlite
+!mysql_definition.sql
 
 # OS generated files #
 ######################
