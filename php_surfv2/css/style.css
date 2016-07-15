@@ -385,7 +385,9 @@ ul.pics > li:last-child{
 }
 .blog_words{
 	width:60%;
-    float: left;
+  float: left;
+  height: 150px;
+
 }
 .blog_para{
 	overflow:auto;
@@ -411,9 +413,11 @@ ul.pics > li:last-child{
 .blog_title:hover{
 	color:#fff799;
 }
-.blog_para{
+.blog_paragraph{
 	color:#d1d2d3;
 	padding-top:50px;
+  height: 100px;
+
 }
 .blog_further_info{
 	width: 33%;
@@ -427,6 +431,17 @@ ul.pics > li:last-child{
 .further_para:hover{
 	text-decoration:underline;
 	opacity:1;
+}
+.read_more{
+  position: relative;
+  width: 25%;
+  float: right;
+  top:50px;
+}
+.style_read{
+  text-decoration: none;
+  color: white;
+
 }
 /* ---------------------------------- about-----------------------------------------------------------*/
 .about_top{
@@ -592,5 +607,25 @@ span.rating{
   color:white;
   font-size:20px;
   padding-bottom:20px;
+
+}
+/* ---------------------------------- full comment pages-----------------------------------------------------------*/
+.Full_comment_title{
+  color: #fff799;
+  font-weight: bold;
+  font-size: 48px;
+  font-family: Arial;
+}
+.full_comment_user{
+  color: #bfae27;
+  font-size: 40px;
+  padding-top: 30px;
+
+}
+
+.full_comment_comment{
+  color: white;
+  font-size: 20px;
+  padding-top: 30px;
 
 }

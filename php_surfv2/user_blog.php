@@ -4,22 +4,27 @@
 include '../includes/global_v2.inc';
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment = $rate = $gender =  "";
-$test = new function_surf();
+$ValidandStore = new function_surf();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
-    $name = $test->test_input($_POST["name"]);
+    $name = $ValidandStore->test_input($_POST["name"]);
 
   }
     $_POST["comment"] = trim($_POST["comment"]);
   if (empty($_POST["comment"])) {
     $commentErr = "No Comment submitted";
   } else {
-    $comment = $test->test_input($_POST["comment"]);
+    $comment = $ValidandStore->test_input($_POST["comment"]);
   }
 
 }
+//public function store_file($filename,$name,$comment,$email,$gender,$rating)
+if ($name != "" and $comment!= "" ){
+  $ValidandStore->user_blog($name,$comment);
+  }
+
 $content  ='<div class="right">
   				<div class="user_blog_title">
               		Write Your Blog
@@ -47,11 +52,6 @@ $totalview = new myTemplate($content,7);
 
 echo $totalview->getView();
 
-//public function store_file($filename,$name,$comment,$email,$gender,$rating)
-if ($name != "" and $comment!= "" ){
-  $test->store_file("blog.json",$name,$comment,"","","");
-
-  }
 
 
 

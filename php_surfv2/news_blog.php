@@ -1,29 +1,39 @@
 <?php
 
-
 include '../includes/global_v2.inc';
 
-$first["Name"] = $Second["Name"] = $Second["comment"] = $Third["Name"] = "No one leave the message";
-$first["comment"]= $Second["comment"] =  $Third["comment"] ="No comment";
+$first["name"] = $Second["name"] = $Third["name"] = "No one leave the message";
+$first["msg"]=  $Second["msg"] = $Third["msg"] ="No comment";
 
-if(file_exists("blog.json") == TRUE){
+$database = new Database();
+$database->query('SELECT * FROM user_blog ORDER BY id DESC LIMIT 3');
 
-$blogs = json_decode(file_get_contents('blog.json'),true);
+$output_from_database = $database->resultset();
 
-$first= $blogs[count($blogs)];
-if (count($blogs) >= 2){
-	$Second= $blogs[count($blogs)-1];
-}
-if (count($blogs)>=1){
-	$Third= $blogs[count($blogs)-2];
-}
 
+if(count($output_from_database)>0){
+$first = $output_from_database[0];
 
 }
+if (count($output_from_database) >=2){
+	$Second = $output_from_database[1];
+}
+if (count($output_from_database)>=3){
+	$Third= $output_from_database[2];
+}
+$trim_first_msg = substr($first["msg"], 0,20);
+$trim_second_msg = substr($Second["msg"], 0,20);
+$trim_third_msg = substr($Third["msg"], 0,20);
+
+
+
+
+
+
 $GetBlog = new function_surf();
-$blog_para[0] = $GetBlog->print_blog($first["Name"],$first["comment"]);
-$blog_para[1] = $GetBlog->print_blog($Second["Name"],$Second["comment"]);
-$blog_para[2] = $GetBlog->print_blog($Third["Name"],$Third["comment"]);
+$blog_para[0] = $GetBlog->print_blog($first["name"],$trim_first_msg,$first["id"]);
+$blog_para[1] = $GetBlog->print_blog($Second["name"],$trim_second_msg,$Second["id"]);
+$blog_para[2] = $GetBlog->print_blog($Third["name"],$trim_third_msg,$Third["id"]);
 
 
 $content ='<div class = "right">

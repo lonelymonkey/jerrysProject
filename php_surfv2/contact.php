@@ -3,17 +3,12 @@
 include '../includes/global_v2.inc';
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment =  "";
-$temp = array();
-$outcome = "";
-$newline = "\n";
-$test = array();
-$test2 = '';
-$test = new function_surf();
+$ValidandStore = new function_surf();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
-    $name = $test->test_input($_POST["name"]);
+    $name = $ValidandStore->test_input($_POST["name"]);
 
   }
 
@@ -22,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   else {
-    $email = $test->test_input($_POST["email"]);
+    $email = $ValidandStore->test_input($_POST["email"]);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $emailErr = "Invalid email format";
     }
@@ -35,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $commentErr = "Comment is required ";
 
   } else {
-    $comment = $test->test_input($_POST["comment"]);
+    $comment = $ValidandStore->test_input($_POST["comment"]);
   }
 }
 
@@ -104,7 +99,7 @@ echo $totalview->getView();
 
 //public function store_file($filename,$name,$comment,$email,$gender,$rating)
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format" and $comment !=""){
-  $test->store_file("contact.json",$name,$comment,$email,'','');
+  $ValidandStore->contact($name,$comment,$email);
   }
 
 

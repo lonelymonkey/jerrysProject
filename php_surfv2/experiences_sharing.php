@@ -3,12 +3,12 @@
 include '../includes/global_v2.inc';
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment = $rate = $gender =  "";
-$test = new function_surf();
+$ValidandStore = new function_surf();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
     $nameErr = "Name is required";
   } else {
-    $name = $test->test_input($_POST["name"]);
+    $name = $ValidandStore->test_input($_POST["name"]);
 
   }
 
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   else {
-    $email =  $test->test_input($_POST["email"]);
+    $email =  $ValidandStore->test_input($_POST["email"]);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $emailErr = "Invalid email format";
     }
@@ -26,17 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["comment"])) {
     $commentErr = "No Comment submitted";
   } else {
-    $comment =  $test->test_input($_POST["comment"]);
+    $comment =  $ValidandStore->test_input($_POST["comment"]);
   }
   if (empty($_POST["rate"])) {
     $rate = "no rating";
   } else {
-    $rate =  $test->test_input($_POST["rate"]);
+    $rate =  $ValidandStore->test_input($_POST["rate"]);
   }
   if (empty($_POST["gender"])) {
     $gender = "Not specific";
   } else {
-    $gender =  $test->test_input($_POST["gender"]);
+    $gender =  $ValidandStore->test_input($_POST["gender"]);
   }
 }
 $content  ='<div class="right">
@@ -86,7 +86,7 @@ echo $totalview->getView();
 if ($name != "" and $email!= "" and $emailErr != "Invalid email format"){
 
   //public function store_file($filename,$name,$comment,$email,$gender,$rating)
-  $test->store_file("experience.json",$name,$comment,$email,$gender,$rate);
+  $ValidandStore->experience($name,$comment,$email,$gender,$rate);
   }
 //echo $totalview->right;
 

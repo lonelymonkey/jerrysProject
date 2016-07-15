@@ -7,10 +7,10 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 
 include 'config.inc';
-#include INCLUDE_PATH . '/database.class.inc';
+include INCLUDE_PATH . '/JerryDatabass.class.inc';
 include INCLUDE_PATH . '/template.inc';
 class function_surf{
-  public function print_blog($name,$comment){
+  public function print_blog($name,$comment,$id){
 
   $output = '
   <div class = "blog_para">
@@ -31,8 +31,14 @@ class function_surf{
   			<div class = "blog_title">
   				'.$name.'
   			</div>
-  			<div class = "blog_para">
+  			<div class = "blog_paragraph">
   		 		'.$comment.'
+        <div class = "read_more">
+          <a class = "style_read" href="full_comment.php?val='.$id.'">Read more</a>
+
+        </div>
+
+
   			</div>
   		</div>
 
@@ -46,26 +52,23 @@ class function_surf{
     $data = htmlspecialchars($data);
     return $data;
   }
-  public function store_file($filename,$name,$comment,$email,$gender,$rating){
-    $J_decode=array();
-
-    if(file_exists($filename) == TRUE){
-      $myfile = fopen($filename,"r") or die( "cant open the file!");
-      $test2 = fread($myfile,filesize($filename));
-      $J_decode = json_decode($test2,true);
-      fclose($myfile);
+  public function contact($name,$comment,$email){
+    $database = new Database();
+    $database->query('INSERT INTO contact (name, email, msg) VALUES (:name, :email, :msg)');
+    $database->bind(':name', $name)->bind(':email',$email)->bind(':msg',$comment);
+    $database->execute();
     }
-
-    $temp = array("Name"=>$name, "comment"=>$comment,"email"=>$email,"gender"=>$gender,"rating"=>$rating);
-    $J_decode[count($J_decode)+1] = $temp;
-    $myfile = fopen($filename,"w") or die( "cant open the file!");
-    $outcome = json_encode($J_decode) ;
-    fwrite($myfile ,$outcome);
-    fclose($myfile);
-
-
-  }
-
-
+  public function user_blog($name,$comment){
+    $database = new Database();
+    $database->query('INSERT INTO user_blog (name,msg) VALUES (:name, :msg)');
+    $database->bind(':name', $name)->bind(':msg',$comment);
+    $database->execute();
+    }
+    public function experience($name,$comment,$email,$gender,$rate){
+      $database = new Database();
+      $database->query('INSERT INTO experiences_sharing (name,email,comment,rate,gender) VALUES (:name, :email, :msg, :rate, :gender)');
+      $database->bind(':name', $name)->bind(':email',$email)->bind(':msg',$comment)->bind(':rate',$rate)->bind(':gender',$gender);
+      $database->execute();
+      }
 }
 ?>
