@@ -1,0 +1,172 @@
+
+<head>
+ <script src="JQuery/jquery-3.1.0.min.js"></script>
+ <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class = "container">
+  <div class="display"></div>
+
+  <div class="result"></div>
+
+  <div class="test"></div>
+
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button">7</button> </li>
+      <li> <button type="button" class = "button">8</button></li>
+      <li> <button type="button" class = "button">9</button></li>
+      <li> <button type="button" class = "button">/</button></li>
+      <li> <button type="button" class = "button">^2</button></li>
+    </ul>
+  </div>
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button">4</button> </li>
+      <li> <button type="button" class = "button">5</button></li>
+      <li> <button type="button" class = "button">6</button></li>
+      <li> <button type="button" class = "button">*</button></li>
+      <li> <button type="button" class = "button">(</button></li>
+
+    </ul>
+  </div>
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button">1</button> </li>
+      <li> <button type="button" class = "button">2</button></li>
+      <li> <button type="button" class = "button">3</button></li>
+      <li> <button type="button" class = "button">-</button></li>
+      <!--<li> <button type="button" class = "button">C</button></li>-->
+      <li> <button type="button" class = "button">)</button></li>
+
+
+    </ul>
+  </div>
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button">0</button> </li>
+      <li> <button type="button" class = "button">.</button></li>
+      <li> <button type="button" class = "button">=</button></li>
+      <li> <button type="button" class = "button">+</button></li>
+      <li> <button type="button" class = "button">CA</button></li>
+
+    </ul>
+  </div>
+
+
+</div>
+<script>
+var len = [];
+var count = 0;
+var whole_epression = "";
+var temp2 = "";
+var counting_power = 0;
+var pattern = "";
+ $('button').on('click', function(){
+    var whole_epression = "";
+     var temp = "";
+     var temp2 = "";
+     var str_length = "";
+     var i = $(this).text();
+     var display = $('.display');
+     var result = $('.result');
+     var test = $('.test');
+     var new_length = 0;
+     var C_display = "";
+     var answer = 0;
+
+     len.push(i);
+     display.text(display.text() + i);
+    // result.text("Can not start with operator");
+     test.text(test.text() + " Length of arrya is " + len.length  + "Count = "+count+ " Len[count] = " + len[count]);
+
+     if (len[0] == "+" || len[0] == "-" || len[0] == "*" || len[0] == "/" || len[0] == "="){
+        result.text("Can not start with operator");
+        display.text(" ");
+        delete len[0];
+        len.length = len.length-1;
+        count = count -1;
+     }
+     else if (len[0] == "CA" || len[0] == "C" ) {
+       result.text("Nothing to Clear");
+       display.text(" ");
+       delete len[0];
+       len.length = len.length-1;
+       count = count -1;
+     }
+     if (len[count] == "CA") {
+       display.text(" ");
+       result.text(" ");
+       len = [];
+       count = -1;
+
+     }
+     //.....................................................testing....................................
+    if (len[count] == "C") {
+        len.pop();
+        len.pop();
+        count = count -2;
+
+    }
+//.........................................................testing..........................................
+
+     if (len[count] == "+" || len[count] == "-" || len[count] == "*" || len[count] == "/") {
+       if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/") {
+         result.text("Can not put two operator in a row, plz clear");
+       }
+     }
+     if (len[count] == "^2") {
+       for (var power = 0; power < len.length ; power++) {
+         temp = temp + len[power];
+       }
+       //test.text(temp.length);
+       temp2 = temp.match(/\d+[\^]\d+/);
+       temp = temp2[0];
+       test.text(temp.length);
+
+
+
+
+
+
+    /*---------------------------------------------dothis after finish regular expression and math.pow(x,2) 
+    for (var i = 0; i < temp.length ; i++) {
+      len.pop();
+      count = count-1;
+    }
+    count = count +1;
+    len[count] =
+
+
+
+
+    /*---------------------------------------------*/
+       //temp = Math.pow(len[count-1], 2);
+
+
+
+
+
+
+     }
+     if (len[count] == "=" ) {
+       if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/") {
+         result.text("Can not put two operator in a row, plz clear");
+       }
+       for (var counting = 0; counting < len.length - 1; counting++) {
+         whole_epression = whole_epression + len[counting];
+       }
+       test.text(whole_epression);
+       result.text(eval(whole_epression));
+       whole_epression = "";
+       len = [];
+       count = -1;
+       display.text(" ");
+     }
+      count = count +1;
+
+
+ });
+</script>
+
+</body>

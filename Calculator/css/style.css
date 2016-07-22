@@ -1,0 +1,68 @@
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.container {
+     background-color: #a1c3a3;
+     margin: 0px auto;
+     overflow: auto;
+     position: relative;
+     width: 1080px;
+}
+.numbers{
+  overflow: auto;
+  margin: 0px auto;
+  position: relative;
+  width: 500px;
+
+}
+.display{
+  overflow: auto;
+  margin: 0px auto;
+  position: relative;
+  width: 500px;
+  text-align: right;
+  color: white;
+  font-size: 25px;
+  height: 50px;
+
+}
+.result{
+  overflow: auto;
+  margin: 0px auto;
+  position: relative;
+  width: 500px;
+  text-align: right;
+  color: white;
+  font-size: 25px;
+  height: 50px;
+
+}
+
+
+ul.list_number{
+  list-style: none;
+
+}
+ul.list_number > li {
+  float: left;
+  width: 80px;
+  height: 80px;
+
+}
