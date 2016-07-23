@@ -19,6 +19,7 @@
       <li> <button type="button" class = "button">/</button></li>
       <li> <button type="button" class = "button">^2</button></li>
       <li> <button type="button" class = "button">Tan</button></li>
+      <li> <button type="button" class = "button">PI</button></li>
     </ul>
   </div>
   <div class="numbers">
@@ -27,8 +28,7 @@
       <li> <button type="button" class = "button">5</button></li>
       <li> <button type="button" class = "button">6</button></li>
       <li> <button type="button" class = "button">*</button></li>
-      <li> <button type="button" class = "button">PI</button></li>
-
+      <li> <button type="button" class = "button">^</button></li>
       <li> <button type="button" class = "button">Cos</button></li>
 
     </ul>
@@ -39,7 +39,6 @@
       <li> <button type="button" class = "button">2</button></li>
       <li> <button type="button" class = "button">3</button></li>
       <li> <button type="button" class = "button">-</button></li>
-      <!--<li> <button type="button" class = "button">C</button></li>-->
       <li> <button type="button" class = "button">ANS</button></li>
       <li> <button type="button" class = "button">Sin</button></li>
 
@@ -52,6 +51,7 @@
       <li> <button type="button" class = "button">=</button></li>
       <li> <button type="button" class = "button">+</button></li>
       <li> <button type="button" class = "button">CA</button></li>
+      <li> <button type="button" class = "button">C</button></li>
       <li> <button type="button" class = "button">(</button></li>
       <li> <button type="button" class = "button">)</button></li>
 
@@ -64,7 +64,6 @@
 <script>
 var len = [];
 var count = 0;
-var temp2 = "";
 var counting_power = 0;
 var pattern = "";
 var answer = 0;
@@ -85,20 +84,36 @@ var check_equal = "";
 
      len.push(i);
      display.text(display.text() + i);
-     test.text(" ");
-     result.text(" ");
+     test.text("");
+     result.text("");
     // result.text("Can not start with operator");
      //test.text(test.text() + " Length of arrya is " + len.length  + "Count = "+count+ " Len[count] = " + len[count]);
+     //test.text("whole array is " + len);
+     if (len[count] == "1" || len[count] == "2" || len[count] == "3" || len[count] == "4" || len[count] == "5" || len[count] == "6" || len[count] == "7" || len[count] == "8" || len[count] == "9" ) {
+      // test.text("Number is entered and the previous element is " + len[count-1]);
+       if (len[count-1] == "Math.sin" || len[count-1] == "Math.tan" || len[count-1] == "Math.cos" ) {
 
+         test.text("Bracklets needed");
+
+         for (var counting = 0; counting < len.length - 1; counting++) {
+           whole_epression = whole_epression + len[counting];
+         }
+         display.text(whole_epression);
+         len.pop();
+         count = count -1;
+         whole_epression = "";
+
+       }
+     }
      if (len[0] == "+" || len[0] == "-" || len[0] == "*" || len[0] == "/" || len[0] == "="){
-        result.text("Can not start with operator");
+        test.text("Can not start with operator");
         display.text(" ");
         delete len[0];
         len.length = len.length-1;
         count = count -1;
      }
      else if (len[0] == "CA" || len[0] == "C" ) {
-       result.text("Nothing to Clear");
+       test.text("Nothing to Clear");
        display.text(" ");
        delete len[0];
        len.length = len.length-1;
@@ -113,16 +128,21 @@ var check_equal = "";
      }
      //.....................................................testing....................................
     if (len[count] == "C") {
+      for (var counting = 0; counting < len.length - 2; counting++) {
+        whole_epression = whole_epression + len[counting];
+      }
+        display.text(whole_epression);
         len.pop();
         len.pop();
         count = count -2;
+        whole_epression = "";
 
     }
 //.........................................................testing..........................................
 
      if (len[count] == "+" || len[count] == "-" || len[count] == "*" || len[count] == "/") {
-       if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/") {
-         result.text("Can not put two operator in a row, plz check");
+       if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/" ) {
+         test.text("Can not put two operator in a row, plz check");
          for (var counting = 0; counting < len.length - 1; counting++) {
            whole_epression = whole_epression + len[counting];
          }
@@ -132,33 +152,37 @@ var check_equal = "";
          whole_epression = "";
 
        }
+
      }
      if (len[count] == "^2") {
        for (var power = 0; power < len.length ; power++) {
          temp = temp + len[power];
        }
        //test.text(temp.length);
-       temp2 = temp.match(/\d+[\^]\d+/);
-       temp = temp2[0];
-       test.text(temp.length);
+       temp2 = temp.match(/(\d+[\.]*\d*)[\^](\d)/);
+       for (var i = 1; i < temp2.length; i++) {
+         whole_epression = whole_epression + temp2[i];
+       }
+
+       //temp = temp2;
+       //test.text("First group, Base is " + temp2[1] +" Second group, power of 2 is " + temp2[2]);
+       //test.text("whole_epression is " + whole_epression + " and the length is " + whole_epression.length)
+    //---------------------------------------------do this after finish regular expression and math.pow(x,2)
+      //test.text("before pop, the count is " + count);
+      for (var i = 0; i < whole_epression.length -1 ; i++) {
+        len.pop();
+        count = count-1;
+      }
 
 
-
-
-
-
-    /*---------------------------------------------dothis after finish regular expression and math.pow(x,2)
-    for (var i = 0; i < temp.length ; i++) {
-      len.pop();
-      count = count-1;
-    }
-    count = count +1;
-    len[count] =
-
+      len[count] = Math.pow(temp2[1],temp2[2]);
+      temp = "";
+      temp2 = [];
+      whole_epression = "";
+      //test.text("whole_epression is " + whole_epression + " and the length is " + whole_epression.length + " and " + temp2[1] + "^" + temp2[2] + " is " + len[count] + " and len count is " + count);
     /*---------------------------------------------*/
-       //temp = Math.pow(len[count-1], 2);
 
-     }
+    }
 
 /*-----------------------------------------------------------------------------------------------------------------*/
       if (len[count] =="PI") {
@@ -167,11 +191,12 @@ var check_equal = "";
       }
       if (len[count] =="Sin") {
         len[count] = "Math.sin";
-        test.text("Don't forget the bracklets");
+        test.text("element is " + len[count]);
+        //test.text("Don't forget the bracklets");
       }
       if (len[count] =="Cos") {
         len[count] = "Math.cos";
-        ltest.text("Don't forget the bracklets");
+        test.text("Don't forget the bracklets");
       }
       if (len[count] =="Tan") {
         len[count] = "Math.tan";
@@ -192,12 +217,13 @@ var check_equal = "";
          count = count -1;
          whole_epression = "";
 
+
        }
        else {
          for (var counting = 0; counting < len.length - 1; counting++) {
            whole_epression = whole_epression + len[counting];
          }
-         //test.text(whole_epression);
+         //test.text("length of array is " + len.length +" and element of array is " + len);
          result.text(eval(whole_epression));
          answer = eval(whole_epression);
          len = [];
@@ -215,8 +241,10 @@ var check_equal = "";
        whole_epression = "";
 
      }
-      count = count +1;
 
+
+      count = count + 1;
+      //test.text("count is " + count + " before go in to next click");
 
  });
 </script>
