@@ -18,6 +18,32 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+
+
+.button_number {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #536354;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button_number:hover {background-color: #536334}
+
+.button_number:active {
+  background-color: #536334;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+
+
 .container {
      background-color: #a1c3a3;
      margin: 0px auto;

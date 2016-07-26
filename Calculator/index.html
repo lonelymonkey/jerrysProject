@@ -13,9 +13,9 @@
 
   <div class="numbers">
     <ul class = "list_number">
-      <li> <button type="button" class = "button">7</button> </li>
-      <li> <button type="button" class = "button">8</button></li>
-      <li> <button type="button" class = "button">9</button></li>
+      <li> <button type="button" class = "button_number">7</button> </li>
+      <li> <button type="button" class = "button_number">8</button></li>
+      <li> <button type="button" class = "button_number">9</button></li>
       <li> <button type="button" class = "button">/</button></li>
       <li> <button type="button" class = "button">^2</button></li>
       <li> <button type="button" class = "button">Tan</button></li>
@@ -24,9 +24,9 @@
   </div>
   <div class="numbers">
     <ul class = "list_number">
-      <li> <button type="button" class = "button">4</button> </li>
-      <li> <button type="button" class = "button">5</button></li>
-      <li> <button type="button" class = "button">6</button></li>
+      <li> <button type="button" class = "button_number">4</button> </li>
+      <li> <button type="button" class = "button_number">5</button></li>
+      <li> <button type="button" class = "button_number">6</button></li>
       <li> <button type="button" class = "button">*</button></li>
       <li> <button type="button" class = "button">^</button></li>
       <li> <button type="button" class = "button">Cos</button></li>
@@ -35,9 +35,9 @@
   </div>
   <div class="numbers">
     <ul class = "list_number">
-      <li> <button type="button" class = "button">1</button> </li>
-      <li> <button type="button" class = "button">2</button></li>
-      <li> <button type="button" class = "button">3</button></li>
+      <li> <button type="button" class = "button_number">1</button> </li>
+      <li> <button type="button" class = "button_number">2</button></li>
+      <li> <button type="button" class = "button_number">3</button></li>
       <li> <button type="button" class = "button">-</button></li>
       <li> <button type="button" class = "button">ANS</button></li>
       <li> <button type="button" class = "button">Sin</button></li>
@@ -134,7 +134,7 @@ var expression_power_2 = "";
 
      }
      //.....................................................backpace...................................
-    if (len[count] == "<-") {
+    else if (len[count] == "<-") {
       for (var counting = 0; counting < len.length - 2; counting++) {
         whole_epression = whole_epression + len[counting];
       }
@@ -147,7 +147,7 @@ var expression_power_2 = "";
     }
 //.........................................................prevent 2 operators..........................................
 
-     if (len[count] == "+" || len[count] == "-" || len[count] == "*" || len[count] == "/") {
+     else if (len[count] == "+" || len[count] == "-" || len[count] == "*" || len[count] == "/") {
        if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/" ) {
          test.text("Can not put two operator in a row, plz check");
          for (var counting = 0; counting < len.length - 1; counting++) {
@@ -161,7 +161,7 @@ var expression_power_2 = "";
        }
     // ---------------------------------------------Power of 2 -----------------------------------------------------------
      }
-     if (len[count] == "^2") {
+    else if (len[count] == "^2") {
 
        for (var power = 0; power < len.length ; power++) {
          temp = temp + len[power];
@@ -190,26 +190,27 @@ var expression_power_2 = "";
     }
 
 /*---------------------------------------- Pi, Cos, Sin, Tan -----------------------------------------------------------*/
-      if (len[count] =="PI") {
+    else if (len[count] =="PI") {
         len[count] = Math.PI;
 
       }
-      if (len[count] =="Sin") {
+    else if (len[count] =="Sin") {
         len[count] = "Math.sin";
       //  test.text("element is " + len[count]);
         test.text("Don't forget the bracklets");
       }
-      if (len[count] =="Cos") {
+    else if (len[count] =="Cos") {
         len[count] = "Math.cos";
         test.text("Don't forget the bracklets");
       }
-      if (len[count] =="Tan") {
+    else if (len[count] =="Tan") {
         len[count] = "Math.tan";
         test.text("Don't forget the bracklets");
       }
 
+
     // --------------------------------------------- Equal Sign =  ------------------------------------------------------------
-     if (len[count] == "=" ) {
+    else if (len[count] == "=" ) {
        whole_epression = "";
        if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/") {
          result.text("Can not put two operator in a row, plz check");
@@ -241,14 +242,14 @@ var expression_power_2 = "";
      }
 
     // ---------------------------------------------Answer function-----------------------------------------------------------
-     if (len[count] == "ANS") {
+    else if (len[count] == "ANS") {
        answer = eval(whole_epression);
        len[count] = answer ;
        whole_epression = "";
 
      }
     // ---------------------------------------------Minus Sign------------------------------------------------------------
-     if (len[count] == "(-)") {
+    else if (len[count] == "(-)") {
        len[count] = "-";
 
      }
