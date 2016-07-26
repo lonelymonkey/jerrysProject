@@ -36,33 +36,36 @@
   overflow: auto;
   margin: 0px auto;
   position: relative;
-  width: 500px;
+  width: 750px;
   text-align: right;
   color: white;
-  font-size: 25px;
+  font-size: 35px;
   height: 50px;
+  background-color: #1f4c1f;
 
 }
 .result{
   overflow: auto;
   margin: 0px auto;
   position: relative;
-  width: 500px;
+  width: 750px;
   text-align: right;
   color: white;
-  font-size: 25px;
+  font-size: 35px;
   height: 50px;
+  background-color: #1f4c1f;
 
 }
 .test{
   overflow: auto;
   margin: 0px auto;
   position: relative;
-  width: 500px;
+  width: 750px;
   text-align: right;
   color: white;
-  font-size: 25px;
+  font-size: 35px;
   height: 100px;
+  background-color: #1f4c1f;
 
 }
 
