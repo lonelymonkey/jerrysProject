@@ -28,7 +28,7 @@
       <li> <button type="button" class = "button_number">5</button></li>
       <li> <button type="button" class = "button_number">6</button></li>
       <li> <button type="button" class = "button">*</button></li>
-      <li> <button type="button" class = "button">^</button></li>
+      <!--<li> <button type="button" class = "button">^</button></li>-->
       <li> <button type="button" class = "button">Cos</button></li>
 
     </ul>
@@ -48,12 +48,12 @@
   </div>
   <div class="numbers">
     <ul class = "list_number">
-      <li> <button type="button" class = "button">Shift</button></li>
+      <!-- <li> <button type="button" class = "button">Shift</button></li>-->
       <li> <button type="button" class = "button">0</button> </li>
       <li> <button type="button" class = "button">.</button></li>
       <li> <button type="button" class = "button">=</button></li>
       <li> <button type="button" class = "button">+</button></li>
-      <li> <button type="button" class = "button">(-)</button></li>
+      <!--<li> <button type="button" class = "button">(-)</button></li>-->
       <li> <button type="button" class = "button">CA</button></li>
       <li> <button type="button" class = "button"><-</button></li>
 
@@ -73,6 +73,8 @@ var answer = 0;
 var whole_epression = "";
 var check_equal = "";
 var expression_power_2 = "";
+var checkpoint = 0;
+
  $('button').on('click', function(){
 
      var temp = "";
@@ -85,6 +87,7 @@ var expression_power_2 = "";
      var new_length = 0;
      var C_display = "";
      var answer = 0;
+     var checking_bracklet = 0;
 
      len.push(i);
      display.text(display.text() + i);
@@ -169,6 +172,7 @@ var expression_power_2 = "";
 
       //temp2 = temp.match(/([(]*[-]*\d+[\.]*\d*[)]*)[\^](\d)/);
        temp2 = temp.match(/[(]*([-]*\d+[\.]*\d*)[)]*[\^](\d)/);
+      // test.text(" (-) situation, base is  " + temp2[1] + ", expression_power_2 is " + expression_power_2 +", and power of " + temp2[2] + ", array is " + len);
        for (var i = 1; i < temp2.length; i++) {
          expression_power_2 = expression_power_2 + temp2[i];
        }
@@ -177,11 +181,40 @@ var expression_power_2 = "";
       for (var i = 0; i < expression_power_2.length -1 ; i++) {
         len.pop();
         count = count-1;
+        if (len[count] == ")") {
+          len.pop();
+          count = count-1;
+
+          for (var j = len.length - 1; j >= 0; j--) {
+
+            if (len[j] == "(") {
+
+              for (var x = 0; i < checking_bracklet+1; x++) {
+
+                len.pop();
+                count = count-1;
+                break;
+              }
+
+
+
+
+            }
+            checking_bracklet = checking_bracklet +1;
+
+
+          }
+
+        }
       }
 
 
+
+      //  test.text("  checking_bracklet is  " +   checking_bracklet + " and len array is " + len + "count is " + count);
+    //test.text("  checking_bracklet is  " +   checking_bracklet + " and len array  " + len + "count is " + count);
       len[count] = Math.pow(temp2[1],temp2[2]);
-      //test.text(" (-) situation, base is  " + temp2[1] + ", expression_power_2 is " + expression_power_2 +", and power of " + temp2[2] + ", array is " + len);
+
+
       temp = "";
       temp2 = [];
       expression_power_2 = "";
@@ -211,6 +244,7 @@ var expression_power_2 = "";
 
     // --------------------------------------------- Equal Sign =  ------------------------------------------------------------
     else if (len[count] == "=" ) {
+
        whole_epression = "";
        if (len[count-1] == "+" || len[count-1] == "-" || len[count-1] == "*" || len[count-1] == "/") {
          result.text("Can not put two operator in a row, plz check");
@@ -225,21 +259,54 @@ var expression_power_2 = "";
 
 
        }
+
+       //result.text("array is " + len);
+       if (checkpoint != 0) {
+         test.text("bracklets are not complete, please check");
+         for (var counting = 0; counting < len.length - 1; counting++) {
+           whole_epression = whole_epression + len[counting];
+         }
+         display.text(whole_epression);
+         len.pop();
+         count = count -1;
+         whole_epression = "";
+
+       }
+
        else {
          for (var counting = 0; counting < len.length - 1; counting++) {
            whole_epression = whole_epression + len[counting];
          }
-         //test.text("length of array is " + len.length +" and element of array is " + len);
+         whole_epression = whole_epression.replace(/[()]/i,"0");
+         whole_epression = whole_epression.replace(/[)]/i,"");
+         //test.text(" whole_epression " + whole_epression);
          result.text(eval(whole_epression));
 
 
          len = [];
          count = -1;
          display.text(" ");
+         checkpoint = 0
 
        }
 
      }
+     else if (len[count] == "("){
+       //test.text("check point is " + checkpoint);
+       checkpoint = checkpoint + 1;
+       if (len[count-1] == "1" || len[count-1] == "2" || len[count-1] == "3" || len[count-1] == "4" || len[count-1] == "5" || len[count-1] == "6" || len[count-1] == "7" || len[count-1] == "8" || len[count-1] == "9" ) {
+         len[count] = "*(";
+       }
+       //test.text("length of array is " + len.length +" and element of array is " + len);
+     }
+     else if (len[count] == ")") {
+       checkpoint = checkpoint - 1;
+        //test.text("check point is " + checkpoint);
+
+
+     }
+
+
 
     // ---------------------------------------------Answer function-----------------------------------------------------------
     else if (len[count] == "ANS") {
