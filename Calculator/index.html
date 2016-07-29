@@ -277,9 +277,9 @@ var checkpoint = 0;
          for (var counting = 0; counting < len.length - 1; counting++) {
            whole_epression = whole_epression + len[counting];
          }
-         whole_epression = whole_epression.replace(/[()]/i,"0");
-         whole_epression = whole_epression.replace(/[)]/i,"");
-         //test.text(" whole_epression " + whole_epression);
+         whole_epression = whole_epression.replace(/[(][)]/i,"0");
+         //whole_epression = whole_epression.replace(/[)]/i,"");
+         test.text(" whole_epression " + whole_epression);
          result.text(eval(whole_epression));
 
 
