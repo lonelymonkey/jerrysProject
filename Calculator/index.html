@@ -28,7 +28,7 @@
       <li> <button type="button" class = "button_number">5</button></li>
       <li> <button type="button" class = "button_number">6</button></li>
       <li> <button type="button" class = "button">*</button></li>
-      <!--<li> <button type="button" class = "button">^</button></li>-->
+      <li> <button type="button" class = "button">^</button></li>
       <li> <button type="button" class = "button">Cos</button></li>
 
     </ul>
@@ -165,6 +165,9 @@ var checkpoint = 0;
        }
     // ---------------------------------------------Power of 2 -----------------------------------------------------------
      }
+
+     /***************************************************
+     *****************************************************
     else if (len[count] == "^2") {
 
        for (var power = 0; power < len.length ; power++) {
@@ -222,12 +225,13 @@ var checkpoint = 0;
 
 
     }
-
+*****************************************************************************
+*******************************************************************************/
 /*---------------------------------------- Pi, Cos, Sin, Tan -----------------------------------------------------------*/
-    else if (len[count] =="PI") {
+    /*else if (len[count] =="PI") {
         len[count] = Math.PI;
 
-      }
+      }*/
     else if (len[count] =="Sin") {
         len[count] = "Math.sin";
       //  test.text("element is " + len[count]);
@@ -238,7 +242,7 @@ var checkpoint = 0;
         test.text("Don't forget the bracklets");
       }
     else if (len[count] =="Tan") {
-        len[count] = "Math.tan";
+        //len[count] = "Math.tan";
         test.text("Don't forget the bracklets");
       }
 
@@ -279,10 +283,16 @@ var checkpoint = 0;
          for (var counting = 0; counting < len.length - 1; counting++) {
            whole_epression = whole_epression + len[counting];
          }
-         //whole_epression = whole_epression.replace(/[(][)]/i,"0");
-         //whole_epression = whole_epression.replace(/[)]/i,"");
-
-        // result.text("expression is " + whole_epression);
+         whole_epression = whole_epression.replace(/PI/i,"Math.PI");
+         whole_epression = whole_epression.replace(/Tan/i,"Math.tan");
+         /*Find out any exponential and reaplace it as Math.pow function*/
+         temp2 = whole_epression.match(/[(]*([-]*\d+[\.]*\d*)[)]*[\^][(]*([-1*]*\d+)[)]*/);
+         //test.text("power array is " + eval(temp2[1])+ " and " + eval(temp2[2])+ " expression is " + whole_epression);
+         temp2[1] = eval(temp2[1]);
+         temp2[2] = eval(temp2[2]);
+         test.text("power array is " + temp2[1]+ " and " + temp2[2]+ " expression is " + whole_epression);
+         whole_epression = whole_epression.replace(/[(]*([-]*\d+[\.]*\d*)[)]*[\^][(]*([-1*]*\d+)[)]*/i,Math.pow(temp2[1],temp2[2]));
+         test.text("power array is " + temp2[1]+ " and " + temp2[2]+ " expression is " + whole_epression + " math function is " + Math.pow(temp2[1],temp2[2]));
          //test.text("eval expression is " + eval(whole_epression) );
 
          try {
@@ -293,6 +303,7 @@ var checkpoint = 0;
          count = -1;
          display.text(" ");
          checkpoint = 0;
+         temp2 = [];
        } catch (e){
          console.log(e);
         alert("can not compute this expression");
@@ -305,6 +316,7 @@ var checkpoint = 0;
         len.pop();
         count = count -1;
         whole_epression = "";
+
 
        }
 
