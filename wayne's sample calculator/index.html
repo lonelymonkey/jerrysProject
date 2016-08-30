@@ -1,0 +1,119 @@
+<head>
+ <script src="calcEngine.js"></script>
+ <script src="JQuery/jquery-3.1.0.min.js"></script>
+ <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div class = "container">
+  <div class="display"></div>
+
+  <div class="result"></div>
+
+  <div class="test"></div>
+
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button_number" id="number">7</button> </li>
+      <li> <button type="button" class = "button_number" id="number">8</button></li>
+      <li> <button type="button" class = "button_number" id="number">9</button></li>
+      <li> <button type="button" class = "button">/</button></li>
+      <li> <button type="button" class = "button">Tan</button></li>
+      <li> <button type="button" class = "button">PI</button></li>
+    </ul>
+  </div>
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button_number" id="number">4</button> </li>
+      <li> <button type="button" class = "button_number" id="number">5</button></li>
+      <li> <button type="button" class = "button_number" id="number">6</button></li>
+      <li> <button type="button" class = "button">*</button></li>
+      <li> <button type="button" class = "button">^</button></li>
+      <li> <button type="button" class = "button">Cos</button></li>
+
+    </ul>
+  </div>
+  <div class="numbers">
+    <ul class = "list_number">
+      <li> <button type="button" class = "button_number" id="number">1</button> </li>
+      <li> <button type="button" class = "button_number" id="number">2</button></li>
+      <li> <button type="button" class = "button_number" id="number">3</button></li>
+      <li> <button type="button" class = "button">-</button></li>
+      <li> <button type="button" class = "button">ANS</button></li>
+      <li> <button type="button" class = "button">Sin</button></li>
+      <li> <button type="button" class = "button">(</button></li>
+      <li> <button type="button" class = "button">)</button></li>
+
+    </ul>
+  </div>
+  <div class="numbers">
+    <ul class = "list_number">
+      <!-- <li> <button type="button" class = "button">Shift</button></li>-->
+      <li> <button type="button" class = "button">0</button> </li>
+      <li> <button type="button" class = "button">.</button></li>
+      <li> <button type="button" class = "button">=</button></li>
+      <li> <button type="button" class = "button">+</button></li>
+      <li> <button type="button" class = "button">+/-</button></li>
+      <li> <button type="button" class = "button">CA</button></li>
+      
+
+
+
+    </ul>
+  </div>
+
+
+</div>
+</body>
+
+<script>
+var display = $('.display');
+var result = $('.result');
+var test = $('.test');
+var clearfag = 0;
+var string_count = 0;
+var display_expression = [];
+var temp_expression = '';
+$('button').on('click', function(){
+  var i = $(this).text();
+
+  switch (i) {
+    case '=':
+      result.text(myMathlib.calculate());
+      display_expression = [];
+      clearfag = 1;
+      //test.text(clearfag);
+      break;
+
+    case 'CA':
+      myMathlib.hit(i);
+      display.text("");
+      break;
+    case '<-':
+      myMathlib.hit(i);
+      display_expression.pop();
+      //test.text("temp is " + display_expression);
+      for (var counting = 0; counting < display_expression.length; counting++) {
+        temp_expression = temp_expression + display_expression[counting];
+        //-test.text(temp_expression);
+      }
+      display.text(temp_expression);
+      string_count = string_count-1;
+      temp_expression = "";
+      break;
+    default:
+     if (clearfag == 1) {
+       display.text("");
+       clearfag = 0;
+     }
+      //test.text(clearfag);
+      myMathlib.hit(i);
+      display.text(display.text() + i);
+      display_expression[string_count] = i;
+      //test.text("display_expression is " + display_expression);
+      string_count++;
+      break;
+  }
+});
+
+</script>
