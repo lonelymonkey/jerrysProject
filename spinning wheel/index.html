@@ -1,0 +1,57 @@
+<head>
+ <script src="JQuery/jquery-3.1.0.min.js"></script>
+ <script src="spining_wheel.js"></script>
+ <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <button class = "button" type = 'button' id = "add">+</button>
+
+  <div id = 'Form_print'>
+    <ul class = 'taps'>
+      <li>Name</li>
+      <li>Sample</li>
+      <li>Color</li>
+    </ul>
+    <br>
+  </div>
+<h2></h2>
+</body>
+
+<script>
+var global_check_id = 0;
+$('#add').click(function(){
+  $("#Form_print").append(spinning_wheel.print_or_remove());
+});
+
+$("#Form_print").on("click",'#remove', function(){
+    //console.log("test");
+    var removeid = $(this).parent().attr('id');
+    //console.log("parent id is  " + removeid);
+    var numbercheck = /\d+/g;
+    var typecheck = /\D+/g;
+    var div_id = removeid.match(numbercheck);
+    $("#div_"+div_id).remove();
+});
+$("#Form_print").on("click",'#submit_myform', function(){
+    var color = false;
+    var name = false;
+    var sample = false;
+    var id = $(this).parent().attr('id');
+    var numbercheck = /\d+/g;
+    var div_id = id.match(numbercheck);
+    var values = {};
+    $.each($('#input_'+div_id).serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+    spinning_wheel.print_chart(values);
+});
+
+
+
+// With on():
+
+
+
+
+
+</script>
