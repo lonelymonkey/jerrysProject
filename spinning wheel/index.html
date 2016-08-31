@@ -14,7 +14,7 @@
     </ul>
     <br>
   </div>
-<h2></h2>
+  <canvas id="can" width="200" height="200" />
 </body>
 
 <script>
@@ -39,17 +39,33 @@ $("#Form_print").on("click",'#submit_myform', function(){
     var id = $(this).parent().attr('id');
     var numbercheck = /\d+/g;
     var div_id = id.match(numbercheck);
+    console.log("div_id is " + div_id[0]);
     var values = {};
     $.each($('#input_'+div_id).serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
-    spinning_wheel.print_chart(values);
+    //console.log(values);
+/************************* Validation of input**********************************************************/
+    if (values.name != "") {
+      $("#input_name_check"+div_id[0]).css("border-color","initial");
+      if (values.number_of_sample != "" && values.number_of_sample.match(/^[0-9]+$/) != null) {
+        spinning_wheel.print_chart(values, div_id[0]);
+        $("#input_sample_check"+div_id[0]).css("border-color","initial");
+        $("#input_name_check"+div_id[0]).css("border-color","initial");
+      }
+      else {
+        $("#input_sample_check"+div_id[0]).css("border-color","red");
+      }
+    }else if (values.number_of_sample == "") {
+      $("#input_sample_check"+div_id[0]).css("border-color","red");
+      $("#input_name_check"+div_id[0]).css("border-color","red");
+    }
+    else {
+      $("#input_sample_check"+div_id[0]).css("border-color","initial");
+      $("#input_name_check"+div_id[0]).css("border-color","red");
+    }
+    //spinning_wheel.print_chart(values);
 });
-
-
-
-// With on():
-
 
 
 
