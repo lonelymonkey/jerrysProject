@@ -1,6 +1,7 @@
 <head>
  <script src="JQuery/jquery-3.1.0.min.js"></script>
  <script src="spining_wheel.js"></script>
+ <script src="JQuery/jQueryRotate.js"></script>
  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -14,60 +15,118 @@
     </ul>
     <br>
   </div>
-  <canvas id="can" width="200" height="200" />
+
+    <canvas id="can" width="400" height="400" />
+
+
 </body>
 
 <script>
-var global_check_id = 0;
+var angle = 0;
+var print_remove = false;
 $('#add').click(function(){
-  $("#Form_print").append(spinning_wheel.print_or_remove());
+  print_remove = true
+  $("#Form_print").append(spinning_wheel.print_or_remove(print_remove, null));
 });
 
 $("#Form_print").on("click",'#remove', function(){
     //console.log("test");
+    print_remove = false
     var removeid = $(this).parent().attr('id');
     //console.log("parent id is  " + removeid);
     var numbercheck = /\d+/g;
     var typecheck = /\D+/g;
     var div_id = removeid.match(numbercheck);
-    $("#div_"+div_id).remove();
+    $("#div_"+div_id[0]).remove();
+    spinning_wheel.print_or_remove(print_remove,div_id[0]);
 });
-$("#Form_print").on("click",'#submit_myform', function(){
-    var color = false;
-    var name = false;
-    var sample = false;
+
+$('#can').click(function(){
+/*********************
+ in this section, I am going to determine the winner, and then spin*/
+var output = spinning_wheel.decide_output();
+var winner = output[0];
+
+console.log("winner is " + winner);
+/*************************/
+var rotation = setInterval(function(){
+
+        angle = angle + 15*0.001*angle +10 ;
+        console.log(angle);
+       $("#can").rotate(angle);
+       //console.log(angle);
+       if (angle > 50000000000000000) {
+         console.log("clear");
+         clearInterval(rotation);
+         angle = 0;
+       }
+  },50);
+
+
+});
+
+$("#Form_print").on("focus",'input', function(){
+
+
     var id = $(this).parent().attr('id');
     var numbercheck = /\d+/g;
     var div_id = id.match(numbercheck);
-    console.log("div_id is " + div_id[0]);
-    var values = {};
-    $.each($('#input_'+div_id).serializeArray(), function(i, field) {
-        values[field.name] = field.value;
-    });
-    //console.log(values);
-/************************* Validation of input**********************************************************/
-    if (values.name != "") {
-      $("#input_name_check"+div_id[0]).css("border-color","initial");
-      if (values.number_of_sample != "" && values.number_of_sample.match(/^[0-9]+$/) != null) {
-        spinning_wheel.print_chart(values, div_id[0]);
-        $("#input_sample_check"+div_id[0]).css("border-color","initial");
-        $("#input_name_check"+div_id[0]).css("border-color","initial");
-      }
-      else {
-        $("#input_sample_check"+div_id[0]).css("border-color","red");
-      }
-    }else if (values.number_of_sample == "") {
-      $("#input_sample_check"+div_id[0]).css("border-color","red");
-      $("#input_name_check"+div_id[0]).css("border-color","red");
-    }
-    else {
-      $("#input_sample_check"+div_id[0]).css("border-color","initial");
-      $("#input_name_check"+div_id[0]).css("border-color","red");
-    }
+    //console.log("div_id is " + div_id[0]);
+
+    //console.log("working");
+    setInterval(function(){
+
+    live_update_print(div_id[0]);
+
+  }, 50);
+
+
+
+    //live_update_print(div_id[0],values);
+
+
     //spinning_wheel.print_chart(values);
 });
 
 
+function live_update_print (id){
+  var values = {};
+  $.each($('#input_'+id).serializeArray(), function(i, field) {
+      values[field.name] = field.value;
+  });
+  //console.log(values);
+/************************* Validation of input**********************************************************/
+  if (values.name != "") {
+    $("#input_name_check"+id).css("box-shadow","1px 1px 15px green");
+    $("#input_name_check"+id).css("border-style","solid");
+    $("#input_name_check"+id).css("border-color","green");
+    if (values.number_of_sample != "" && values.number_of_sample.match(/^[0-9]+$/) != null) {
+      spinning_wheel.print_chart(values, id);
+      $("#input_name_check"+id).css("border-style","solid");
+      $("#input_sample_check"+id).css("border-style","solid");
+      $("#input_sample_check"+id).css("border-color","green");
+      $("#input_name_check"+id).css("border-color","green");
+      $("#input_sample_check"+id).css("box-shadow","1px 1px 15px green");
+      $("#input_name_check"+id).css("box-shadow","1px 1px 15px green");
+    }
+    else {
+      $("#input_sample_check"+id).css("box-shadow","1px 1px 15px red");
+      $("#input_sample_check"+id).css("border-color","red");
+    }
+  }else if (values.number_of_sample == "") {
+    $("#input_sample_check"+id).css("box-shadow","1px 1px 10px red");
+    $("#input_name_check"+id).css("box-shadow","1px 1px 10px red");
+    $("#input_sample_check"+id).css("border-color","red");
+    $("#input_name_check"+id).css("border-color","red");
+  }
+  else {
+    $("#input_sample_check"+id).css("box-shadow","1px 1px 15px green");
+    $("#input_sample_check"+id).css("border-color","green");
+    $("#input_sample_check"+id).css("border-style","solid");
+    $("#input_name_check"+id).css("box-shadow","1px 1px 15px red");
+  }
+
+}
 
 
 </script>
