@@ -12,7 +12,7 @@ ul.taps > li{
 
 }
 ul.taps > li:last-child{
-  margin-left:-75px 
+  margin-left:-75px
 }
 .button {
     background-color: #4CAF50; /* Green */
@@ -46,4 +46,10 @@ ul.taps > li:last-child{
   background-color: #4CAF50
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+.form{
+  padding-bottom: 10px;
+  padding-bottom: 10px;
+  width: 50%;
+  float: left;
 }

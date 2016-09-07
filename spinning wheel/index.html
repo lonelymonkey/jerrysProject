@@ -5,9 +5,12 @@
  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <button class = "button" type = 'button' id = "add">+</button>
+  <div>
+    <button class = "button" type = 'button' id = "add">+</button>
+  </div>
 
-  <div id = 'Form_print'>
+
+  <div id = 'Form_print' class = "form">
     <ul class = 'taps'>
       <li>Name</li>
       <li>Sample</li>
@@ -22,11 +25,14 @@
 </body>
 
 <script>
-var angle = 0;
+var angle =270;
+var velocity = 0;
 var print_remove = false;
+$('#can').rotate(270);
 $('#add').click(function(){
   print_remove = true
-  $("#Form_print").append(spinning_wheel.print_or_remove(print_remove, null));
+
+$("#Form_print").append(spinning_wheel.print_or_remove(print_remove, null));
 });
 
 $("#Form_print").on("click",'#remove', function(){
@@ -42,23 +48,24 @@ $("#Form_print").on("click",'#remove', function(){
 });
 
 $('#can').click(function(){
-/*********************
- in this section, I am going to determine the winner, and then spin*/
 var output = spinning_wheel.decide_output();
 var winner = output[0];
-
+var winner_probability = output[1];
 console.log("winner is " + winner);
+console.log("should stop at " +winner_probability*360+" degree");
 /*************************/
 var rotation = setInterval(function(){
-
-        angle = angle + 15*0.001*angle +10 ;
-        console.log(angle);
-       $("#can").rotate(angle);
-       //console.log(angle);
-       if (angle > 50000000000000000) {
-         console.log("clear");
+        var stop = 360*49+270-8.455;
+        velocity = -(1.167983132986*0.000001)*(angle*angle)+(0.0207325)*(angle)+5;
+        //angle1 = angle1 + 15*0.001*angle1 +10;
+        angle = angle + velocity;
+        $('#can').rotate(angle);
+       if (angle > stop - 360 * winner_probability) {
+         console.log(angle);
+         console.log("done");
          clearInterval(rotation);
-         angle = 0;
+        angle =0;
+
        }
   },50);
 
@@ -80,12 +87,6 @@ $("#Form_print").on("focus",'input', function(){
 
   }, 50);
 
-
-
-    //live_update_print(div_id[0],values);
-
-
-    //spinning_wheel.print_chart(values);
 });
 
 
