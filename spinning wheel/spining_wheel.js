@@ -21,7 +21,7 @@
   spinning_wheel.print_or_remove = function(PRflag, id) {
     if (PRflag) {
       return print();
-    }
+  }
 
     else {
       var id_position = piechart.id.indexOf(id);

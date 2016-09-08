@@ -50,6 +50,12 @@ ul.taps > li:last-child{
 .form{
   padding-bottom: 10px;
   padding-bottom: 10px;
-  width: 50%;
+  width: 40%;
   float: left;
+}
+.container {
+
+     margin: 0px auto;
+
+     width: 1800px;
 }
