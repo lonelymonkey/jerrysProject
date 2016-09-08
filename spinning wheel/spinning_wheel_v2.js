@@ -9,24 +9,25 @@
         'total' : 0,
         'angle' : 270,
         'velocity' : 0,
-        'print_remove' : false,
-        'start_flag' : false
+        'print_remove' : false
       },
+      json : true,
       validation: false,
       id : [],
-      decision:[]
+      decision:[],
+      probability:[]
   };
   // this function are going to print form
-  var angle =270;
-  var velocity = 0;
+
   var div_counting = model.data.counting;
   var piechart =  {
       id : [],
       name :[],
       sample :[],
       color :[]};
-  function print_or_remove(PRflag, id) {
+function print_or_remove(PRflag, id) {
     if (PRflag) {
+
       return print();
     }
 
@@ -34,16 +35,19 @@
       var id_position = piechart.id.indexOf(id);
       if (id_position > -1) {
         //console.log("test");
+        console.log('remove');
         piechart.id.splice(id_position, 1);
         piechart.name.splice(id_position, 1);
         piechart.sample.splice(id_position, 1);
         piechart.color.splice(id_position, 1);
         //console.log(JSON.stringify(piechart));
+        model.json = JSON.stringify(piechart);
+        window.location.hash = model.json;
         create_piechart();
         }
     }
   }
-   function decide_output(){
+function decide_output(){
     var probability_array = model.decision;
     var total = model.data.total;
     var target = 0;
@@ -72,15 +76,10 @@
     //console.log("target out of for loop is " + target);
     model.decision = [];
     return [winner, random];
-
-
-
   }
-
-
-
-  function print_chart(object_inputs, id){
+function print_chart(object_inputs, id){
   //  console.log(model[2].id);
+    //console.log("in begining of print_piechart, id is  "+JSON.stringify(piechart.id));
     var result_multiple = check_multiple_submit(id);
     var mutiple_id = result_multiple[1]
     if (result_multiple[0] == true) {
@@ -95,7 +94,9 @@
       }
     }
     else {
+
       model.id.push(id);
+
       save_input_value(object_inputs, id);
       create_piechart();
     }
@@ -123,22 +124,21 @@ function create_piechart(){
     ctx.lineTo(canvas.width / 2, canvas.height / 2);
     ctx.fill();
     lastend += Math.PI * 2 * (piechart.sample[i] / myTotal);
-}
-if (piechart.sample.length == 0) {
-  ctx.fillStyle = "#FFFFFF";
-  ctx.beginPath();
-  ctx.moveTo((canvas.width) / 2, (canvas.height) / 2);
-  // Arc Parameters: x, y, radius, startingAngle (radians), endingAngle (radians), antiClockwise (boolean)
-  ctx.arc((canvas.width) / 2, (canvas.height) / 2, (canvas.height+10) / 2, lastend, lastend + (Math.PI * 2 ), false);
-  ctx.lineTo((canvas.width) / 2, (canvas.height)/ 2);
-  ctx.fill();
-  lastend += Math.PI * 2 ;
-}
+ }
+  if (piechart.sample.length == 0) {
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath();
+    ctx.moveTo((canvas.width) / 2, (canvas.height) / 2);
+    // Arc Parameters: x, y, radius, startingAngle (radians), endingAngle (radians), antiClockwise (boolean)
+    ctx.arc((canvas.width) / 2, (canvas.height) / 2, (canvas.height+10) / 2, lastend, lastend + (Math.PI * 2 ), false);
+    ctx.lineTo((canvas.width) / 2, (canvas.height)/ 2);
+    ctx.fill();
+    lastend += Math.PI * 2 ;
+  }
 
 }
 function check_multiple_submit(id){
   var id_array = model.id;
-
 
       if (id_array.indexOf(id)> -1) {
         return [true, piechart.id.indexOf(id)];
@@ -148,21 +148,28 @@ function check_multiple_submit(id){
 
 }
 function save_input_value (object_inputs, id ){
-  piechart.id.push(id);
+  // when we do the hash tag, we will save duplicated id, so we set this if condition to avoid it
+  if (piechart.id.indexOf(id) == -1) {
+    piechart.id.push(id);
+  }
+
+
   piechart.name.push(object_inputs.name);
   piechart.sample.push(object_inputs.number_of_sample);
   piechart.color.push(object_inputs.color);
 
 }
 function print(){
+    var name = piechart.name;
+    var sample = piechart.sample;
     var color = randomColor();
     var tracking_counting = 0;
     var output =
     '<div id = "div_'+div_counting+'" >'
     +'<form id = "input_'+div_counting+'"" action ="index.html">'
     +'<input type="text" id = "input_name_check'+div_counting+'" name="name" class = "input_form" >'
-    +'<input type="text" id = "input_sample_check'+div_counting+'" name="number_of_sample" class = "input_form" >'
-    +'<input type="color" name="color" class = "input_form" value = "'+color+'">'
+    +'<input type="text" id = "input_sample_check'+div_counting+'" name="number_of_sample" class = "input_form"  >'
+    +'<input type="color" id = "input_color_check'+div_counting+'" name="color" class = "input_form" value = "'+color+'">'
     +'<button type = "button" id = "remove" class = "button" >&#x2717</button>'
     +'</form>'
     +'</div>';
@@ -171,11 +178,11 @@ function print(){
     //console.log(div_counting);
     return output;
   }
-  function randomColor(){
+function randomColor(){
     var color = Math.floor(Math.random() * 16777216).toString(16);
     return '#000000'.slice(0, -color.length) + color;
   }
-  function live_update_print (id){
+function live_update_print (id){
     var values = {};
     $.each($('#input_'+id).serializeArray(), function(i, field) {
         values[field.name] = field.value;
@@ -190,6 +197,9 @@ function print(){
       if (values.number_of_sample != "" && values.number_of_sample.match(/^[0-9]+$/) != null) {
 
         print_chart(values, id);
+        // if we can print pie chart, which means data is valid. Therefore, we can store those data in our #
+        model.json = JSON.stringify(piechart);
+        window.location.hash = model.json;
         /*after we print pie chart, we enable our start button*/
         $("button[id = 'start']").prop('disabled', false);
         $("#input_name_check"+id).css("border-style","solid");
@@ -217,19 +227,22 @@ function print(){
     }
 
   }
-  function bindbasicUI(){
+function bindbasicUI(){
     /*we don't want to spin with nothing, so we disable start button if no pie chart printed*/
-    $("button[id = 'start']").prop('disabled', true);
+    // if json is not empty, which user can start to rotate , so we don't want to disabled #start button when we have data in#
+    if (model.json == "") {
+      $("#start").attr("disabled","disabled");
+
+    }
     $('#add').click(function(){
-
-
       model.data.print_remove = true;
-
     $("#Form_print").append(print_or_remove(model.data.print_remove, null));
+
     });
 
     $("#Form_print").on("click",'#remove', function(){
         //console.log("test");
+
         model.data.print_remove = false
         var removeid = $(this).parent().attr('id');
         //console.log("parent id is  " + removeid);
@@ -240,20 +253,15 @@ function print(){
         print_or_remove(model.data.print_remove,div_id[0]);
     });
     $("#Form_print").on("focus",'input', function(){
-
-
         var id = $(this).parent().attr('id');
         var numbercheck = /\d+/g;
         var div_id = id.match(numbercheck);
-        //console.log("div_id is " + div_id[0]);
 
-        //console.log("working");
-         model.validation = setInterval(function(){
+        model.validation = setInterval(function(){
 
-        live_update_print(div_id[0]);
+          live_update_print(div_id[0]);
 
-      }, 50);
-
+        }, 50);
     });
     $("#Form_print").on("focusout",'input', function(){
 
@@ -261,8 +269,39 @@ function print(){
 
     });
   }
+function check_hash(){
+  // if # is nothing, we need to stop this function
+  model.json= window.location.hash.substr(1);
+  if (model.json == "") {
 
-  function rotation(){
+  }
+  // if hash is not emtpy, we take value and then store to our piechart object, and then print the piechart and form
+  else {
+    model.json= window.location.hash.substr(1);
+    var json = JSON.parse(model.json);
+    piechart.id= json["id"];
+    piechart.name= json["name"];
+    piechart.sample= json["sample"];
+    piechart.color = json["color"];
+    // we do have to array to track id, so model.id is the one to check multiple id, we need to synchornize it as well
+    model.id = piechart.id;
+
+    //we print the form, and print the previous values into those check box
+    for (var i = 0; i < piechart.id.length; i++) {
+      $("#Form_print").append(print_or_remove(true, null));
+      $("#input_name_check"+ model.data.counting).val(piechart.name[i]);
+      $("#input_sample_check"+ model.data.counting).val(piechart.sample[i]);
+      $("#input_color_check"+ model.data.counting).val(piechart.color[i]);
+        model.data.counting++;
+    }
+    create_piechart();
+    //console.log(div_counting);
+    //console.log(JSON.stringify(piechart));
+
+  }
+  }
+
+function rotation(){
 
     $.getScript("JQuery/jQueryRotate.js", function(){
       $('#can').rotate(model.data.angle);
@@ -298,8 +337,10 @@ function print(){
       });
     });
   }
-  spinning_wheel.load = function(){
+spinning_wheel.load = function(){
+
     bindbasicUI();
+    check_hash();
     rotation();
   }
 return spinning_wheel;
