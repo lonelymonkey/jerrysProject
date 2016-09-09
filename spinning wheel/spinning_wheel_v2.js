@@ -17,9 +17,6 @@
       decision:[],
       probability:[]
   };
-  // this function are going to print form
-
-  var div_counting = model.data.counting;
   var piechart =  {
       id : [],
       name :[],
@@ -301,7 +298,6 @@ function check_hash(){
 
   }
   }
-
 function rotation(){
 
     $.getScript("JQuery/jQueryRotate.js", function(){
@@ -339,7 +335,6 @@ function rotation(){
     });
   }
 spinning_wheel.load = function(){
-
     bindbasicUI();
     check_hash();
     rotation();
