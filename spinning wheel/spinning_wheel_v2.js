@@ -22,6 +22,7 @@
       name :[],
       sample :[],
       color :[]};
+// Print or remove form, depend on the flag pass into the function
 function print_or_remove(PRflag, id) {
     if (PRflag) {
 
@@ -44,6 +45,7 @@ function print_or_remove(PRflag, id) {
         }
     }
   }
+// THis function decide the winner, and then pass to the rotation
 function decide_output(){
     var probability_array = model.decision;
     var total = model.data.total;
@@ -74,6 +76,7 @@ function decide_output(){
     model.decision = [];
     return [winner, random];
   }
+// This function does the update the piechart and create piechart. If nothing change, does nothing
 function print_chart(object_inputs, id){
   //  console.log(model[2].id);
     //console.log("in begining of print_piechart, id is  "+JSON.stringify(piechart.id));
@@ -99,6 +102,7 @@ function print_chart(object_inputs, id){
     }
 
   }
+// This function create piechart
 function create_piechart(){
   var canvas = document.getElementById("can");
   var ctx = canvas.getContext("2d");
@@ -134,6 +138,7 @@ function create_piechart(){
   }
 
 }
+// This function will check the the input's graph is created or not
 function check_multiple_submit(id){
   var id_array = model.id;
 
@@ -144,6 +149,7 @@ function check_multiple_submit(id){
       }
 
 }
+// store input to piechart
 function save_input_value (object_inputs, id ){
   // when we do the hash tag, we will save duplicated id, so we set this if condition to avoid it
   if (piechart.id.indexOf(id) == -1) {
@@ -156,6 +162,7 @@ function save_input_value (object_inputs, id ){
   piechart.color.push(object_inputs.color);
 
 }
+// print form(name, sample, and color)
 function print(){
     var color = randomColor();
     var tracking_counting = 0;
@@ -173,10 +180,12 @@ function print(){
     //console.log(div_counting);
     return output;
   }
+// create random color
 function randomColor(){
     var color = Math.floor(Math.random() * 16777216).toString(16);
     return '#000000'.slice(0, -color.length) + color;
   }
+// check the input every 0.05s, and validate the input
 function live_update_print (id){
     var values = {};
     $.each($('#input_'+id).serializeArray(), function(i, field) {
@@ -222,6 +231,7 @@ function live_update_print (id){
     }
 
   }
+// bind all the events
 function bindbasicUI(){
     /*we don't want to spin with nothing, so we disable start button if no pie chart printed*/
     // if json is not empty, which user can start to rotate , so we don't want to disabled #start button when we have data in#
@@ -264,6 +274,7 @@ function bindbasicUI(){
 
     });
   }
+// if we have pre-set inputs, those inputs will be in the url, we obtain it and then draw the piechart and create input form
 function check_hash(){
   // if # is nothing, we need to stop this function
   model.json= window.location.hash.substr(1);
@@ -298,6 +309,7 @@ function check_hash(){
 
   }
   }
+// rotate the piechart
 function rotation(){
 
     $.getScript("JQuery/jQueryRotate.js", function(){
