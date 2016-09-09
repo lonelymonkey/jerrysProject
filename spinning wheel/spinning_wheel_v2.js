@@ -160,21 +160,19 @@ function save_input_value (object_inputs, id ){
 
 }
 function print(){
-    var name = piechart.name;
-    var sample = piechart.sample;
     var color = randomColor();
     var tracking_counting = 0;
     var output =
-    '<div id = "div_'+div_counting+'" >'
-    +'<form id = "input_'+div_counting+'"" action ="index.html">'
-    +'<input type="text" id = "input_name_check'+div_counting+'" name="name" class = "input_form" >'
-    +'<input type="text" id = "input_sample_check'+div_counting+'" name="number_of_sample" class = "input_form"  >'
-    +'<input type="color" id = "input_color_check'+div_counting+'" name="color" class = "input_form" value = "'+color+'">'
+    '<div id = "div_'+model.data.counting+'" >'
+    +'<form id = "input_'+model.data.counting+'"" action ="index.html">'
+    +'<input type="text" id = "input_name_check'+model.data.counting+'" name="name" class = "input_form" >'
+    +'<input type="text" id = "input_sample_check'+model.data.counting+'" name="number_of_sample" class = "input_form"  >'
+    +'<input type="color" id = "input_color_check'+model.data.counting+'" name="color" class = "input_form" value = "'+color+'">'
     +'<button type = "button" id = "remove" class = "button" >&#x2717</button>'
     +'</form>'
     +'</div>';
     //console.log("form is " + output);
-    div_counting ++;
+    model.data.counting ++;
     //console.log(div_counting);
     return output;
   }
@@ -288,12 +286,15 @@ function check_hash(){
 
     //we print the form, and print the previous values into those check box
     for (var i = 0; i < piechart.id.length; i++) {
-      $("#Form_print").append(print_or_remove(true, null));
-      $("#input_name_check"+ model.data.counting).val(piechart.name[i]);
-      $("#input_sample_check"+ model.data.counting).val(piechart.sample[i]);
-      $("#input_color_check"+ model.data.counting).val(piechart.color[i]);
-        model.data.counting++;
+      model.data.counting = piechart.id[i];
+      console.log(model.data.counting);
+      $("#Form_print").append(print_or_remove(true, model.data.counting));
+      $("#input_name_check"+ piechart.id[i]).val(piechart.name[i]);
+      $("#input_sample_check"+ piechart.id[i]).val(piechart.sample[i]);
+      $("#input_color_check"+ piechart.id[i]).val(piechart.color[i]);
+
     }
+    model.data.counting++;
     create_piechart();
     //console.log(div_counting);
     //console.log(JSON.stringify(piechart));
