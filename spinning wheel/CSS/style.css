@@ -4,15 +4,18 @@
 }
 .taps{
   list-style: none;
+  position: relative;
+  left: 20;
 
 }
 ul.taps > li{
   float: left;
-  margin-right: 146px;
+  margin-right: 97px;
 
 }
-ul.taps > li:last-child{
-  margin-left:-75px
+.arrow{
+  position: relative;
+  left: 179px;
 }
 .button {
     background-color: #4CAF50; /* Green */
@@ -57,5 +60,5 @@ ul.taps > li:last-child{
 
      margin: 0px auto;
 
-     width: 1800px;
+     width: 1750px;
 }

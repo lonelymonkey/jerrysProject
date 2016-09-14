@@ -9,7 +9,8 @@
         'total' : 0,
         'angle' : 270,
         'velocity' : 0,
-        'print_remove' : false
+        'print_remove' : false,
+        'mytotal' : 0
       },
       json : true,
       validation: false,
@@ -21,7 +22,9 @@
       id : [],
       name :[],
       sample :[],
-      color :[]};
+      color :[],
+      probability :[]};
+  var textarea = '<textarea cols = "50"></textarea>';
 // Print or remove form, depend on the flag pass into the function
 function print_or_remove(PRflag, id) {
     if (PRflag) {
@@ -126,6 +129,7 @@ function create_piechart(){
     ctx.fill();
     lastend += Math.PI * 2 * (piechart.sample[i] / myTotal);
  }
+  model.data.mytotal = myTotal;
   if (piechart.sample.length == 0) {
     ctx.fillStyle = "#FFFFFF";
     ctx.beginPath();
@@ -171,6 +175,7 @@ function print(){
     +'<form id = "input_'+model.data.counting+'"" action ="index.html">'
     +'<input type="text" id = "input_name_check'+model.data.counting+'" name="name" class = "input_form" >'
     +'<input type="text" id = "input_sample_check'+model.data.counting+'" name="number_of_sample" class = "input_form"  >'
+    +'<input type="text" id = "probability_check'+model.data.counting+'" name="probablity" class = "input_form" readonly disabled >'
     +'<input type="color" id = "input_color_check'+model.data.counting+'" name="color" class = "input_form" value = "'+color+'">'
     +'<button type = "button" id = "remove" class = "button" >&#x2717</button>'
     +'</form>'
@@ -201,9 +206,19 @@ function live_update_print (id){
       if (values.number_of_sample != "" && values.number_of_sample.match(/^[0-9]+$/) != null) {
 
         print_chart(values, id);
+        //after piechart is printed, we can store our probability to our input box and our piechart object
+        for (var i = 0; i < piechart.id.length; i++) {
+          piechart.probability[i] = piechart.sample[i]/model.data.mytotal*100;
+          $('#probability_check'+piechart.id[i]).val(piechart.probability[i] + '%');
+
+        }
+
         // if we can print pie chart, which means data is valid. Therefore, we can store those data in our #
         model.json = JSON.stringify(piechart);
-        window.location.hash = model.json;
+        //console.log(model.json);
+        var encodejson = encodeURIComponent(model.json);
+        window.location.hash = encodejson;
+        //console.log(encodeURIComponent(model.json));
         /*after we print pie chart, we enable our start button*/
         $("button[id = 'start']").prop('disabled', false);
         $("#input_name_check"+id).css("border-style","solid");
@@ -243,6 +258,7 @@ function bindbasicUI(){
       model.data.print_remove = true;
     $("#Form_print").append(print_or_remove(model.data.print_remove, null));
 
+
     });
 
     $("#Form_print").on("click",'#remove', function(){
@@ -274,7 +290,7 @@ function bindbasicUI(){
 
     });
   }
-// if we have pre-set inputs, those inputs will be in the url, we obtain it and then draw the piechart and create input form
+// if we have pre-set inputs, those inputs will be in the url,
 function check_hash(){
   // if # is nothing, we need to stop this function
   model.json= window.location.hash.substr(1);
@@ -284,40 +300,44 @@ function check_hash(){
   // if hash is not emtpy, we take value and then store to our piechart object, and then print the piechart and form
   else {
     model.json= window.location.hash.substr(1);
-    var json = JSON.parse(model.json);
+    var json = JSON.parse(decodeURIComponent(model.json));
     piechart.id= json["id"];
     piechart.name= json["name"];
     piechart.sample= json["sample"];
     piechart.color = json["color"];
+    piechart.probability = json["probability"];
     // we do have to array to track id, so model.id is the one to check multiple id, we need to synchornize it as well
     model.id = piechart.id;
 
     //we print the form, and print the previous values into those check box
     for (var i = 0; i < piechart.id.length; i++) {
       model.data.counting = piechart.id[i];
-      console.log(model.data.counting);
+    //  console.log(model.data.counting);
       $("#Form_print").append(print_or_remove(true, model.data.counting));
       $("#input_name_check"+ piechart.id[i]).val(piechart.name[i]);
       $("#input_sample_check"+ piechart.id[i]).val(piechart.sample[i]);
       $("#input_color_check"+ piechart.id[i]).val(piechart.color[i]);
+      $("#probability_check"+ piechart.id[i]).val(piechart.probability[i] + '%');
 
     }
     model.data.counting++;
     create_piechart();
+
     //console.log(div_counting);
     //console.log(JSON.stringify(piechart));
 
   }
   }
-// rotate the piechart
 function rotation(){
 
     $.getScript("JQuery/jQueryRotate.js", function(){
       $('#can').rotate(model.data.angle);
       $('#start').click(function(){
+
       var output = decide_output();
       var winner = output[0];
       var winner_probability = output[1];
+    //  $('#arrow').prepend('<img id="theImg" src="Arrows-Down-icon.png"/>')
       console.log("winner is " + winner);
       console.log("should stop at " +winner_probability*360+" degree");
       /*************************/
@@ -333,14 +353,14 @@ function rotation(){
           $('input').prop('disabled',true);
         }
         if (model.data.angle > stop - 360 * winner_probability) {
-          console.log(model.data.angle);
+          console.log(model.data.angle % 360);
           console.log("done");
           clearInterval(rotation);
           model.data.angle =0;
           model.data.velocity =0;
           $('button').prop('disabled', false);
           $('input').prop('disabled',false);
-
+          //setTimeout(function(){$("#arrow img").remove();},3000)
            }
         },50);
       });
