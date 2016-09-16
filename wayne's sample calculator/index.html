@@ -55,7 +55,7 @@
       <li> <button type="button" class = "button">+</button></li>
       <li> <button type="button" class = "button">+/-</button></li>
       <li> <button type="button" class = "button">CA</button></li>
-      
+      <li> <button type="button" class = "button"><-</button></li>
 
 
 
@@ -73,9 +73,126 @@ var test = $('.test');
 var clearfag = 0;
 var string_count = 0;
 var display_expression = [];
-var temp_expression = '';
+
+var buffer = [];
+var dictionary = [
+  {
+    char : ['0','1','2','3','4','5','6','7','8','9'],
+    data : {
+      'type' : 'number'
+    }
+  },
+  {
+    char : ['+','-','*','/'],
+    data : {
+      'type' : 'operator'
+    }
+  },
+  {
+    char : ['('],
+    data : {
+      'type' : 'begin-bracket'
+    }
+  },
+  {
+    char : [')'],
+    data : {
+      'type' : 'end-bracket'
+    }
+  },
+  {
+    char : ['^'],
+    data : {
+      'type' : 'functionTypeA',
+      'function' : "Math.pow",
+    }
+  },
+  {
+    char : ['Sin'],
+    data : {
+      'type' : 'functionTypeB',
+      'function' : "Math.sin",
+    }
+  },
+  {
+    char : ['Cos'],
+    data : {
+      'type' : 'functionTypeB',
+      'function' : "Math.cos",
+    }
+  },
+  {
+    char : ['Tan'],
+    data : {
+      'type' : 'functionTypeB',
+      'function' : "Math.tan",
+    }
+  },
+  {
+    char : ['PI'],
+    data : {
+      'type' : 'functionTypeC',
+      'function' : "Math.PI",
+    }
+  },
+  {
+    char : ['CA'],
+    data : {
+      'type' : 'Clear'
+    }
+  },
+  {
+    char : ['<-'],
+    data : {
+      'type' : 'Clear'
+    }
+  }
+];
+function findInDictionary(char) {
+  // ^ is pass into this function
+  var output = false;
+  var temp_expression = '';
+  for (var i=0;i<dictionary.length;i++) {
+    var characters = dictionary[i].char;
+
+    if (characters.indexOf(char) > -1) {
+
+      output = dictionary[i].data;
+
+      break;
+    }
+  }
+  return output;
+}
 $('button').on('click', function(){
+  var temp_expression = '';
   var i = $(this).text();
+  var currentKey = findInDictionary(i);
+  console.log("length of buffer is " + buffer.length);
+  if (buffer.length != 0) {
+    console.log("I am in buffer length check if else");
+    var lastKey = buffer[buffer.length-1];
+    console.log(lastKey);
+  }
+  else {
+    var lastKey = false;
+  }
+
+    /*if (currentKey.type == 'operator') {
+      if (lastKey.type == 'operator' || lastKey.type == 'functionTypeA') {
+
+        buffer.pop();
+        display_expression.pop();
+        test.text(temp_expression);
+        for (var i = 0; i < display_expression.length; i++) {
+        temp_expression =  display_expression[i] + temp_expression;
+        }
+        display.text(temp_expression);
+        temp_expression = [];
+      }
+    }
+  }*/
+  buffer.push(currentKey)
 
   switch (i) {
     case '=':
@@ -106,12 +223,18 @@ $('button').on('click', function(){
        display.text("");
        clearfag = 0;
      }
+
+     if (lastKey != false) {
+       console.log(" != is working");
+
+     }
       //test.text(clearfag);
       myMathlib.hit(i);
-      display.text(display.text() + i);
-      display_expression[string_count] = i;
-      //test.text("display_expression is " + display_expression);
-      string_count++;
+      var n_to_s = i.toString();
+      display.text(display.text() + n_to_s);
+      display_expression.push(n_to_s);
+      test.text("display_expression is " + display_expression);
+
       break;
   }
 });

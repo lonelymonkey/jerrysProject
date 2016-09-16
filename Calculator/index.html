@@ -286,7 +286,13 @@ var checkpoint = 0;
          whole_epression = whole_epression.replace(/PI/i,"Math.PI");
          whole_epression = whole_epression.replace(/Tan/i,"Math.tan");
          /*Find out any exponential and reaplace it as Math.pow function*/
-         temp2 = whole_epression.match(/[(]*([-]*\d+[\.]*\d*)[)]*[\^][(]*([-1*]*\d+)[)]*/);
+         try {
+           temp2 = whole_epression.match(/[(]*([-1*]*\d+[\.]*\d*)[)]*[\^][(]*([-1*]*\d+)[)]*/);
+         } catch (e) {
+           console.log(e);
+           alert("regular expression is failed");
+         }
+
          //test.text("power array is " + eval(temp2[1])+ " and " + eval(temp2[2])+ " expression is " + whole_epression);
          temp2[1] = eval(temp2[1]);
          temp2[2] = eval(temp2[2]);

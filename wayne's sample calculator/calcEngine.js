@@ -121,10 +121,10 @@
    ]
 
     */
-    console.log("char is " + char );
+    //console.log("char is " + char );
     if (currentKey) {
         var lastKey = (buffer.length > 0) ?  buffer[buffer.length-1] : false;
-
+        
         //we should group number together as a unit
         // following is correct, cuz our char is not number
         if (lastKey) {
@@ -145,14 +145,18 @@
             firstUnit = false;
           }
         }
+        if (lastKey.type =='operator'|| lastKey.type == 'functionTypeA') {
+          if (currentKey.type == 'operator'|| currentKey.type == 'functionTypeA' ) {
+            alert("Wrong expression");
+            buffer.pop();
+            translation.pop();
+            console.log("translation is " + translation.join(""));
+          }
+        }
         currentKey.char = char;
-        console.log("current key is below ");
-        console.log(currentKey);
-        buffer.push(currentKey);
-       if (currentKey.type == "functionTypeA") {
-         console.log("^ is read");
 
-       }
+        buffer.push(currentKey);
+
         closeFunctionCheck();
       //  console.log("after closefunctioncheck, array function mapping is" + functionMapping.join(""));
         switch (currentKey.type) {
