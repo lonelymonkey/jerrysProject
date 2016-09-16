@@ -105,7 +105,7 @@
   var functionMapping = [];
   var paramStartIndex = 0;
 
-// hit structure begin
+// hit structure begin let change something 
 
 //lets use ^ as example, to go through all the code
 function hit(char){
