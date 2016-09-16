@@ -55,7 +55,7 @@
       <li> <button type="button" class = "button">+</button></li>
       <li> <button type="button" class = "button">+/-</button></li>
       <li> <button type="button" class = "button">CA</button></li>
-      
+
 
 
 
@@ -67,53 +67,9 @@
 </body>
 
 <script>
-var display = $('.display');
-var result = $('.result');
-var test = $('.test');
-var clearfag = 0;
-var string_count = 0;
-var display_expression = [];
-var temp_expression = '';
-$('button').on('click', function(){
-  var i = $(this).text();
+$(document).ready(function(){
 
-  switch (i) {
-    case '=':
-      result.text(myMathlib.calculate());
-      display_expression = [];
-      clearfag = 1;
-      //test.text(clearfag);
-      break;
+myMathlib.load();
 
-    case 'CA':
-      myMathlib.hit(i);
-      display.text("");
-      break;
-    case '<-':
-      myMathlib.hit(i);
-      display_expression.pop();
-      //test.text("temp is " + display_expression);
-      for (var counting = 0; counting < display_expression.length; counting++) {
-        temp_expression = temp_expression + display_expression[counting];
-        //-test.text(temp_expression);
-      }
-      display.text(temp_expression);
-      string_count = string_count-1;
-      temp_expression = "";
-      break;
-    default:
-     if (clearfag == 1) {
-       display.text("");
-       clearfag = 0;
-     }
-      //test.text(clearfag);
-      myMathlib.hit(i);
-      display.text(display.text() + i);
-      display_expression[string_count] = i;
-      //test.text("display_expression is " + display_expression);
-      string_count++;
-      break;
-  }
 });
-
 </script>

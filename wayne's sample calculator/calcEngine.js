@@ -108,7 +108,7 @@
 // hit structure begin
 
 //lets use ^ as example, to go through all the code
-  myMathlib.hit = function(char){
+function hit(char){
     // char = ^
     // we pass ^ to findInDictionary
     var currentKey = findInDictionary(char);
@@ -190,7 +190,7 @@
         first parameter is the expression prior to the function operator
         2nd parameter is the expression after the function operator
   *****************************************/
-  function findInDictionary(char) {
+function findInDictionary(char) {
     // ^ is pass into this function
     var output = false;
     for (var i=0;i<dictionary.length;i++) {
@@ -220,7 +220,7 @@
     }
     return output;
   }
-  function clear(char){
+function clear(char){
     console.log("inside  clear function");
     switch (char) {
       case 'CA':
@@ -246,7 +246,7 @@
 
     }
   }
-  function translateFunctionTypeA(func) {
+function translateFunctionTypeA(func) {
     var count = 0;
     var index = 0;
     var functionName = 'FUNC_'+functionMapping.length;
@@ -287,7 +287,7 @@
     return;
   }
 
-  function translateFunctionTypeB(func) {
+function translateFunctionTypeB(func) {
     var count = 0;
     var index = 0;
     var functionName = 'FUNC_'+functionMapping.length;
@@ -298,7 +298,7 @@
 
 
     translation.push(functionName);
-      translation.push("(");
+    translation.push("(");
     insertFunction({
       'function' : func,
       'functionName' : functionName,
@@ -324,7 +324,7 @@
     }
   */
 
-  function insertFunction(input) {
+function insertFunction(input) {
     var insertLength = input.insertLength;
     var f;
     //update all the paramStartIndex in functionMapping
@@ -358,7 +358,7 @@
   /*******************************************************
       this function loops through  functionMapping array and closes up any function as needed
   *******************************************************/
-  function closeFunctionCheck() {
+function closeFunctionCheck() {
     var f;
     // if there is no function, we don't go to the for loop below
        //console.log("length of functionmapping is " + functionMapping.length);
@@ -376,7 +376,7 @@
       }
     }
   }
-  function closeFunction(index) {
+function closeFunction(index) {
     var count = 0;
     if (index == translation.length-1) return false;
     for (var i=index; i<translation.length;i++) {
@@ -404,21 +404,19 @@
   addMissingOperators:
     javascripts interprets (expression)()  as function calls, - need to add * operators
   *****************************************/
-  function addMissingOperators(str) {
+function addMissingOperators(str) {
     //this function should add missing operators *
     str = str.replace(')(',')*(');
     str = str.replace(')Math.',')*Math.');
     return str;
   }
-  myMathlib.calculate = function() {
-    //console.log("when I appear, it is in the calculation status");
-    //console.log("before go in to translation function");
-  //  console.log(translation.join(''));
+function calculate () {
 
-    translateFunction();
+
+   translateFunction();
     //console.log("after translation function");
     //console.log(translation.join(''));
-    completeEquation();
+   completeEquation();
     var translationText = translation.join('');
     translationText = addMissingOperators(translationText);
     console.log('translation: ' + translationText)
@@ -430,7 +428,7 @@
   /*******************************************************
       this function loops through  functionMapping array and translates all the functionName to function
   *******************************************************/
-  function translateFunction() {
+function translateFunction() {
     var f, index;
     console.log("before entering the while loop inside the translatefunction");
     console.log("translation function is " + translation);
@@ -450,7 +448,7 @@
   completeEquation:
     count the '(' , ')'  pairs and complete the equation as needed
   *****************************************/
-  function completeEquation() {
+function completeEquation() {
     var count = 0;
     for (var i=0;i<translation.length;i++) {
       var char = translation[i];
@@ -466,78 +464,147 @@
       count -= 1;
     }
   }
+function bindUI(){
+    var clearfag = 0;
+    var string_count = 0;
+    var display_expression = [];
+    var temp_expression = '';
+    $('button').on('click', function(){
+      var i = $(this).text();
+
+      switch (i) {
+        case '=':
+          $('.result').text(calculate());
+          display_expression = [];
+          clearfag = 1;
+          //test.text(clearfag);
+          break;
+
+        case 'CA':
+          hit(i);
+          $('.display').text("");
+          break;
+        case '<-':
+          hit(i);
+          display_expression.pop();
+          //test.text("temp is " + display_expression);
+          for (var counting = 0; counting < display_expression.length; counting++) {
+            temp_expression = temp_expression + display_expression[counting];
+            //-test.text(temp_expression);
+          }
+          $('.display').text(temp_expression);
+          string_count = string_count-1;
+          temp_expression = "";
+          break;
+        default:
+         if (clearfag == 1) {
+           $('.display').text("");
+           clearfag = 0;
+         }
+          //test.text(clearfag);
+          hit(i);
+          $('.display').text($('.display').text() + i);
+          display_expression[string_count] = i;
+          //test.text("display_expression is " + display_expression);
+          string_count++;
+          break;
+      }
+    });
+
+  }
+myMathlib.load = function(){
+    bindUI();
+    hit();
+    calculate();
+
+  }
+  var test = [
+    //{
+      //'type' : 'basic operation with +-*/ and ( )',
+      //'testCases' : [
+      //  ['(','4',')','(','3','+','4',')', '/', '2'],
+       //['(','4',')','(','3','+','4'],  //test auto complete bracket
+      //  ['(','4',')','3','+','4'],
+      //  ['1','4','+','3','-','4'],
+      //  ['1','4','+','3','*','4'],
+      //  ['1','+','(','3'],
+      //  ['(','2',')','(','2',')','+','1'],
+      //  ['(','1','+','3',')','+','(','2', '+', '1',')']
+    //  ],
+      //'expectedResults' : [
+      //  14,28,16,13,26,4,5,7
+    //  ]
+  //  },
+    {
+      'type' : 'operation with ^',
+      'testCases' : [
+      //  ['(','3',')','(','1','+','1',')', '^', '(', '1', '+', '1',')', '+', '(', '1', '+', '2' ],
+      //  ['1','+','(','1','+','1',')', '^', '(', '1', '+', '1', ')' , '+', '1'],
+      //  ['(','1','+','1',')', '^', '(', '1', '+', '1' ],
+      //  ['(','4',')','(','3','+','4',')', '^', '2'],
+        ['1','+','3','^','2','+','3','^','4'],
+      //  ['2','^','(', '2', '^', '2', '+', '1', ')'],
+      //  ['2','^', '2', '^', '3'],
+      //  ['2','^','(', '2', '^', '3', ')'],
+      //  ['2','^','(', '2', '^', '2', '+', '1', ')', '^', '2'],
+      //  ['2','^','(', '2', '^', '2', '+', '1', ')', '^', '(', '1' , '+', '1' , ')' , '+', '3'],
+      // ['(', '2', '^', '2', '+', '1', ')', '^', '(', '1' , '+', '1' , ')' , '+', '3'],
+      ],
+      'expectedResults' : [
+        15,6,4,196,10,32,64,256,1024,1027,28
+      ]
+    }
+  ];
+  var failedTest = [];
+  var testResults = [];
+  test.forEach(function(t){
+  //  console.log('Testing for: '+t.type);
+    var testResultObj = {
+      type : t.type,
+      results : []
+    };
+    var expectedResults = t.expectedResults;
+    t.testCases.forEach(function(input,index,arr){
+      input.forEach(function(c){
+        hit(c);
+      });
+      //console.log('input: '+ input.join(''));
+      var result = calculate();
+      if (expectedResults[index] != result) {
+        failedTest.push(input);
+      }
+      testResultObj.results.push(result);
+    })
+    testResults.push(testResultObj);
+  });
+  console.log(failedTest);
+  if (failedTest.length <= 0) {
+    console.log('all testCases passed!');
+  } else {
+    console.log('Failed TestCases: ');
+    failedTest.forEach(function(testcase){
+    console.log(testcase.join(''));
+    });
+  }
   return myMathlib;
 }))
+
+
+
+
+/***********************combine code***************************************/
+
+
+
+
+
+
+
+/******************************************************************/
+
+
 
 /************************************
 Test Cases:
   each array inside test simulates a sequence of user input
 *****************************************/
-var test = [
-  //{
-    //'type' : 'basic operation with +-*/ and ( )',
-    //'testCases' : [
-    //  ['(','4',')','(','3','+','4',')', '/', '2'],
-     //['(','4',')','(','3','+','4'],  //test auto complete bracket
-    //  ['(','4',')','3','+','4'],
-    //  ['1','4','+','3','-','4'],
-    //  ['1','4','+','3','*','4'],
-    //  ['1','+','(','3'],
-    //  ['(','2',')','(','2',')','+','1'],
-    //  ['(','1','+','3',')','+','(','2', '+', '1',')']
-  //  ],
-    //'expectedResults' : [
-    //  14,28,16,13,26,4,5,7
-  //  ]
-//  },
-  {
-    'type' : 'operation with ^',
-    'testCases' : [
-    //  ['(','3',')','(','1','+','1',')', '^', '(', '1', '+', '1',')', '+', '(', '1', '+', '2' ],
-    //  ['1','+','(','1','+','1',')', '^', '(', '1', '+', '1', ')' , '+', '1'],
-    //  ['(','1','+','1',')', '^', '(', '1', '+', '1' ],
-    //  ['(','4',')','(','3','+','4',')', '^', '2'],
-      ['1','+','3','^','2','+','3','^','4'],
-    //  ['2','^','(', '2', '^', '2', '+', '1', ')'],
-    //  ['2','^', '2', '^', '3'],
-    //  ['2','^','(', '2', '^', '3', ')'],
-    //  ['2','^','(', '2', '^', '2', '+', '1', ')', '^', '2'],
-    //  ['2','^','(', '2', '^', '2', '+', '1', ')', '^', '(', '1' , '+', '1' , ')' , '+', '3'],
-    // ['(', '2', '^', '2', '+', '1', ')', '^', '(', '1' , '+', '1' , ')' , '+', '3'],
-    ],
-    'expectedResults' : [
-      15,6,4,196,10,32,64,256,1024,1027,28
-    ]
-  }
-];
-var failedTest = [];
-var testResults = [];
-test.forEach(function(t){
-//  console.log('Testing for: '+t.type);
-  var testResultObj = {
-    type : t.type,
-    results : []
-  };
-  var expectedResults = t.expectedResults;
-  t.testCases.forEach(function(input,index,arr){
-    input.forEach(function(c){
-      myMathlib.hit(c);
-    });
-    //console.log('input: '+ input.join(''));
-    var result = myMathlib.calculate();
-    if (expectedResults[index] != result) {
-      failedTest.push(input);
-    }
-    testResultObj.results.push(result);
-  })
-  testResults.push(testResultObj);
-});
-console.log(failedTest);
-if (failedTest.length <= 0) {
-  console.log('all testCases passed!');
-} else {
-  console.log('Failed TestCases: ');
-  failedTest.forEach(function(testcase){
-  console.log(testcase.join(''));
-  });
-}
