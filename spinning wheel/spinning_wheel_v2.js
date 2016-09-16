@@ -41,6 +41,7 @@ function print_or_remove(PRflag, id) {
         piechart.name.splice(id_position, 1);
         piechart.sample.splice(id_position, 1);
         piechart.color.splice(id_position, 1);
+        piechart.probability.splice(id_position, 1);
         //console.log(JSON.stringify(piechart));
         model.json = JSON.stringify(piechart);
         window.location.hash = model.json;
@@ -272,6 +273,17 @@ function bindbasicUI(){
         var div_id = removeid.match(numbercheck);
         $("#div_"+div_id[0]).remove();
         print_or_remove(model.data.print_remove,div_id[0]);
+        // once we remove one entry, we have to re calculate probability again
+        for (var i = 0; i < piechart.id.length; i++) {
+          piechart.probability[i] = piechart.sample[i]/model.data.mytotal*100;
+          $('#probability_check'+piechart.id[i]).val(piechart.probability[i] + '%');
+
+        }
+        model.json = JSON.stringify(piechart);
+        //console.log(model.json);
+        var encodejson = encodeURIComponent(model.json);
+        window.location.hash = encodejson;
+        console.log(piechart.probability);
     });
     $("#Form_print").on("focus",'input', function(){
         var id = $(this).parent().attr('id');
@@ -322,6 +334,7 @@ function check_hash(){
     }
     model.data.counting++;
     create_piechart();
+
 
     //console.log(div_counting);
     //console.log(JSON.stringify(piechart));
