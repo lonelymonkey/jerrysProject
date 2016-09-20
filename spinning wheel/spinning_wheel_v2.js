@@ -14,12 +14,15 @@
       },
       json : true,
       validation: false,
+      setname:false,
       id : [],
       decision:[],
-      probability:[]
+      probability:[],
+      winner:0,
   };
   var piechart =  {
       id : [],
+      set_name : "",
       name :[],
       sample :[],
       color :[],
@@ -62,7 +65,7 @@ function decide_output(){
     for (var e = 0; e < piechart.sample.length; e++) {
       probability_array.push(piechart.sample[e]/total);
     }
-    var random = Math.random();
+    var random = model.winner;
     //console.log("probability_array is " + JSON.stringify(probability_array));
     //console.log("random is " + random);
     for (var i = 0; i < probability_array.length; i++) {
@@ -198,6 +201,7 @@ function live_update_print (id){
         values[field.name] = field.value;
     });
 
+
     //console.log(values);
   /************************* Validation of input**********************************************************/
     if (values.name != "") {
@@ -283,7 +287,7 @@ function bindbasicUI(){
         //console.log(model.json);
         var encodejson = encodeURIComponent(model.json);
         window.location.hash = encodejson;
-        console.log(piechart.probability);
+        //console.log(piechart.probability);
     });
     $("#Form_print").on("focus",'input', function(){
         var id = $(this).parent().attr('id');
@@ -296,6 +300,34 @@ function bindbasicUI(){
 
         }, 50);
     });
+    $("#set_name").focus(function(){
+
+      model.setname = setInterval(function(){
+        var set_name = $('#set_name').val();
+        if (set_name == "") {
+          $("#set_name").css("box-shadow","1px 1px 15px red");
+          $("#set_name").css("border-color","red");
+            piechart.set_name = "";
+        }
+        else {
+          $("#set_name").css("box-shadow","1px 1px 15px green");
+          $("#set_name").css("border-color","green");
+          piechart.set_name = set_name;
+        }
+        model.json = JSON.stringify(piechart);
+      //  console.log(model.json);
+        var encodejson = encodeURIComponent(model.json);
+        window.location.hash = encodejson;
+      }, 50);
+
+      //console.log(piechart);
+    });
+    $("#set_name").focusout(function(){
+
+    clearInterval(model.setname);
+
+    });
+
     $("#Form_print").on("focusout",'input', function(){
 
       clearInterval(model.validation);
@@ -318,18 +350,20 @@ function check_hash(){
     piechart.sample= json["sample"];
     piechart.color = json["color"];
     piechart.probability = json["probability"];
+    piechart.set_name = json["set_name"];
     // we do have to array to track id, so model.id is the one to check multiple id, we need to synchornize it as well
     model.id = piechart.id;
-
+    //console.log(json);
     //we print the form, and print the previous values into those check box
     for (var i = 0; i < piechart.id.length; i++) {
       model.data.counting = piechart.id[i];
-    //  console.log(model.data.counting);
+    //console.log(model.data.counting);
       $("#Form_print").append(print_or_remove(true, model.data.counting));
       $("#input_name_check"+ piechart.id[i]).val(piechart.name[i]);
       $("#input_sample_check"+ piechart.id[i]).val(piechart.sample[i]);
       $("#input_color_check"+ piechart.id[i]).val(piechart.color[i]);
       $("#probability_check"+ piechart.id[i]).val(piechart.probability[i] + '%');
+      $("#set_name").val(piechart.set_name);
 
     }
     model.data.counting++;
@@ -346,14 +380,7 @@ function rotation(){
     $.getScript("JQuery/jQueryRotate.js", function(){
       $('#can').rotate(model.data.angle);
       $('#start').click(function(){
-
-      var output = decide_output();
-      var winner = output[0];
-      var winner_probability = output[1];
-    //  $('#arrow').prepend('<img id="theImg" src="Arrows-Down-icon.png"/>')
-      console.log("winner is " + winner);
-      console.log("should stop at " +winner_probability*360+" degree");
-      /*************************/
+      send_data_to_php();
       var rotation = setInterval(function(){
         var stop = 360*49+270-8.455;
         model.data.velocity = -(1.167983132986*0.000001)*(model.data.angle*model.data.angle)+(0.0207325)*(model.data.angle)+5;
@@ -365,7 +392,7 @@ function rotation(){
           $('button').prop('disabled', true);
           $('input').prop('disabled',true);
         }
-        if (model.data.angle > stop - 360 * winner_probability) {
+        if (model.data.angle > stop - 360 * model.winner) {
           console.log(model.data.angle % 360);
           console.log("done");
           clearInterval(rotation);
@@ -373,16 +400,34 @@ function rotation(){
           model.data.velocity =0;
           $('button').prop('disabled', false);
           $('input').prop('disabled',false);
+
           //setTimeout(function(){$("#arrow img").remove();},3000)
            }
         },50);
       });
     });
   }
+function send_data_to_php(){
+
+    $.post("backend/backend.php", piechart, function(data, status){
+      console.log("Data: " + data + "\nStatus: " + status);
+      model.winner = data;
+      console.log(model.winner);
+  });
+
+}
+function get_data_from_php(){
+  setInterval(function(){
+    $.get("backend/backend.php", function(data, status){
+        console.log("Data: " + data + "\nStatus: " + status);
+    });
+  },10000);
+}
 spinning_wheel.load = function(){
-    bindbasicUI();
     check_hash();
+    bindbasicUI();
     rotation();
+    get_data_from_php();
   }
 return spinning_wheel;
 }))
