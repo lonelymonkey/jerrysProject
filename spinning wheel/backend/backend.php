@@ -11,12 +11,14 @@ $whole_set = $_POST;
 
 
 
-
 # when user click spin, the $bar is not empty, so php will give a randon number to front end, and front end also
 # send the whole set to us as assocaitive array
 if ($whole_set) {
   // we are storing our data in DB
   $setname = $whole_set["set_name"];
+  $slice_name = $whole_set["name"];
+  $distribution = $whole_set["sample"];
+  $color = $whole_set["color"];
   // insert set name into wheelset
   $randon_number = rand(0,100);
   echo $randon_number*0.01;
@@ -30,10 +32,11 @@ if ($whole_set) {
   //$database->query('SELECT * FROM user_blog where id = '.$DataId.'');
   $set_id_from_DB = $database->resultset();
   $desire_setID = $set_id_from_DB[count($set_id_from_DB)-1];
-  for ($i=0; $i < ; $i++) { 
-    # code...
+  //var_dump($desire_setID["setId"]);
+  for ($i=0; $i < count($whole_set["id"]); $i++) {
+    inert_into_probabilityslice($desire_setID["setId"], $slice_name[$i],$distribution[$i],$color[$i]);
   }
-  ;
+
 
 
   //$database->query('SELECT * FROM Wheelset where ');
@@ -53,6 +56,14 @@ else {
   #We have load the data from database and package them as json format, not we send our json to front end
   $dataset = ["Jerry"=>"best","bill"=>"hehe"];
   var_dump($dataset);
+}
+
+function inert_into_probabilityslice($setId, $name, $sample, $color) {
+  $database = new Database();
+  $database->query('INSERT INTO probabilitySlice (setId, name, distribution, colorCode)
+  VALUES (:setId,:name,:distribution,:colorCode)');
+  $database->bind(':setId',$setId)->bind(':name',$name)->bind(':distribution',$sample)->bind(':colorCode',$color);
+  $database->execute();
 }
 
 ?>
