@@ -28,8 +28,12 @@ if ($whole_set) {
   $database->query('SELECT setId FROM wheelset where name = :setname');
   $database->bind(':setname',$setname);
   //$database->query('SELECT * FROM user_blog where id = '.$DataId.'');
-  $current_set_id = $database->resultset();
-  var_dump($current_set_id[count($current_set_id)-1]);
+  $set_id_from_DB = $database->resultset();
+  $desire_setID = $set_id_from_DB[count($set_id_from_DB)-1];
+  for ($i=0; $i < ; $i++) { 
+    # code...
+  }
+  ;
 
 
   //$database->query('SELECT * FROM Wheelset where ');
