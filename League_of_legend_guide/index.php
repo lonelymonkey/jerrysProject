@@ -15,18 +15,18 @@ var_dump($runes_response);
 
 $spells_response = $riotInterface->call_spells_api($api_key);
 var_dump($spells_response);
-*/
+
 /******************************************************/
 $items_response = file_get_contents("items.json");
-$items_response = json_decode($items_response);
+$items_response = json_decode($items_response,true);
 
 $champion_response = file_get_contents("champion.json");
-$champion_response = json_decode($champion_response);
+$champion_response = json_decode($champion_response,true);
 echo "<br>";
-var_dump($champion_response->data->Jax);
+var_dump($champion_response["data"]["Jax"][""]);
 echo "<br>";
 $items_id = strval(3025);
-var_dump($items_response->data->$items_id);
+//var_dump($items_response);
 echo "<br>";
 
 /*object(stdClass)#285 (139) { ["Jax"]=> object(stdClass)#284 (4) { ["id"]=> int(24) ["key"]=> string(3) "Jax" ["name"]=> string(3) "Jax" ["title"]=> string(19) "Grandmaster at Arms" } */

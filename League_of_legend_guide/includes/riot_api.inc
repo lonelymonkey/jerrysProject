@@ -12,7 +12,7 @@ class riot_api_interface {
   $fp = fopen('items.json', 'w');
   fwrite($fp,$response);
   fclose($fp);
-  $response = json_decode($response);
+  $response = json_decode($response,true);
   return $response;
   }
 
@@ -22,7 +22,7 @@ class riot_api_interface {
   $fp = fopen('champion.json', 'w');
   fwrite($fp,$response);
   fclose($fp);
-  $response = json_decode($response);
+  $response = json_decode($response,true);
   return $response;
 
   }
@@ -32,7 +32,7 @@ class riot_api_interface {
   $fp = fopen('runes.json', 'w');
   fwrite($fp,$response);
   fclose($fp);
-  $response = json_decode($response);
+  $response = json_decode($response,true);
   return $response;
   }
   public function call_spells_api($api_key){
@@ -41,7 +41,7 @@ class riot_api_interface {
   $fp = fopen('spells.json', 'w');
   fwrite($fp,$response);
   fclose($fp);
-  $response = json_decode($response);
+  $response = json_decode($response,true);
   return $response;
   }
 }
