@@ -105,7 +105,7 @@
   var functionMapping = [];
   var paramStartIndex = 0;
 
-// hit structure begin let change something 
+// hit structure begin let change something
 
 //lets use ^ as example, to go through all the code
 function hit(char){
@@ -238,7 +238,7 @@ function clear(char){
         buffer = [];
         var length = tempBuffer.length;
         for (var i = 0; i < length; i++) {
-          myMathlib.hit(tempBuffer[i].char);
+          hit(tempBuffer[i].char);
         }
         console.log("translation is " + translation);
       default:

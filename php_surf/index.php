@@ -2,7 +2,7 @@
 
 include '../includes/surf_global.inc';
 
-$active = 'class = "active"';
+//$active = 'class = "active"';
 $var1 ='<div class = "right">
 				<div class = "home_first">
 						<div class ="Home_title">

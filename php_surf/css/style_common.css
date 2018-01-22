@@ -52,9 +52,9 @@ body {
 
 
 .container {
-    margin: 0px auto;
-    position: relative;
-    width: 1080px;
+  margin: 0px auto;
+  position: relative;
+  width: 1080px;
 	padding-bottom: 1px;
 	padding-top: 1;
 	z-index:2;
