@@ -10,6 +10,9 @@ class riot_api_interface {
   public $api_key;
   private $file_name;
   public $response;
+  public function __construct ($api_key){
+    $this->api_key = $api_key;
+  }
   public function update_data_from_riot(){
     $this->call_items_api();
     $this->call_champion_api();
@@ -21,9 +24,7 @@ class riot_api_interface {
     fwrite($fp,$this->response);
     fclose($fp);
   }
-  public function __construct ($api_key){
-    $this->api_key = $api_key;
-  }
+
   private function call_items_api(){
     $riot_item_url = $this->base_url."/items?api_key=". $this->api_key . "&tags=from&tags=gold&tags=into&tags=sanitizedDescription&tags=tags";
     $this->response = file_get_contents($riot_item_url);
@@ -34,7 +35,7 @@ class riot_api_interface {
   }
 
   private function call_champion_api(){
-    $riot_champion_url = $this->base_url."/champions?api_key=".$this->api_key. "&tags=spells";
+    $riot_champion_url = $this->base_url."/champions?api_key=".$this->api_key. "&tags=spells&tags=passive";
     $this->response = file_get_contents($riot_champion_url);
     $this->file_name = "champion.json";
     $this->store_items_as_json();
