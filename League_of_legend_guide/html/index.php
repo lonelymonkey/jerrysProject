@@ -14,7 +14,9 @@ $json_to_db = new import_data_from_json();
 // $spell_response = json_decode(file_get_contents("../spells.json"),true);
 // var_dump($spell_response["data"]);
 
-
+// $json_to_db->import_champion_data();
+// $json_to_db->import_item_data();
+// $json_to_db->import_spell_data();
 
 
 

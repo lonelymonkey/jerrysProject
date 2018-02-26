@@ -7,6 +7,7 @@ CREATE TABLE `build_guide` (
   `date_create` datetime not null default '0000-00-00',
   `build_name` varchar(256) NOT NULL,
   `skin_id` int(11) NOT NULL,
+  `update_time` datetime not null default '0000-00-00',
   PRIMARY KEY  (`build_id`),
   FOREIGN KEY (`champion_id`) REFERENCES champions (champion_id) ON DELETE CASCADE,
   FOREIGN KEY (`user_id`) REFERENCES user (user_id) ON DELETE CASCADE
