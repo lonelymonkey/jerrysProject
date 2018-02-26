@@ -1,5 +1,4 @@
 <?php
-echo("<pre>");
 class import_data_from_json
 {
   private $database;
@@ -11,7 +10,7 @@ class import_data_from_json
     $this->database = new Database();
   }
   public function import_champion_data(){
-    $this->champion_response = file_get_contents("champion.json");
+    $this->champion_response = file_get_contents("../champion.json");
     $this->champion_response = json_decode($this->champion_response,true);
     foreach ($this->champion_response["data"] as $champion_name => $champion_data) {
       $this->database->query('DELETE from champions where champion_id = :champion_id')
@@ -35,11 +34,11 @@ class import_data_from_json
     }
   }
   public function import_item_data(){
-    $this->item_response = file_get_contents("item.json");
+    $this->item_response = file_get_contents("../item.json");
     $this->item_response = json_decode($this->item_response,true);
-    var_dump($this->item_response["data"]);
+    //var_dump($this->item_response["data"]);
     foreach ($this->item_response["data"] as $item_id => $item_detail) {
-      echo($item_id. "<br>");
+      // echo($item_id. "<br>");
       if (!empty($item_detail["description"])) {
         $item_description = $item_detail["description"];
       }else {
@@ -81,7 +80,7 @@ class import_data_from_json
     }
   }
   public function import_spell_data(){
-    $this->spell_response = file_get_contents("spells.json");
+    $this->spell_response = file_get_contents("../spells.json");
     $this->spell_response = json_decode($this->spell_response,true);
     foreach ($this->spell_response["data"] as $spell_name => $spell_data) {
 
@@ -95,12 +94,13 @@ class import_data_from_json
                      ->bind(':spell_name',$spell_data["name"])
                      ->bind(':spell_data',json_encode($spell_data))
                      ->execute();
-
+/*
       $this->database->query('SELECT * FROM spell where spell_id = :spell_id')
                      ->bind('spell_id',$spell_data["id"]);
       $spell_return_data = $this->database->resultset();
-      //var_dump($spell_return_data[0][]);
+      var_dump($spell_return_data[0][]);
       var_dump(json_decode($spell_return_data[0]["spell_data"],true));
+*/
     }
 
   }
@@ -111,5 +111,4 @@ class import_data_from_json
   }
 
 }
-echo("</pre>");
  ?>

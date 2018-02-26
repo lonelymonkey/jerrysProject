@@ -8,9 +8,8 @@ CREATE TABLE `build_guide` (
   `build_name` varchar(256) NOT NULL,
   `skin_id` int(11) NOT NULL,
   PRIMARY KEY  (`build_id`),
-  FOREIGN KEY (`champion_id`) REFERENCES champions (champion_id),
-  FOREIGN KEY (`user_id`) REFERENCES user (user_id),
-  FOREIGN KEY (`skin_id`) REFERENCES skin (skin_id)
+  FOREIGN KEY (`champion_id`) REFERENCES champions (champion_id) ON DELETE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES user (user_id) ON DELETE CASCADE
 ) ENGINE=Innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user` (
