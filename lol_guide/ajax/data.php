@@ -1,7 +1,7 @@
 <?php
 //include "../../includes/global.inc";
-include "../includes/dataService.inc";
-include '../includes/config.inc';
+include "../../../global_includes/lol_guide/dataService.inc";
+include '../../../global_includes/lol_guide/config.inc';
 include INCLUDE_PATH . '/JerryDatabase.class.inc';
 
 //include '../includes/import.inc';
@@ -36,7 +36,7 @@ try {
     }
     $response['errMsg'] = $e->getMessage();
 }
-//var_dump(json_encode($response['data']));
+// var_dump(json_encode($response));
 echo json_encode($response);
 
 ?>

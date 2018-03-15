@@ -7,7 +7,7 @@ defined('DB_PASS') or define("DB_PASS", "");
 defined('DB_NAME') or define("DB_NAME", "surfsite");
 
 
-defined('INCLUDE_PATH') or define('INCLUDE_PATH', 'C:/XAMPP/htdocs/GG/includes');
+defined('INCLUDE_PATH') or define('INCLUDE_PATH', 'C:/xampp/htdocs/personal_project/includes');
 
 class config {
 }
