@@ -2,7 +2,13 @@
  window.myApp = factory(window.myApp);
 }
 (function(myApp){
-var id = myApp.config.id;
+  var id = myApp.config.id;
+  myApp.read_responser_after_save_build = function (response){
+  console.log(response);
+
+  myApp.save_build.build_id = response.data.build_id;
+  console.log(myApp.save_build);
+  }
   myApp.create_writing_frame = function (create){
     var writing_frame = ` <div class = "row create_main_function">
                               <div class = "col-md-3 ">

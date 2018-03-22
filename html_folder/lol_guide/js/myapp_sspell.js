@@ -48,14 +48,17 @@
       $("#spell1_spot").append(spell_ready_to_push);
       $("#sspell"+pool_member_id).hide();
       $(".spell_be_pushed"+pool_member_id).prop('alt', 'first');
+      myApp.save_build.spell_set.spell_id_1 = pool_member_id;
       first_spell_on = true;
     }else if (!second_spell_on) {
       $(".spell_span2").hide();
       $("#spell2_spot").append(spell_ready_to_push);
       $("#sspell"+pool_member_id).hide();
       $(".spell_be_pushed"+pool_member_id).prop('alt', 'second');
+      myApp.save_build.spell_set.spell_id_2 = pool_member_id;
       second_spell_on = true;
     }
+    console.log(myApp.save_build.spell_set);
   }
   myApp.sspell_selection_back_to_pool = function (pool_member_id){
     console.log("sspell_selection_back_to_pool spell id is " + pool_member_id);
@@ -65,13 +68,15 @@
     if (spell_spot == "first") {
       first_spell_on = false;
       $(".spell_span1").show();
+      myApp.save_build.spell_set.spell_id_1 = 0;
     }
     else if (spell_spot == "second") {
       second_spell_on = false;
       $(".spell_span2").show();
+      myApp.save_build.spell_set.spell_id_2 = 0;
+
     }
     $(".spell_be_pushed"+pool_member_id).remove();
-
   }
 
   return myApp;

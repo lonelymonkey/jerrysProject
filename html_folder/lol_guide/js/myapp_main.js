@@ -242,7 +242,9 @@ myApp.load_users_build = function (){
                             <div  class ="col-md-3">`+ myApp.exist_builds[i].build_name +`</div>
                             <div  class ="col-md-3"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
                             <div  class ="col-md-3"> `+ myApp.exist_builds[i].update_time +` </div>
-                            <div  class ="col-md-3"> <button onclick="">view</button> <button onclick='myApp.writing(`+temp+`)'>edit</button></div>
+                            <div  class ="col-md-3">
+                            <button onclick="">view</button> 
+                            <button onclick='myApp.writing(`+temp+`)'>edit</button></div>
                         </div>`;
     console.log(build_set_frame);
     $(id+' .content').append(build_set_frame);

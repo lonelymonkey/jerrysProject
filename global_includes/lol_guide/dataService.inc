@@ -228,12 +228,12 @@ if (!class_exists('dataServiceRead')) {
         $this->db_validation->query('select * from '.$table_name.' where build_id =
                                     '.$build_id);
         $table_col_and_entry = $this->db_validation->resultset();
-        var_dump($table_col_and_entry);
+        // var_dump($table_col_and_entry);
         if ($table_col_and_entry == NULL) {
-          echo "\n empty \n";
+          // echo "\n empty \n";
           return "create";
         }else {
-          echo "\n not empty \n";
+          // echo "\n not empty \n";
 
           return "update";
         }
@@ -241,6 +241,7 @@ if (!class_exists('dataServiceRead')) {
     private function build_guide_insert_or_update ($input_array){
       if ($input_array["build_id"]==0) {
         $this->current_build_id = $this->database->insert($input_array,"build_guide");
+        return $this->current_build_id;
       }else {
         if ($this->user_validation($input_array["build_id"],$input_array["user_id"])) {
           $temp_build_id = $input_array["build_id"];
@@ -259,7 +260,7 @@ if (!class_exists('dataServiceRead')) {
     }
 
     public function save_data($data_to_db) {
-      $build_created = false;
+      $deal_table_build_guide = false;
       $build_guide_array = ["build_id"=>0,
                             "user_id"=>0,
                             "champion_id"=>0,
@@ -279,24 +280,22 @@ if (!class_exists('dataServiceRead')) {
                 $build_guide_array[$col] = date("Y-m-d G:i:s",time());
               }else {
                 $build_guide_array[$col] = $first_phase_value;
-
               }
             }
           }
           // var_dump($build_guide_array);
         }else {
-          echo $first_phase_key . "\n above is table name \n";
+          // echo $first_phase_key . "\n above is table name \n";
           if ($first_phase_key != "spell_set") {
             continue;
-
           }
-          if (!$build_created) {
+          if (!$deal_table_build_guide) {
             $this->build_guide_insert_or_update($build_guide_array);
-            $build_created = true;
+            $deal_table_build_guide = true;
           }
-          echo "above is saving build_guide\n";
+          // echo "above is saving build_guide\n";
           $first_phase_value["build_id"] = $this->current_build_id;
-          var_dump($first_phase_value);
+          // var_dump($first_phase_value);
           if ($this->set_validation($build_guide_array["build_id"],$first_phase_key)=="create") {
             $this->database->insert($first_phase_value,$first_phase_key);
           }else
@@ -305,6 +304,7 @@ if (!class_exists('dataServiceRead')) {
 
         }
       }
+      return ["build_id"=>$this->current_build_id];
     }
   }
 }

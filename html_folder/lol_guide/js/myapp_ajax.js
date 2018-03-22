@@ -26,9 +26,7 @@
         url : config.apiUrl,
         data : { function : 'save_data', data : buildString },
         success : function(response) {
-          if (typeof(callback) == 'function') {
-            callback(response);
-          }
+          myApp.read_responser_after_save_build(response);
         }
       });
     }
