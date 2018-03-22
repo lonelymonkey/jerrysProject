@@ -110,7 +110,7 @@ CREATE TABLE `items` (
 ) ENGINE=innodb DEFAULT CHARSET=latin1;
 
 CREATE TABLE `note` (
-  `note_id` int(11) NOT NULL auto_increment,
+  `note_id` int(11) NOT NULL,
   `note` TEXT NOT NULL,
   `build_id` int(11) NOT NULL,
   PRIMARY KEY (`note_id`),
