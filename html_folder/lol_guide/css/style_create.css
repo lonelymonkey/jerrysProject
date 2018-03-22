@@ -1,0 +1,78 @@
+.create_champion_select_field{
+  display: none;
+}
+.create_select_champion{
+  font-size: 30px;
+  opacity: 0.6;
+  border-radius: 5px;
+  height: 80px;
+  width: 80px;
+}
+
+.create_main_function{
+  background-color: rgba(109,115,156,0.6);
+  border-radius: 25px;
+  border-color: #77869a;
+
+}
+
+.create_list_champion{
+  float: left;
+  margin-right: 30px;
+  padding-top: 50px;
+}
+#selected_champion{
+  height: 80px;
+  width: 80px;
+}
+
+#save{
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+
+}
+
+.writing_field{
+  margin-top: 30px;
+  overflow: auto;
+}
+.field_tag{
+  float: left;
+  padding: 10px;
+  margin-right: 10px;
+  background-color: rgba(66, 68, 88, 0.8);
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 5px;
+
+
+}
+#save:hover {background-color: #3e8e41}
+
+#save:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.field_selection{
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+  border-radius: 5px;
+  border-style: groove;
+}
+#pool_and_selection{
+  background-color: rgba(0,0,0,0.6);
+  margin-top: 20px;
+  overflow: auto;
+
+}
