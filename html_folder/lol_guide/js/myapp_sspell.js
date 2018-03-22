@@ -4,7 +4,7 @@
 
 (function(myApp){
   var first_spell_on = false;
-  var second_spell_on = false
+  var second_spell_on = false;
   myApp.sspell_build_writing_frame = function (){
     var pool_members = "";
     console.log("the length of spells is");
@@ -27,25 +27,48 @@
                       </div>`;
     $("#pool_and_selection").html(spell_field);
     for (var i = 0; i < myApp.spells.length; i++) {
-      var sspell = `<div class = "spell_list_sspell" id = "sspell`+myApp.spells[i].spell_id+`">
-                      <img onclick = "myApp.sspell_pool_to_selection(`+myApp.spells[i].spell_id+`)"
-                      src = "../assets/sspell_icon/`+myApp.spells[i].spell_id+`.png">
+      var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
+      var spell_data_bundle = {
+                                id : myApp.spells[i].spell_id,
+                                name : myApp.spells[i].spell_name,
+                                description : parse_spell_data.description
+      };
+      var sspell = `<div data-toggle='popover' class = 'spell_list_sspell' id = 'sspell`+myApp.spells[i].spell_id+`'>
+                      <img onclick = 'myApp.sspell_pool_to_selection(`+myApp.spells[i].spell_id+`)'
+                      src = '../assets/sspell_icon/`+myApp.spells[i].spell_id+`.png'>
                     </div>`;
+
+        // "<div data-toggle=`popover` class = `spell_list_sspell` id = `sspell"+myApp.spells[i].spell_id+"`><img onclick = `myApp.sspell_pool_to_selection("+spell_data_bundle+")`src = `../assets/sspell_icon/"+myApp.spells[i].spell_id+".png`></div>"
       $(".spell_pool").append(sspell);
+      console.log(spell_data_bundle);
+      myApp.initiate_sspell_popover(spell_data_bundle);
     }
     console.log("test test test");
     console.log(myApp.save_build);
   }
 
   myApp.sspell_pool_to_selection = function (pool_member_id) {
-    console.log("spell pool to selection spell id is " + pool_member_id);
-    var spell_ready_to_push = `<div class ="sspell_be_pushed" onclick = "myApp.sspell_selection_back_to_pool(`+pool_member_id+`)">
+    console.log(pool_member_id);
+    for (var i = 0; i < myApp.spells.length; i++) {
+      if (myApp.spells[i].spell_id !=pool_member_id) {
+        continue;
+      }
+      var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
+      var spell_data_bundle = {
+                                id : myApp.spells[i].spell_id,
+                                name : myApp.spells[i].spell_name,
+                                description : parse_spell_data.description
+      };
+    }
+    console.log(spell_data_bundle);
+    var spell_ready_to_push = `<div data-toggle="popover" class ="sspell_be_pushed" onclick = "myApp.sspell_selection_back_to_pool(`+pool_member_id+`)">
                                   <img class = "spell_be_pushed`+pool_member_id+`" src = "../assets/sspell_icon/`+pool_member_id+`.png">
                                </div>
                               `;
     if (!first_spell_on) {
       $(".spell_span1").hide();
       $("#spell1_spot").append(spell_ready_to_push);
+      myApp.initiate_sspell_popover(spell_data_bundle);
       $("#sspell"+pool_member_id).hide();
       $(".spell_be_pushed"+pool_member_id).prop('alt', 'first');
       myApp.save_build.spell_set.spell_id_1 = pool_member_id;
@@ -53,6 +76,7 @@
     }else if (!second_spell_on) {
       $(".spell_span2").hide();
       $("#spell2_spot").append(spell_ready_to_push);
+      myApp.initiate_sspell_popover(spell_data_bundle);
       $("#sspell"+pool_member_id).hide();
       $(".spell_be_pushed"+pool_member_id).prop('alt', 'second');
       myApp.save_build.spell_set.spell_id_2 = pool_member_id;
@@ -77,7 +101,25 @@
 
     }
     $(".spell_be_pushed"+pool_member_id).remove();
+    $(".popover.fade.right.in").remove();
   }
-
+  myApp.initiate_sspell_popover = function (popover_content){
+    console.log(popover_content.description);
+    var content_frame = `<div class="media">
+                              <a href="#" class="pull-left">
+                                  <img src="../assets/sspell_icon/`+popover_content.id+`.png"class="media-object" alt="Sample Image">
+                              </a>
+                              <div class="media-body">
+                                  <h4 class="media-heading">`+popover_content.name+`</h4>
+                                  <p>`+popover_content.description+`t.</p>
+                              </div>
+                           </div>`;
+    $('[data-toggle="popover"]').popover({
+        placement : 'right',
+        trigger : 'hover',
+        html : true,
+        content : content_frame
+      });
+  }
   return myApp;
 }))

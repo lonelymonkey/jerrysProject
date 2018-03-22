@@ -72,6 +72,9 @@
       case "skill":
         myApp.ability_build_writing_frame();
         break;
+      case "items":
+        myApp.items_build_writing_frame();
+        break;
       default:
         $("#pool_and_selection").html(field_name);
     }
