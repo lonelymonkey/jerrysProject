@@ -26,12 +26,12 @@ class riot_api_interface {
   }
 
   private function call_items_api(){
-    $riot_item_url = $this->base_url."/items?api_key=". $this->api_key . "&tags=from&tags=gold&tags=into&tags=sanitizedDescription&tags=tags";
+    $riot_item_url = $this->base_url."/items?api_key=". $this->api_key . "&tags=from&tags=gold&tags=inStore&tags=tags";
     $this->response = file_get_contents($riot_item_url);
     $this->file_name = "item.json";
     $this->store_items_as_json();
     $this->response = json_decode($this->response,true);
-    //return $this->response;
+    return $this->response;
   }
 
   private function call_champion_api(){

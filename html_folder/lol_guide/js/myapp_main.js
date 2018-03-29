@@ -10,6 +10,7 @@
   myApp.config = {
                   id : ""
   }
+  myApp.item_set_number = 0;
   myApp.champions;
   myApp.spells;
   myApp.items;
@@ -28,28 +29,30 @@
                             spell_id_2 : 0,
                             note_id : 0
                   },
-                  item_set  : {
-                            item_set_id : 0,
-                            set_name : "",
-                            note_id : 0
-                  },
-                  item_detail_set : {
-                            detail_id : 0,
-                            item_set_id : 0,
-                            items : "",
-                  },
-                  against_champion  : {
-                            against_id : 0,
-                            champion_id : 0,
-                            diffculty : 0,
-                            note_id : 0
-                  },
-                  skill_order_table  : {
-                            order_id : 0,
-                            skill_order_id : 0,
-                            level          : 0,
-                            skill          : "q"
-                  },
+                  item_set  :
+                  [
+
+                  ],
+                  item_detail_set : [
+
+                  ],
+                  against_champion:[
+                    {
+                      against_id : 0,
+                      champion_id : 0,
+                      diffculty : 0,
+                      note_id : 0,
+                      remove : false
+                    }
+                  ] ,
+                  skill_order_table  : [
+                    {
+                      order_id : 0,
+                      skill_order_id : 0,
+                      level          : 0,
+                      skill          : "q"
+                    }
+                  ],
                   skill_order_link_to_note  : {
                             skill_order_id　: 0,
                             note_id : 0
@@ -102,9 +105,9 @@ myApp.read_initial_data = function(obj){
   myApp.items = obj.data.items;
   myApp.exist_builds = obj.data.builds;
 
-  console.log(myApp.champions);
+  // console.log(myApp.champions);
   console.log(myApp.spells);
-  console.log(myApp.items);
+  // console.log(myApp.items);
 
   // console.log("I am the last sentense");
 }
@@ -183,7 +186,7 @@ myApp.load_exist_build = function (){
     var current_champion_name = "";
     var current_champion_id = 0;
     var build_set_frame = "";
-    console.log(myApp.exist_builds[i]);
+    // console.log(myApp.exist_builds[i]);
     for (var j = 0; j < myApp.champions.length; j++) {
       // console.log(myApp.champions[j]);
       if (myApp.champions[j].champion_id == myApp.exist_builds[i].champion_id) {
@@ -243,7 +246,7 @@ myApp.load_users_build = function (){
                             <div  class ="col-md-3"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
                             <div  class ="col-md-3"> `+ myApp.exist_builds[i].update_time +` </div>
                             <div  class ="col-md-3">
-                            <button onclick="">view</button> 
+                            <button onclick="">view</button>
                             <button onclick='myApp.writing(`+temp+`)'>edit</button></div>
                         </div>`;
     console.log(build_set_frame);

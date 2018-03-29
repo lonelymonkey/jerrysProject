@@ -52,3 +52,39 @@
   bottom: 3px;
   right: 3px
 }
+
+
+.popover.fade.right.in{
+  background-color: rgb(218, 219, 230);
+  border-radius: 25px;
+  border-style: groove;
+  min-width: 600px;
+  border-width: 3px;
+  border-color: #354d8b;
+}
+
+.popover.fade.right.in .arrpw{
+  border-width: 0;
+}
+
+.sspell_popover_icon{
+  float: left;
+  padding-right: 20;
+  min-width: 120px;
+}
+.popover>.arrow:after{
+  display:none;
+}
+.sspell_popover_description{
+  padding-top: 10px;
+  width: 70%;
+  /* min-width: 300px; */
+}
+.sspell_popover_name{
+  font-size: 25px;
+  font-weight: bold;
+}
+.sspell_popover_detail{
+  color: black;
+  font-size: 16px;
+}

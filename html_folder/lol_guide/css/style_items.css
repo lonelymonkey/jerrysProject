@@ -1,0 +1,110 @@
+.item_edit_field{
+  background-color: rgba(0,0,0,0.6);
+  height: 620px;
+}
+.item_pool_and_choice{
+  display: none;
+  overflow: auto;
+}
+.item_sets_tap{
+  background-color: rgba(210,15,18,0.6);
+  padding-bottom: 30px;
+}
+.item_choice{
+  float: left;
+  width: 45%;
+  background-color: rgba(240,202,29,0.6);
+
+}
+.item_pool{
+  float: left;
+  width: 55%;
+  padding-bottom: 22px;
+}
+.item_set_name{
+  background-color: rgba(21,108,45,0.6);
+}
+.item_chosen{
+  background-color: rgba(134,104,119,0.6);
+  padding-bottom: 371px;
+}
+.item_pool_display{
+  float: left;
+  width: 60%;
+  padding-bottom: 200px;
+  overflow: auto;
+  max-height: 470px;
+
+}
+
+.item_pool_catagory{
+  float: left;
+  width: 40%;
+  color: white;
+
+}
+
+.item_name{
+  color: wheat;
+  width: 150px;
+  float: left;
+}
+.item_icon{
+  float: left;
+
+}
+.item_block{
+  min-width: 100px;
+  min-height: 70px;
+  margin-bottom: 5px;
+}
+.item_pool_selection{
+  overflow: auto;
+  border-top: 10px groove #354d8b;
+
+}
+
+.item_block .popover.fade.right.in{
+  min-width: 700px;
+  font-size: 25px;
+}
+
+stats {
+  color: DarkBlue;
+
+}
+
+.item_popover_description{
+  padding-top: 10px;
+  width: 70%;
+  /* min-width: 300px; */
+}
+
+.item_popover_name{
+  font-size: 25px;
+  font-weight: bold;
+}
+.item_popover_detail > font {
+  font-size: unset;
+}
+
+font > a {
+  pointer-events: none;
+  cursor: default;
+}
+
+.item_popover_detail{
+  color: black;
+  font-size: 16px;
+}
+
+.item_popover_icon{
+  float: left;
+  padding-right: 20;
+  min-width: 70px;
+}
+
+.item_tree {
+  float: right;
+
+}

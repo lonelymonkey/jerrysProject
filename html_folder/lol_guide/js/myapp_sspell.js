@@ -27,11 +27,11 @@
                       </div>`;
     $("#pool_and_selection").html(spell_field);
     for (var i = 0; i < myApp.spells.length; i++) {
-      var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
+      // var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
       var spell_data_bundle = {
                                 id : myApp.spells[i].spell_id,
                                 name : myApp.spells[i].spell_name,
-                                description : parse_spell_data.description
+                                description : myApp.spells[i].spell_data.description
       };
       var sspell = `<div data-toggle='popover' class = 'spell_list_sspell' id = 'sspell`+myApp.spells[i].spell_id+`'>
                       <img onclick = 'myApp.sspell_pool_to_selection(`+myApp.spells[i].spell_id+`)'
@@ -41,7 +41,7 @@
         // "<div data-toggle=`popover` class = `spell_list_sspell` id = `sspell"+myApp.spells[i].spell_id+"`><img onclick = `myApp.sspell_pool_to_selection("+spell_data_bundle+")`src = `../assets/sspell_icon/"+myApp.spells[i].spell_id+".png`></div>"
       $(".spell_pool").append(sspell);
       console.log(spell_data_bundle);
-      myApp.initiate_sspell_popover(spell_data_bundle);
+      initiate_sspell_popover(spell_data_bundle);
     }
     console.log("test test test");
     console.log(myApp.save_build);
@@ -53,11 +53,11 @@
       if (myApp.spells[i].spell_id !=pool_member_id) {
         continue;
       }
-      var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
+      // var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
       var spell_data_bundle = {
                                 id : myApp.spells[i].spell_id,
                                 name : myApp.spells[i].spell_name,
-                                description : parse_spell_data.description
+                                description : myApp.spells[i].spell_data.description
       };
     }
     console.log(spell_data_bundle);
@@ -68,7 +68,7 @@
     if (!first_spell_on) {
       $(".spell_span1").hide();
       $("#spell1_spot").append(spell_ready_to_push);
-      myApp.initiate_sspell_popover(spell_data_bundle);
+      initiate_sspell_popover(spell_data_bundle);
       $("#sspell"+pool_member_id).hide();
       $(".spell_be_pushed"+pool_member_id).prop('alt', 'first');
       myApp.save_build.spell_set.spell_id_1 = pool_member_id;
@@ -76,7 +76,7 @@
     }else if (!second_spell_on) {
       $(".spell_span2").hide();
       $("#spell2_spot").append(spell_ready_to_push);
-      myApp.initiate_sspell_popover(spell_data_bundle);
+      initiate_sspell_popover(spell_data_bundle);
       $("#sspell"+pool_member_id).hide();
       $(".spell_be_pushed"+pool_member_id).prop('alt', 'second');
       myApp.save_build.spell_set.spell_id_2 = pool_member_id;
@@ -103,15 +103,15 @@
     $(".spell_be_pushed"+pool_member_id).remove();
     $(".popover.fade.right.in").remove();
   }
-  myApp.initiate_sspell_popover = function (popover_content){
+  initiate_sspell_popover = function (popover_content){
     console.log(popover_content.description);
-    var content_frame = `<div class="media">
-                              <a href="#" class="pull-left">
-                                  <img src="../assets/sspell_icon/`+popover_content.id+`.png"class="media-object" alt="Sample Image">
-                              </a>
-                              <div class="media-body">
-                                  <h4 class="media-heading">`+popover_content.name+`</h4>
-                                  <p>`+popover_content.description+`t.</p>
+    var content_frame = `<div class="media sspell_popover">
+                              <div class = "sspell_popover_icon">
+                                <img src="../assets/sspell_icon/`+popover_content.id+`.png"class="media-object" alt="Sample Image">
+                              </div>
+                              <div class="media-body sspell_popover_description">
+                                  <h4 class="media-heading sspell_popover_name">`+popover_content.name+`</h4>
+                                  <div class = "sspell_popover_detail">`+popover_content.description+`t.</div>
                               </div>
                            </div>`;
     $('[data-toggle="popover"]').popover({

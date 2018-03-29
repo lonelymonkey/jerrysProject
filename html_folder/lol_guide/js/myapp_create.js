@@ -52,6 +52,7 @@
       myApp.save_build.champion_id  = $("#pick_champion").val();
       console.log("champion id is "+myApp.save_build.champion_id);
       });
+      
       $("#build_name").focusout(function(){
        myApp.save_build.build_name  = $("#build_name").val();
        console.log("build name is "+myApp.save_build.build_name);
@@ -59,9 +60,105 @@
   }
   myApp.send_build_to_ajax = function (){
     console.log(myApp.save_build);
-    var stringify_build = JSON.stringify(myApp.save_build);
-    myApp_ajax.save_build(stringify_build);
+    // create_dummy_build_for_testing_backend();
+    console.log(myApp.save_build);
+    var stringnify_build = JSON.stringify(myApp.save_build);
+    myApp_ajax.save_build(stringnify_build);
   }
+  /************Below is the test dummy build for backend*************/
+
+  function create_dummy_build_for_testing_backend (){
+    myApp.save_build = {
+                    build_id : 20,
+                    user_id  : 1,
+                    champion_id :103,
+                    date_create : "",
+                    update_time : "",
+                    build_name : "create to test backend",
+                    skin_id : 0,
+                    spell_set : {
+                              spell_set_id : 9,
+                              spell_id_1 : 11,
+                              spell_id_2 : 12,
+                              note_id : 1
+                    },
+                    item_set  : [
+                      {
+                        item_set_id : 65,
+                        set_name : "65 mix test updateing detial update core item",
+                        note_id : 0,
+                        remove : true
+                      },
+                      {
+                        item_set_id : 0,
+                        set_name : "0 mix test create detial deffensive item",
+                        note_id : 0,
+                        remove : false
+                      }
+                    ],
+                    item_detail_set : [
+                      {
+                      detail_id : 0,
+                      item_set_id : 0,
+                      items : [154,144,134]
+                      },
+                    ],
+                    against_champion:[
+                      {
+                        against_id : 1,
+                        champion_id : 7,
+                        diffculty : 10,
+                        note_id : 0,
+                        remove : false
+
+                      },
+                      {
+                        against_id : 2,
+                        champion_id : 8,
+                        diffculty : 10,
+                        note_id : 0,
+                        remove : false
+                      },
+                      {
+                        against_id : 0,
+                        champion_id : 516,
+                        diffculty : 5,
+                        note_id : 0,
+                        remove : false
+                      }
+                    ] ,
+                    skill_order_table  : [
+                      {
+                        order_id : 0,
+                        skill_order_id : 0,
+                        level          : 0,
+                        skill          : "q"
+                      }
+                    ],
+                    skill_order_link_to_note  : {
+                              skill_order_id　: 0,
+                              note_id : 0
+                    },
+                    note  : {
+                              note_id : 0,
+                              note    : ""
+                    }
+    };
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /************aboveis the test dummy build for backend*************/
+
   myApp.select_field = function (field_name) {
 
     switch (field_name) {

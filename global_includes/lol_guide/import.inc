@@ -35,48 +35,61 @@ class import_data_from_json
     }
   }
   public function import_item_data(){
+
     $this->item_response = file_get_contents("../html/item.json");
     $this->item_response = json_decode($this->item_response,true);
-    //var_dump($this->item_response["data"]);
     foreach ($this->item_response["data"] as $item_id => $item_detail) {
-      // echo($item_id. "<br>");
+
+      if (!$item_detail["gold"]["purchasable"]) {
+        echo "I am not purchasable <br>";
+        unset($this->item_response["data"][$item_id]);
+        continue;
+      }
+      if ($item_detail["gold"]["total"] == 0) {
+        echo "I am free <br>";
+        unset($this->item_response["data"][$item_id]);
+        continue;
+      }
+
       if (!empty($item_detail["description"])) {
         $item_description = $item_detail["description"];
       }else {
         $item_description = "";
       }
+
       if (!empty($item_detail["from"])) {
+        foreach ($item_detail["from"] as $key => $value) {
+          $item_detail["from"][$key] = intval($value);
+
+        }
         $item_from = $item_detail["from"];
       }else {
-        $item_from = [];
-      }
-      if (!empty($item_detail["into"])) {
-        $item_into = $item_detail["into"];
-      }else {
-        $item_into = [];
+        $item_from = $null_array;
       }
       if (!empty($item_detail["tags"])) {
         $item_tags = $item_detail["tags"];
       }else {
-        $item_tags = [];
+        $item_tags = "";
       }
+      // var_dump($item_detail);
+      echo($item_id. "<br>");
+
       $this->database->query('DELETE from items where item_id = :item_id')
                      ->bind(':item_id', $item_id)
                      ->execute();
 
       $this->database->query('INSERT INTO items (item_id, item_name, total_cost, base_cost,
-                                                  sell_price, description, tags, _from_, _into_)
+                                                  sell_price, description, tags, _from_)
                                         VALUES (:item_id, :item_name, :total_cost, :base_cost,
-                                              :sell_price, :description, :tags, :_from_, :_into_)')
+                                              :sell_price, :description, :tags, :_from_)')
                      ->bind(':item_id', $item_id)
                      ->bind(':item_name', $item_detail["name"])
                      ->bind(':total_cost',$item_detail["gold"]["total"])
                      ->bind(':base_cost',$item_detail["gold"]["base"])
                      ->bind(':sell_price',$item_detail["gold"]["sell"])
                      ->bind(':description',$item_description)
-                     ->bind(':tags',json_encode($item_tags))
-                     ->bind(':_from_',json_encode($item_from))
-                     ->bind(':_into_',json_encode($item_into))
+                     ->bind(':tags',json_encode($item_tags ))
+                     ->bind(':_from_',json_encode($item_from ))
                      ->execute();
     }
   }
