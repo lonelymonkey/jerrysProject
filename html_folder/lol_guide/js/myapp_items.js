@@ -112,6 +112,12 @@
   }
   function item_catagory_list (){
     var catagory_frame =  `<div class = "item_cat">
+          <div class = "item_cat_list">
+            <div class="item_check_box">
+             <input class ="item_cat_check" type="checkbox" value="Jungle">
+            </div>
+            <div class= "item_list_name">Jungle item</div>
+          </div>
            <div class="item_list_title">Defense</div>
            <div class = "item_cat_list">
               <div class="item_check_box">
