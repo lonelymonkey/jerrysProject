@@ -1,6 +1,5 @@
 .item_edit_field{
   background-color: rgba(0,0,0,0.6);
-  height: 620px;
 }
 .item_pool_and_choice{
   display: none;
@@ -20,6 +19,7 @@
   float: left;
   width: 55%;
   padding-bottom: 22px;
+  color: white;
 }
 .item_set_name{
   background-color: rgba(21,108,45,0.6);
@@ -31,7 +31,7 @@
 .item_pool_display{
   float: left;
   width: 60%;
-  padding-bottom: 200px;
+  min-width: 297px;
   overflow: auto;
   max-height: 470px;
 
@@ -41,6 +41,7 @@
   float: left;
   width: 40%;
   color: white;
+  padding-left: 5px;
 
 }
 
@@ -103,8 +104,33 @@ font > a {
   padding-right: 20;
   min-width: 70px;
 }
+.item_name{
+  text-align: center;
+  font-size: 15px;
+  top: 20px;
+  position: relative;
 
+}
+.item_price{
+    color: white;
+    float: left;
+    font-size: 20px;
+    font-size: 20px;
+    top: 20px;
+    position: relative;
+
+
+}
 .item_tree {
   float: right;
+}
 
+.item_check_box{
+  float: left;
+  width: 10%;
+}
+
+.item_list_name{
+  float: left;
+  width: 90%;
 }
