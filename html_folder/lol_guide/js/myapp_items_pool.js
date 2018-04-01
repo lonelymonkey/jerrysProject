@@ -41,7 +41,7 @@
           // console.log(e.item_name);
           var  item_block = ` <div class = "item_block" id = "item-${e.item_id}">
                                 <div class = "item_icon" data-toggle="popover">
-                                  <img src = "../assets/item_icon/`+e.item_id+`.png">
+                                  <img onclick = "myApp.item_pool_to_selection(${e.item_id})" src = "../assets/item_icon/`+e.item_id+`.png">
                                 </div>
                                 <div class = "item_name">
                                   `+ e.item_name +`
@@ -100,6 +100,7 @@
             </div>
      </div>`;
     $("#pool_and_selection").html(items_guide_frame);
+    myApp.check_exist_set();
     item_display_list ();
     item_catagory_list();
 
@@ -276,7 +277,7 @@
     for (var i = 0; i < local_item_set.length; i++) {
       var  item_block = ` <div class = "item_block" id = "item-${local_item_set[i].item_id}">
                             <div class = "item_icon" data-toggle="popover">
-                              <img src = "../assets/item_icon/`+local_item_set[i].item_id+`.png">
+                              <img onclick = "myApp.item_pool_to_selection(${local_item_set[i].item_id})" src="../assets/item_icon/`+local_item_set[i].item_id+`.png">
                             </div>
                             <div class = "item_name">
                               `+ local_item_set[i].item_name +`

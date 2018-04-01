@@ -109,5 +109,11 @@
     }
     $("#item_empty_container-"+myApp.save_build.item_detail_set[item_which_set].items.length).html(`<img  class = "item_empty_icon" src = "../assets/other/item_empty.png">`);
   }
+  myApp.check_exist_set = function(){
+    for (var i = 0; i < myApp.save_build.item_detail_set.length; i++) {
+      console.log(i);
+        $('.item_sets_tap').prepend('<button onclick = "myApp.item_detail_frame('+i+')" class = btn btn-md>Item set # '+i+'</button>');
+    }
+  };
   return myApp;
 }))
