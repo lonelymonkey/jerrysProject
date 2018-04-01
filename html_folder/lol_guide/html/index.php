@@ -11,7 +11,8 @@
     <script src="../js/myapp_create.js"></script>
     <script src="../js/myapp_sspell.js"></script>
     <script src="../js/myapp_ability.js"></script>
-    <script src="../js/myapp_items.js"></script>
+    <script src="../js/myapp_items_pool.js"></script>
+    <script src="../js/myapp_items_selection.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="../css/style_main.css" rel="stylesheet">

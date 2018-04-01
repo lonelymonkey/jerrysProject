@@ -5,7 +5,7 @@
 (function(myApp){
   var item_set_structure = {
                               item_set_id : 0,
-                              set_name : "dummy set name",
+                              set_name : "",
                               note_id : 0,
                               remove : false
                           };
@@ -17,21 +17,28 @@
   var second_item_from = "";
   var local_item_set = [];
   var local_item_tags = [];
+  var item_which_set =0;
   myApp.item_search = function (){
     var item_keyword = "";
     var item_str = "";
     var reg = "";
     $( "#item_search" ).keyup(function() {
-        // console.log($("#item_search").val());
+        console.log($("#item_search").val());
+        //init the catagory array and ui
+      $(".item_cat_check").prop('checked',false);
+      local_item_tags = [];
+      local_item_set = [];
+
       $(".item_pool_display").html("");
       item_keyword = $("#item_search").val();
       reg = new RegExp("^" + item_keyword,"i");
       console.log(reg);
       console.log(reg);
+      var item_empty = true;
       myApp.items.forEach((e)=>{
         item_str = e.item_name;
         if (reg.test(item_str)) {
-          console.log(e.item_name);
+          // console.log(e.item_name);
           var  item_block = ` <div class = "item_block" id = "item-${e.item_id}">
                                 <div class = "item_icon" data-toggle="popover">
                                   <img src = "../assets/item_icon/`+e.item_id+`.png">
@@ -46,6 +53,7 @@
                             `;
           $(".item_pool_display").append(item_block);
           item_init_popover(e);
+          item_empty= false;
         }
         // // console.log(test_reg.test(str));
         //
@@ -55,10 +63,15 @@
         // }
 
       });
+      if (item_empty) {
+        $(".item_pool_display").html('<div class = "item_not_match">No items match by conditions</div>');
+
+      }
 
     });
 
   }
+
   myApp.items_build_writing_frame = function (){
     var items_guide_frame =
     `<div class = "item_edit_field">
@@ -66,37 +79,18 @@
               <button onclick = "myApp.item_add_set()" class = btn btn-md>Set &#43;</button>
           </div>
           <div class = "item_pool_and_choice">
-                <div class = "item_choice">
-                    <div class = "item_set_name">
-                        item set Name : <input id = "item_set_name" type = "text" placeholder = "Enter set name...">
-                    </div>
-                    <div class = "item_chosen">
-                        this will be item chosen
-                    </div>
-                    <div class = "item_core_set">
-                      Core item : <input type="checkbox" value="core">
-                    </div>
-                    <div class = "item_notes">
-                        <div class = "item_notes_title">
-                            Notes
-                        </div>
-                        <div class = "item_notes_writing_area">
-                            <textarea rows="4" cols="50"></textarea>
-                        </div>
-                    </div>
-                </div>
+                <div class = "item_choice"></div>
                 <div class = "item_pool">
                     <div class = "item_search_field">
                       <div class = "item_search_title">
                           Item Search
                       </div>
-                      <div class = "item_search_input">
+
                         <input id = "item_search" onclick = "myApp.item_search()" type = "text" placeholder = "Item name...">
-                      </div>
+
                     </div>
                     <div class = "item_pool_selection">
                       <div class = "item_pool_display">
-
                       </div>
                       <div class = "item_pool_catagory">
 
@@ -239,6 +233,7 @@
   }
   function bind_item_check_box_ui(){
     $('.item_cat_check').on('click',function(){
+      $("#item_search").val("");
       var item_tag = $(this).val();
       if ($(this).prop("checked")) {
         local_item_tags.push(item_tag);
@@ -264,7 +259,7 @@
         // if myApp.items.tags.indexOf(e) > -1, count ++,
         // if count = local_item_tags.length, which matches the conditions
       local_item_tags.forEach((e)=>{
-        console.log(e);
+        // console.log(e);
         index =  myApp.items[i].tags.indexOf(e);
         if (index > -1) {
           count ++;
@@ -276,7 +271,7 @@
     }
     $(".item_pool_display").html("");
     if (local_item_set.length == 0) {
-      $(".item_pool_display").html("No items match by conditions");
+    $(".item_pool_display").html('<div class = "item_not_match">No items match by conditions</div>');
     }
     for (var i = 0; i < local_item_set.length; i++) {
       var  item_block = ` <div class = "item_block" id = "item-${local_item_set[i].item_id}">
@@ -297,14 +292,12 @@
       // console.log(myApp.items[i]._from_);
     }
   }
-
-
   function item_display_list (){
     // console.log(myApp.items);
     for (var i = 0; i < myApp.items.length; i++) {
       var  item_block = ` <div class = "item_block" id = "item-${myApp.items[i].item_id}">
                             <div class = "item_icon" data-toggle="popover">
-                              <img src = "../assets/item_icon/`+myApp.items[i].item_id+`.png">
+                              <img onclick = "myApp.item_pool_to_selection(${myApp.items[i].item_id})" src = "../assets/item_icon/`+myApp.items[i].item_id+`.png">
                             </div>
                             <div class = "item_name">
                               `+ myApp.items[i].item_name +`
@@ -320,18 +313,7 @@
     }
     // console.log("item name in the div is "+$(".item_name").text());
   }
-  myApp.item_add_set = function () {
-    $('.item_sets_tap').prepend('<button onclick = "myApp.item_detail_frame('+myApp.item_set_number+')" class = btn btn-md>Item set # '+myApp.item_set_number+'</button>');
-    myApp.item_set_number ++;
-    // console.log("item add set");
-    // console.log(JSON.stringify(myApp.save_build));
-    myApp.save_build.item_set.push(item_set_structure);
-    myApp.save_build.item_detail_set.push(item_detail_structure);
-    // console.log(myApp.save_build);
-  }
-  myApp.item_detail_frame = function (set_number){
-    $(".item_pool_and_choice").show();
-  }
+
   function check_2nd_layer (item_id) {
       // console.log("the item id which may have2nd layer is " + item_id);
 
