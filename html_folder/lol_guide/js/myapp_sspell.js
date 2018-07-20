@@ -7,6 +7,7 @@
   var second_spell_on = false;
   myApp.sspell_build_writing_frame = function (){
     var pool_members = "";
+    sspell_init();
     console.log("the length of spells is");
     console.log(myApp.spells);
     console.log(pool_members);
@@ -24,8 +25,18 @@
                           </div>
                         </div>
                         <div class ="spell_pool"></div>
+                      </div>
+                      <div class = "spell_note_field">
+                        <div>Note : </div>
+
+                        <textarea class = "spell_input_note" rows = "5" cols = "60"></textarea>
                       </div>`;
     $("#pool_and_selection").html(spell_field);
+
+    $(".spell_input_note").keyup(function(){
+      console.log("key in value is ",$(".spell_input_note").val());
+      myApp.save_build.spell_set.note = $(".spell_input_note").val();
+    });
     for (var i = 0; i < myApp.spells.length; i++) {
       // var parse_spell_data = JSON.parse(myApp.spells[i].spell_data);
       var spell_data_bundle = {
@@ -43,10 +54,25 @@
       console.log(spell_data_bundle);
       initiate_sspell_popover(spell_data_bundle);
     }
+    sspell_reload();
     console.log("test test test");
     console.log(myApp.save_build);
-  }
 
+  }
+  function sspell_init(){
+    first_spell_on = false;
+    second_spell_on = false;
+  }
+  function sspell_reload(){
+    if (myApp.save_build.spell_set.spell_id_1 != 0) {
+      myApp.sspell_pool_to_selection(myApp.save_build.spell_set.spell_id_1);
+
+    }
+    if (myApp.save_build.spell_set.spell_id_2 != 0) {
+      myApp.sspell_pool_to_selection(myApp.save_build.spell_set.spell_id_2);
+    }
+    $(".spell_input_note").val(myApp.save_build.spell_set.note);
+  }
   myApp.sspell_pool_to_selection = function (pool_member_id) {
     console.log(pool_member_id);
     for (var i = 0; i < myApp.spells.length; i++) {
@@ -101,7 +127,7 @@
 
     }
     $(".spell_be_pushed"+pool_member_id).remove();
-    $(".popover.fade.right.in").remove();
+    $(".popover.fade.bottom.in").remove();
   }
   initiate_sspell_popover = function (popover_content){
     console.log(popover_content.description);
@@ -111,11 +137,11 @@
                               </div>
                               <div class="media-body sspell_popover_description">
                                   <h4 class="media-heading sspell_popover_name">`+popover_content.name+`</h4>
-                                  <div class = "sspell_popover_detail">`+popover_content.description+`t.</div>
+                                  <div class = "sspell_popover_detail">`+popover_content.description+`</div>
                               </div>
                            </div>`;
     $('[data-toggle="popover"]').popover({
-        placement : 'right',
+        placement : 'bottom',
         trigger : 'hover',
         html : true,
         content : content_frame

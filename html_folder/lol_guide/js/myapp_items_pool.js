@@ -32,13 +32,30 @@
       $(".item_pool_display").html("");
       item_keyword = $("#item_search").val();
       reg = new RegExp("^" + item_keyword,"i");
-      console.log(reg);
-      console.log(reg);
+      reg1 = new RegExp(item_keyword,"i")
+      // console.log(reg);
+      // console.log(reg1);
       var item_empty = true;
       myApp.items.forEach((e)=>{
         item_str = e.item_name;
         if (reg.test(item_str)) {
           // console.log(e.item_name);
+          var  item_block = ` <div class = "item_block" id = "item-${e.item_id}">
+                                <div class = "item_icon" data-toggle="popover">
+                                  <img onclick = "myApp.item_pool_to_selection(${e.item_id})" src = "../assets/item_icon/`+e.item_id+`.png">
+                                </div>
+                                <div class = "item_name">
+                                  `+ e.item_name +`
+                                </div>
+                                <div class = "item_price">
+                                  `+ e.total_cost +`
+                                </div>
+                              </div>
+                            `;
+          $(".item_pool_display").append(item_block);
+          item_init_popover(e);
+          item_empty= false;
+        }else if (reg1.test(item_str)) {
           var  item_block = ` <div class = "item_block" id = "item-${e.item_id}">
                                 <div class = "item_icon" data-toggle="popover">
                                   <img onclick = "myApp.item_pool_to_selection(${e.item_id})" src = "../assets/item_icon/`+e.item_id+`.png">
@@ -76,7 +93,7 @@
     var items_guide_frame =
     `<div class = "item_edit_field">
           <div class = "item_sets_tap">
-              <button onclick = "myApp.item_add_set()" class = btn btn-md>Set &#43;</button>
+              <button onclick = "myApp.item_add_set()" class ="btn btn-md">Set &#43;</button>
           </div>
           <div class = "item_pool_and_choice">
                 <div class = "item_choice"></div>
@@ -364,9 +381,6 @@
     var content_frame = `<div class="media item_popover">
                             <div class = "item_popover_icon">
                               <img src="../assets/item_icon/`+popover_content.item_id+`.png"class="media-object" alt="Sample Image">
-                            </div>
-                            <div class = "item_tree">
-                              `+view+`
                             </div>
                             <div class="media-body item_popover_description">
                                 <h4 class="media-heading item_popover_name">`+popover_content.item_name+`</h4>

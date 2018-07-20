@@ -54,11 +54,21 @@
 }
 
 
-.popover.fade.right.in{
+.popover.fade.bottom.in{
   background-color: rgb(218, 219, 230);
   border-radius: 25px;
   border-style: groove;
   min-width: 600px;
+  border-width: 3px;
+  border-color: #354d8b;
+}
+
+.popover.fade.top.in{
+  background-color: rgb(218, 219, 230);
+  border-radius: 25px;
+  border-style: groove;
+  min-width: 600px;
+  max-width: 700px;
   border-width: 3px;
   border-color: #354d8b;
 }
@@ -87,4 +97,9 @@
 .sspell_popover_detail{
   color: black;
   font-size: 16px;
+}
+.spell_note_field{
+  font-size: 35px;
+  padding-bottom: 30px;
+  padding-left: 30px;
 }

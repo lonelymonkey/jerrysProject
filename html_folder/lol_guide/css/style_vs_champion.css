@@ -1,0 +1,163 @@
+.vs_champion_set{
+  max-width: 910px;
+  color : white;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+
+}
+.vs_champion_field{
+  padding-bottom: 300px;
+}
+.vs_champion_add{
+  padding: 10px;
+}
+.vs_champion_set_difficulty{
+  padding-top: 10px;
+  padding-left: 30px;
+
+}
+.vs_champion_set_champion{
+  padding-left: 41;
+}
+
+.vs_champion_select_champion{
+  height: 100px;
+  width: 100px;
+}
+.vs_champion_difficulty_level_0{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #82b382;
+}
+.vs_champion_difficulty_level_1{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #309630;
+
+}
+.vs_champion_difficulty_level_2{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #759b37;
+
+}
+.vs_champion_difficulty_level_3{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #cbcd3d;
+
+}
+
+.vs_champion_difficulty_level_4{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #ffe000;
+
+}
+.vs_champion_difficulty_level_5{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: orange;
+
+}
+.vs_champion_difficulty_level_6{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #ff7600;
+
+}
+.vs_champion_difficulty_level_7{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: #ff2400;
+
+}
+.vs_champion_difficulty_level_8{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: red;
+}
+.vs_champion_difficulty_level_9{
+  min-height: 60px;
+  margin-right: 5px;
+  float: left;
+  width: 10%;
+  max-width: 30px;
+  opacity: 0.2;
+  background-color: red;
+}
+.vs_champion_difficulty_frame{
+  margin-top: 5px;
+  min-height: 45px;
+}
+.vs_champion_level_common:hover{
+  opacity: 1;
+}
+.vs_champion_modal{
+  min-width: 932px;
+
+}
+.vs_champion_active{
+  /* background-color: black; */
+  opacity: 1;
+}
+.vs_set_remove_button{
+  color: white;
+  background-color: black;
+}
+.vs_champion_title{
+  float: left;
+  padding-top: 20px;
+  font-size: 35px;
+}
+.vs_champion_champion{
+  width: 20%;
+  padding-left: 24px;
+}
+.vs_champion_difficulty{
+  width: 35%;
+  padding-left: 40px;
+}
+.vs_champion_note{
+  width: 45%;
+}
+.vs_champion_set_notes{
+  padding-top: 10px;
+}

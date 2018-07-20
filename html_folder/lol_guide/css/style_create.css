@@ -15,7 +15,10 @@
   border-color: #77869a;
 
 }
+.modal-content{
+  min-width: 782px;
 
+}
 .create_list_champion{
   float: left;
   margin-right: 30px;
@@ -56,6 +59,11 @@
 
 
 }
+.create_error_display_section{
+  display : none;
+  font-size: 30;
+  color: white;
+}
 #save:hover {background-color: #3e8e41}
 
 #save:active {
@@ -71,8 +79,14 @@
   border-style: groove;
 }
 #pool_and_selection{
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,1);
   margin-top: 20px;
   overflow: auto;
+  border-radius: 10px;
+  min-height: 400px;
+  color: white;
 
+}
+.save_loading{
+  width: 100px;
 }

@@ -1,0 +1,332 @@
+img.resize {
+    width:540px; /* you can use % */
+    height: auto;
+}
+.display_background_holder{
+  background-size: 1200px auto;
+  /* background-color: black; */
+  min-height: 600px;
+}
+.display_content_holder{
+  position: absolute;
+  top: 0px;
+  padding-bottom: 200px;
+}
+.display_guide_name{
+  color: white;
+  font-size: 35px;
+  padding-left: 74px;
+  padding-top: 60px;
+}
+.display_rune_li{
+  overflow: auto;
+  margin-bottom: 20px;
+}
+ul.display_rune_ul{
+  list-style-type: none;
+}
+.display_css_rune{
+  min-height: 100px;
+  margin-bottom: 50px;
+}
+.display_css_rune_pool{
+  background-color: black;
+  float: left;
+  border-style: solid;
+  border-radius: 50%;
+  margin-right: 15px;
+  cursor: pointer;
+  border-color: rgba(255, 255, 255, 0.3);
+
+}
+.display_remove_cursor{
+  cursor: auto;
+}
+.display_rune_holer{
+  padding-top: 100px;
+  width: 40%;
+  float: left;
+}
+.rune_title_name{
+  color: white;
+  float: left;
+  padding-top: 20px;
+  font-size: 25px;
+}
+.display_item_rune_container{
+  overflow: auto;
+}
+.display_rune_container{
+  height: 200px;
+    width: 150px;
+    float: left;
+    margin-left: 40px;
+
+}
+.display_rune_li_css{
+  overflow: auto;
+}
+.display_note_css{
+  color: white;
+  font-size: 15px;
+  word-wrap: break-word;
+}
+.display_secondary_rune{
+  padding-left: 0;
+}
+.display_rune_position{
+  width: 50%;
+  float: left;
+}
+.display_note_title{
+  font-size: 30px;
+}
+.display_note_content{
+  font-size: 20px;
+  padding-top: 20px;
+}
+.display_items_holder{
+  margin-top: 104px;
+  width: 60%;
+  float: left;
+  color: white;
+  overflow: auto;
+}
+.item_set_title{
+  float: left;
+  padding-right: 5px;
+  font-size: 25px;
+}
+.item_set_note{
+  cursor: pointer;
+  float: right;
+  background-color: gray;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 2px;
+}
+.display_sspel_note{
+  color: white
+}
+.display_sspell_note_container{
+  overflow: auto;
+  padding-top: 20px;
+  width:350px;
+}
+.display_sspell_holder{
+  min-height: 260px;
+}
+.item_set_container_css{
+  float: left;
+  margin-right: 50px;
+  min-height: 100px;
+  min-width: 100px;
+  margin-bottom: 50px;
+}
+.display_note_popover_css{
+  min-width: 100px;
+  font-size: 25px;
+}
+.display_note_popover_css .sspell_popover_detail{
+  font-size: 25px;
+  max-width: 600px;
+  word-wrap: break-word;
+
+}
+.display_item_detail{
+
+}
+.display_title_note_holder{
+  margin-top: 20px;
+}
+.popover.fade.right.in{
+  background-color: rgb(218, 219, 230);
+  border-radius: 25px;
+  border-style: groove;
+  min-width: 250px;
+  border-width: 3px;
+  border-color: #354d8b;
+}
+.display_item_detail_frame{
+  float: left;
+  margin-right: 20px;
+  margin-top: 20px;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 3px;
+  border-color: gray;
+  cursor: pointer;
+
+}
+.display_sspell_whole_container{
+  overflow: auto;
+  padding-left: 70px;
+  padding-top: 100px;
+}
+.display_sspell_container{
+  float: left;
+  margin-right: 30px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: gray;
+  cursor: pointer;
+
+}
+.display_ability_title{
+  color: white;
+  font-size: 35px;
+  padding-bottom: 20px;
+}
+.display_ability_list_frame{
+  min-height: 100px;
+  margin-bottom: 20px;
+}
+.display_ability_level_text{
+  margin-top: 9px;
+}
+.display_ability_icon{
+  width: 70px;
+  height: 70px;
+  float: left;
+  margin-left: 10;
+  margin-top: 10;
+  margin-right: 18px;
+  border-style: solid;
+  border-color: gray;
+  border-width: 3px;
+  cursor: pointer;
+
+}
+.display_ability_selected{
+  color: white;
+  font-size: 25;
+  text-align: center;
+}
+.display_ability_checkbox_css{
+  width: 50px;
+  height: 50px;
+  margin-right: 11px;
+  background-color: gray;
+  float: left;
+  margin-top: 20px;
+}
+.display_item_detail{
+  overflow: auto;
+  background-color: #10103c;
+  border-style: solid;
+  border-width: 6px;
+  border-radius: 5px;
+  border-color: #242448;
+  padding-left: 23px;
+  padding-bottom: 17px;
+}
+.display_level_title{
+  font-size: 35px;
+  color: white;
+  padding-bottom: 30px;
+
+}
+.display_vs_champion_icon{
+  float: left;
+  width: 20%;
+  cursor: pointer;
+}
+.display_vs_title{
+  color: white;
+  font-size: 40px;
+  padding-bottom: 30px;
+}
+.display_vs_content{
+  display: none;
+}
+.display_vs_threat_level_bar_0{
+  height: 30px;
+  width: 150px;
+  background-color: #82b382;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_1{
+  height: 30px;
+  width: 200px;
+  background-color: #309630;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_2{
+  height: 30px;
+  width: 250px;
+  background-color: #309630;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_3{
+  height: 30px;
+  width: 300px;
+  background-color: #cbcd3d;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_4{
+  height: 30px;
+  width: 350px;
+  background-color: #ffe000;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_5{
+  height: 30px;
+  width: 400px;
+  background-color: orange;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_6{
+  height: 30px;
+  width: 450px;
+  background-color: #ff7600;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_7{
+  height: 30px;
+  width: 500px;
+  background-color: #ff2400;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_8{
+  height: 30px;
+  width: 550px;
+  background-color: red;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_threat_level_bar_9{
+  height: 30px;
+  width: 600px;
+  background-color: red;
+  float: left;
+  margin-top: 17px;
+}
+.display_vs_treat_level_section{
+  float: left;
+  width: 70%;
+}
+.display_vs_treat_level{
+  width: 20%;
+  color: white;
+  font-size: 50px;
+  float: left;
+
+}
+.display_vs_css{
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  cursor: pointer;
+  border-bottom: double 4px;
+  border-bottom-color : white;
+}
+.display_vs_set{
+  overflow: auto;
+}

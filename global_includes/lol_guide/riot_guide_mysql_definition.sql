@@ -29,6 +29,16 @@ CREATE TABLE `spell_set` (
   FOREIGN KEY (`build_id`) REFERENCES build_guide(build_id) ON DELETE CASCADE
 ) ENGINE=innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `rune_set` (
+  `rune_set_id` int(11) NOT NULL auto_increment,
+  `build_id` int(11) NOT NULL,
+  `primary` varchar(128),
+  `secondary` varchar(128),
+  `note_id` int(11) NOT NULL,
+  PRIMARY KEY  (`rune_set_id`),
+  FOREIGN KEY (`build_id`) REFERENCES build_guide(build_id) ON DELETE CASCADE
+) ENGINE=innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
 CREATE TABLE `item_set` (
   `item_set_id` int(11) NOT NULL auto_increment,
   `build_id` int(11) NOT NULL,
@@ -58,21 +68,20 @@ CREATE TABLE `against_champion` (
 
 CREATE TABLE `skill_order_table` (
   `order_id` int(11) NOT NULL auto_increment,
-  `skill_order_id` int(11) NOT NULL,
-  `level` tinyint UNSIGNED NOT NULL,
-  `skill` enum("q","w","e","r") NOT NULL,
+  `build_id` int(11) NOT NULL,
+  `order_list` varchar(128),
+  `note_id` int(11) NOT NULL,
   PRIMARY KEY  (`order_id`),
-  FOREIGN KEY (`skill_order_id`) REFERENCES skill_order_link_to_note(skill_order_id) ON DELETE CASCADE
+  FOREIGN KEY (`build_id`) REFERENCES build_guide(build_id) ON DELETE CASCADE
 ) ENGINE=innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*skill enum*/
 /*move background to build, 1 build 1 skin*/
 CREATE TABLE `skin` (
-  `skin_id` int(11) NOT NULL auto_increment,
+  `skin_id` int(11) NOT NULL,
   `champion_id` int(11) NOT NULL,
-  `skin_name` varchar(64) NOT NULL,
   PRIMARY KEY  (`skin_id`),
   FOREIGN KEY (`champion_id`) REFERENCES champions(champion_id) ON DELETE CASCADE
-) ENGINE=innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=innodb DEFAULT CHARSET=latin1;
 
 CREATE TABLE `skill_order_link_to_note` (
   `skill_order_id` int(11) NOT NULL auto_increment,
@@ -109,8 +118,19 @@ CREATE TABLE `items` (
   PRIMARY KEY  (`item_id`)
 ) ENGINE=innodb DEFAULT CHARSET=latin1;
 
+CREATE TABLE `runes` (
+  `rune_id` int(11) NOT NULL auto_increment,
+  `rune_name` varchar(128),
+  `description` varchar(512),
+  `type` enum('keystone', 'tier1', 'tier2', 'tier3') not null default 'tier3',
+  `category` enum('precision','domination','sorcery','resolve','inspiration') not null default 'precision',
+  PRIMARY KEY  (`rune_id`),
+  key `type` (`type`),
+  key `category` (`category`)
+) ENGINE=innodb DEFAULT CHARSET=latin1;
+
 CREATE TABLE `note` (
-  `note_id` int(11) NOT NULL,
+  `note_id` int(11) NOT NULL auto_increment,
   `note` TEXT NOT NULL,
   `build_id` int(11) NOT NULL,
   PRIMARY KEY (`note_id`),
@@ -127,3 +147,29 @@ CREATE TABLE `blogs` (
   KEY `name` (`name`)
 ) ENGINE=innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 */
+
+
+
+CREATE TABLE `runes` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(128),
+  `description` varchar(512),
+  `type` enum('keystone', 'tier1', 'tier2', 'tier3') not null default 'tier3',
+  `category` enum('precision','domination') not null default 'precision',
+  PRIMARY KEY  (`id`),
+  key `type` (`type`),
+  key `category` (`category`),
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+select * from runes where category='precision' and type='tier1';
+
+--
+-- [keystone id]-[tier1]-[tier2]-[tier3]
+-- $runeSet = [
+--    1,
+--    3,
+--    7,
+--    9
+-- ]
+-- implode('-',$runeSet)
+-- explode('-',$data['primary'])

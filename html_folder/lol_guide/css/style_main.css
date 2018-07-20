@@ -1,11 +1,19 @@
-
+body{
+  /* background: linear-gradient(to bottom, transparent, black), url(); */
+  /* background: linear-gradient(to bottom, black,gray); */
+  background: black;
+  background-repeat : no-repeat;
+}
+.layered-image {
+  background: linear-gradient(to right, transparent, mistyrose),
+      url("https://mdn.mozillademos.org/files/15525/critters.png");
+}
 #lol_app {
   margin: 0px auto;
   overflow: visible;
   position: relative;
   padding: 0;
-  width: 900px;
-
+  width: 1200px;
 }
 .view_buile_title{
   background-color: rgba(109,115,156,0.6);
@@ -21,6 +29,8 @@
   background-color: rgba(109,115,156,0.6);
   border-radius: 25px;
   margin-top: 25px;
+  color: white;
+  font-size: 25px;
 }
 nav.main_nav_bar{
   color: red;
@@ -123,3 +133,14 @@ ul.field_selection  > li:last-child {
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
+
+button{
+  color: black;
+}
+.media{
+  color :black;
+}
+textarea{
+  color : black;
+  resize: none;
+}

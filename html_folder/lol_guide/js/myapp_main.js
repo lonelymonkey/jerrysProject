@@ -10,10 +10,12 @@
   myApp.config = {
                   id : ""
   }
+  myApp.current_page = "";
   myApp.item_set_number = 0;
   myApp.champions;
   myApp.spells;
   myApp.items;
+  myApp.runes;
   myApp.exist_builds = [];
   myApp.save_build = {
                   build_id : 0,
@@ -27,7 +29,13 @@
                             spell_set_id : 0,
                             spell_id_1 : 0,
                             spell_id_2 : 0,
-                            note_id : 0
+                            note : ""
+                  },
+                  rune_set : {
+                      rune_set_id : 0,
+                      primary_rune : ["",0,0,0,0],
+                      secondary_rune : ["",0,0],
+                      note : ""
                   },
                   item_set  :
                   [
@@ -37,30 +45,17 @@
 
                   ],
                   against_champion:[
-                    {
-                      against_id : 0,
-                      champion_id : 0,
-                      diffculty : 0,
-                      note_id : 0,
-                      remove : false
-                    }
+
                   ] ,
-                  skill_order_table  : [
-                    {
-                      order_id : 0,
-                      skill_order_id : 0,
-                      level          : 0,
-                      skill          : "q"
-                    }
-                  ],
-                  skill_order_link_to_note  : {
-                            skill_order_id　: 0,
-                            note_id : 0
+                  skill_order_table  : {
+                    order_id : 0,
+                    order_list : ["","","","","","","","","","","","","","","","","",""],
+                    note : ""
                   },
-                  note  : {
-                            note_id : 0,
-                            note    : ""
-                  }
+                  // skill_order_link_to_note  : {
+                  //           skill_order_id　: 0,
+                  //           note_id : 0
+                  // },
   };
   var json_to_db= "";
   var current_build_id = 0;
@@ -104,6 +99,7 @@ myApp.read_initial_data = function(obj){
   myApp.spells = obj.data.spells;
   myApp.items = obj.data.items;
   myApp.exist_builds = obj.data.builds;
+  myApp.runes = obj.data.runes;
 
   // console.log(myApp.champions);
   console.log(myApp.spells);
@@ -116,7 +112,7 @@ function build_frame() {
   <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
      <div class="navbar-header">
-       <a class="navbar-brand" href="#" onclick="myApp.load_exist_build()">Guide LOL</a>
+       <a class="navbar-brand" href="#" onclick="myApp_ajax.load()">Guide LOL</a>
      </div>
      <ul class="nav navbar-nav">
        <li class="dropdown">
@@ -202,12 +198,14 @@ myApp.load_exist_build = function (){
                             <div  class ="col-md-3">`+ myApp.exist_builds[i].build_name +`</div>
                             <div  class ="col-md-3"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
                             <div  class ="col-md-3"> `+ myApp.exist_builds[i].update_time +` </div>
-                            <div  class ="col-md-3 main_view"> <button onclick="" class = "btn btn-lg">view</button> </div>
+                            <div  class ="col-md-3 main_view"> <button onclick="myApp.display_view_guide(${myApp.exist_builds[i].build_id})" class = "btn btn-lg">view</button> </div>
                         </div>`;
     // console.log(build_set_frame);
     $(id+' .content').append(build_set_frame);
   }
 }
+
+
 
 myApp.load_users_build = function (){
   var current_champion_id = 0;
@@ -229,11 +227,11 @@ myApp.load_users_build = function (){
     }
     var current_champion_name = "";
     var build_set_frame = "";
-    console.log(myApp.exist_builds[i]);
+    // console.log(myApp.exist_builds[i]);
     for (var j = 0; j < myApp.champions.length; j++) {
       console.log(myApp.champions[j]);
       if (myApp.champions[j].champion_id == myApp.exist_builds[i].champion_id) {
-        console.log("champion name is " + myApp.champions[j].champion_name);
+        // console.log("champion name is " + myApp.champions[j].champion_name);
         current_champion_name = myApp.champions[j].champion_name;
         current_champion_id = myApp.champions[j].champion_id;
 

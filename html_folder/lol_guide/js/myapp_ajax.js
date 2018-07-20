@@ -19,17 +19,45 @@
       $.extend(config,cfg);
     }
     myApp_ajax.save_build = function(buildString,callback) {
-      console.log(JSON.parse(buildString));
+
+      var temp_string = JSON.parse(buildString);
+
+      console.log(temp_string);
+      buildString = JSON.stringify(temp_string);
       $.ajax({
         method : 'POST',
         dataType : 'json',
         url : config.apiUrl,
         data : { function : 'save_data', data : buildString },
         success : function(response) {
-          myApp.read_responser_after_save_build(response);
+          if (response.status <0) {
+            $(".create_error_display_section").css("display","block");
+            $(".create_error_display_section").html(response.errMsg);
+            $(".create_error_display_section").fadeOut(1500);
+
+            console.log(response.errMsg);
+          }else {
+            myApp.read_responser_after_save_build(response);
+          }
+          $(".save_button").html(`<button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>`);
+
+
+
         }
       });
     }
+  myApp_ajax.get_target_build_data = function (build_id){
+
+    $.ajax({
+      method : 'GET',
+      dataType : 'json',
+      url : '../ajax/data.php',
+      data : { function : 'get_all_data_from_build',data : JSON.stringify(build_id)},
+      success : function(response) {
+        myApp.display_get_build_detail(response.data);
+      }
+    })
+  }
   myApp_ajax.log_in = function(){
     $.ajax({
       method : 'GET',
@@ -51,7 +79,7 @@
       // async: false,
       success : function(response) {
         // console.log('we got our initial data back');
-        // console.log(response);
+        console.log(response);
         myApp.read_initial_data(response);
         myApp.load_exist_build();
       }

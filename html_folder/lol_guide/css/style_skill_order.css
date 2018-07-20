@@ -1,0 +1,53 @@
+.skill_skin_warning{
+  font-size: 30;
+  color: white;
+}
+.skill_icon {
+  width: 10%;
+  float: left;
+  padding-left: 20;
+  padding-top: 20;
+}
+.skill_info_checkbox{
+  overflow: auto;
+  margin-bottom: 20px;
+}
+.skill_selection_holder{
+  overflow: auto;
+}
+input[type="checkbox"]{
+  height:30px;
+  width: 30px;
+}
+.skill_div{
+  width: 40px;
+  float: left;
+  margin-right: 5px;
+
+}
+ul.skill_list_div{
+  list-style-type:none;
+  padding-left: 0;
+  text-align : center;
+}
+.skill_check_list{
+  overflow: auto;
+}
+.skill_count_display{
+  width: 25%;
+  float: left;
+
+}
+.skill_count_name{
+  float: left;
+  width: 30px;
+}
+.skill_count_number{
+  float: left;
+  width:50%;
+}
+.skill_note_field{
+  font-size: 35px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+}

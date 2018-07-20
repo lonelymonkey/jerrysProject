@@ -3,16 +3,18 @@
 }
 (function(myApp){
   var id = myApp.config.id;
+  myApp.create_flag = false;
   myApp.read_responser_after_save_build = function (response){
-  console.log(response);
-
-  myApp.save_build.build_id = response.data.build_id;
-  console.log(myApp.save_build);
+    console.log(response.data);
+    // console.log(myApp.save_build);
+    myApp.save_build = response.data;
+    console.log(myApp.save_build.against_champion);
   }
   myApp.create_writing_frame = function (create){
+    myApp.create_flag = create;
     var writing_frame = ` <div class = "row create_main_function">
-                              <div class = "col-md-3 ">
-                                <button id = "save"onclick='myApp.send_build_to_ajax()'>save</button>
+                              <div class = "col-md-3 save_button">
+                                <button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>
                               </div>
                               <div class = "col-md-6">
                                 Build Name : <input type="text" id="build_name">
@@ -23,6 +25,7 @@
                                   </div>
                               </div>
                           </div>
+                          <div class = "create_error_display_section"></div>
                           <div class = "writing_field">
                             <div class = "field_selection">
                               <div class = "field_tag" onclick="myApp.select_field('spells')">Summoner Spell </div>
@@ -52,24 +55,30 @@
       myApp.save_build.champion_id  = $("#pick_champion").val();
       console.log("champion id is "+myApp.save_build.champion_id);
       });
-      
+
       $("#build_name").focusout(function(){
        myApp.save_build.build_name  = $("#build_name").val();
        console.log("build name is "+myApp.save_build.build_name);
      });
   }
   myApp.send_build_to_ajax = function (){
-    console.log(myApp.save_build);
+    // console.log(myApp.save_build);
     // create_dummy_build_for_testing_backend();
-    console.log(myApp.save_build);
+    // console.log(myApp.save_build);
     var stringnify_build = JSON.stringify(myApp.save_build);
-    myApp_ajax.save_build(stringnify_build);
+    if (myApp.save_build.champion_id == 0 || myApp.save_build.build_name =="") {
+      console.log("please check the build name or the champion");
+    }else {
+      $(".save_button").html(`<div class = "save_loading"><img src = "../assets/other/loader-transparent-85px.gif"></div>`)
+      myApp_ajax.save_build(stringnify_build);
+    }
+
   }
   /************Below is the test dummy build for backend*************/
 
   function create_dummy_build_for_testing_backend (){
     myApp.save_build = {
-                    build_id : 20,
+                    build_id : 0,
                     user_id  : 1,
                     champion_id :103,
                     date_create : "",
@@ -77,84 +86,76 @@
                     build_name : "create to test backend",
                     skin_id : 0,
                     spell_set : {
-                              spell_set_id : 9,
+                              spell_set_id : 0,
                               spell_id_1 : 11,
                               spell_id_2 : 12,
-                              note_id : 1
+                              note : "2nd test update note table where note_id = 4"
                     },
                     item_set  : [
                       {
-                        item_set_id : 65,
-                        set_name : "65 mix test updateing detial update core item",
-                        note_id : 0,
-                        remove : true
+                        item_set_id : 0,
+                        set_name : "100 mix test updateing detial update core item",
+                        note : "update item_set note 2",
+                        remove : false
                       },
                       {
                         item_set_id : 0,
-                        set_name : "0 mix test create detial deffensive item",
-                        note_id : 0,
+                        set_name : "100 mix test create detial deffensive item",
+                        note : "update item_set note 2 ",
                         remove : false
                       }
                     ],
                     item_detail_set : [
                       {
-                      detail_id : 0,
-                      item_set_id : 0,
-                      items : [154,144,134]
+                        detail_id : 0,
+                        item_set_id : 0,
+                        items : []
                       },
+                      {
+                        detail_id : 0,
+                        item_set_id : 0,
+                        items : []
+                      }
                     ],
                     against_champion:[
                       {
-                        against_id : 1,
+                        against_id : 0,
                         champion_id : 7,
                         diffculty : 10,
-                        note_id : 0,
+                        note : "test saving not for agaisnt champion 1",
                         remove : false
 
                       },
                       {
-                        against_id : 2,
+                        against_id : 0,
                         champion_id : 8,
                         diffculty : 10,
-                        note_id : 0,
+                        note : "test saving not for agaisnt champion 2",
                         remove : false
                       },
                       {
                         against_id : 0,
                         champion_id : 516,
                         diffculty : 5,
-                        note_id : 0,
+                        note : "test saving not for agaisnt champion 3",
                         remove : false
                       }
                     ] ,
-                    skill_order_table  : [
-                      {
-                        order_id : 0,
-                        skill_order_id : 0,
-                        level          : 0,
-                        skill          : "q"
-                      }
-                    ],
-                    skill_order_link_to_note  : {
-                              skill_order_id　: 0,
-                              note_id : 0
+                    rune_set : {
+                      rune_set_id : 0,
+                      primary_rune : [1,2,3],
+                      secondary_rune : [4,5,6],
+                      note : ""
                     },
-                    note  : {
-                              note_id : 0,
-                              note    : ""
+                    skill_order_table  : {
+                      order_id : 0,
+                      order : ["q","w","e","q","q","r","q","w","q","w","r","e","w","w","e","r","e","e"],
+                      note : ""
                     }
+
     };
 
   }
-
-
-
-
-
-
-
-
-
 
 
   /************aboveis the test dummy build for backend*************/
@@ -163,38 +164,85 @@
 
     switch (field_name) {
       case "spells":
+        myApp.current_page = "spells";
+
         myApp.sspell_build_writing_frame();
 
         break;
-      case "skill":
-        myApp.ability_build_writing_frame();
-        break;
       case "items":
+        myApp.current_page = "items";
         myApp.items_build_writing_frame();
+        break;
+      case "runes":
+        myApp.current_page = "runes";
+
+        myApp.runes_build_writing_frame();
+        break;
+      case "against_champion":
+        myApp.current_page = "against_champion";
+        myApp.vschampion_build_writing_frame();
+        break;
+      case "skill":
+        myApp.current_page = "skill";
+
+        myApp.skill_order_writing_frame();
+        break;
+      case "skin":
+        myApp.current_page = "skin";
+        myApp.skin_writing_frame();
         break;
       default:
         $("#pool_and_selection").html(field_name);
     }
   }
   function init(){
+    console.log(myApp.save_build);
     myApp.save_build.build_id=0;
-    myApp.save_build.champion_id=103;
+    myApp.save_build.champion_id=0;
     myApp.save_build.build_name="";
+    myApp.save_build.spell_set = {
+                            spell_set_id : 0,
+                            spell_id_1 : 0,
+                            spell_id_2 : 0,
+                            note : ""
+                  };
+    myApp.save_build.skill_order_table = {
+      order_id : 0,
+      order_list : ["","","","","","","","","","","","","","","","","",""],
+      note : ""
+    };
+    myApp.save_build.rune_set={
+        rune_set_id : 0,
+        primary_rune : ["",0,0,0,0],
+        secondary_rune : ["",0,0],
+        note : ""
+    };
+    myApp.save_build.item_set = [];
+    myApp.save_build.item_detail_set = [];
+    myApp.save_build.against_champion = [];
+
   }
   myApp.creat_move_champion_to_selection = function (select_champion_id){
     console.log("champion select is "+select_champion_id);
+
     myApp.save_build.champion_id = select_champion_id;
+    myApp.skill_champion_decided_flag = true;
+    myApp.skill_order_champion(select_champion_id);
+    myApp.skin_champion(select_champion_id);
+
     console.log(myApp.save_build);
     $("#selected_champion").html(`<img class="create_select_champion"
         data-toggle="modal" data-target="#myModal"
         onclick = "myApp.create_select_champion()"
         src="../assets/champion_icon/`+select_champion_id+`.png"
         alt="`+select_champion_id+`">`);
+    $(".create_select_champion").css("opacity",1);
   }
-  myApp.create_select_champion = function (selected_champion_id) {
-    $("#create_champion_select_field").html("");
+  myApp.create_select_champion = function () {
+    // $("#create_champion_select_field").html("");
     // <div class = "selected champion field"></div>
     // <input type="text" placeholder="Search Champion..." name="champion"><br>
+
     var champion_select_view = `
     <!-- Modal -->
       <div class="modal fade" id="myModal" role="dialog">
@@ -208,9 +256,8 @@
             </div>
             <div class="modal-body" >
                 <div class = "search">
-                  <input type="text" placeholder="Search ">
                     <div id="create_champion_select_field">
-                  </div>
+                    </div>
                 </div>
             </div>
           </div>
@@ -221,6 +268,14 @@
       for (var i = 0; i < myApp.champions.length; i++) {
         switch (myApp.champions[i].champion_id) {
           case "103":
+            $("#create_champion_select_field").append
+            (`<div class ="create_list_champion">
+                <img data-dismiss="modal" onclick ="myApp.creat_move_champion_to_selection(`+myApp.champions[i].champion_id+`)
+                 "src="../assets/champion_icon/`+myApp.champions[i].champion_id+`.png"
+                 alt="`+myApp.champions[i].champion_id+`">
+              </div>`);
+            break;
+          case "268":
             $("#create_champion_select_field").append
             (`<div class ="create_list_champion">
                 <img data-dismiss="modal" onclick ="myApp.creat_move_champion_to_selection(`+myApp.champions[i].champion_id+`)

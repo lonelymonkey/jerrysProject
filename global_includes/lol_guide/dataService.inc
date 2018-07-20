@@ -1,6 +1,9 @@
 <?php
-include "db_helper.inc";
 if (!class_exists('dataServiceRead')) {
+include "db_helper.inc";
+
+require_once "data_validation.inc";
+
   class dataServiceRead {
     private $database;
     private $champion_array_type_data;
@@ -9,13 +12,78 @@ if (!class_exists('dataServiceRead')) {
     public $response = ["champions"=>[],
                         "items"=>[],
                         "spells"=>[],
-                        "builds"=>[]
+                        "builds"=>[],
+                        "runes"=>[]
                       ];
     public function __construct() {
       $this->database = new Database();
     }
     public function get_build_sets($build_id){
+      // this part is for editing exsist build
       var_dump($build_id);
+    }
+    public function get_all_data_from_build($build_id){
+      $list_regular_table = [
+        'spell_set',
+        'rune_set',
+        'skill_order_table',
+        'item_set',
+        'against_champion',
+        'build_guide',
+        'note'
+      ];
+      $return_data_array =[];
+      $temp_item_array = [];
+      for ($i=0; $i < sizeof($list_regular_table); $i++) {
+        $this->database->query('SELECT * from '.$list_regular_table[$i].' where build_id = :build_id')
+                       ->bind(":build_id",$build_id);
+        $temp_regualr_data = $this->database->resultset();
+        if (sizeof($temp_regualr_data) == 1) {
+          $return_data_array[$list_regular_table[$i]] = $temp_regualr_data[0];
+          for ($j=0; $j < sizeof($return_data_array[$list_regular_table[$i]]) ; $j++) {
+            unset($return_data_array[$list_regular_table[$i]]["build_id"]);
+          }
+
+        }else {
+          $return_data_array[$list_regular_table[$i]] = $temp_regualr_data;
+          for ($j=0; $j < sizeof($return_data_array[$list_regular_table[$i]]) ; $j++) {
+            unset($return_data_array[$list_regular_table[$i]][$j]["build_id"]);
+          }
+        }
+        if ($list_regular_table[$i] == "rune_set" ) {
+          $return_data_array[$list_regular_table[$i]]["primary_rune"] = explode('-',$return_data_array[$list_regular_table[$i]]["primary_rune"]);
+          $return_data_array[$list_regular_table[$i]]["secondary_rune"] = explode('-',$return_data_array[$list_regular_table[$i]]["secondary_rune"]);
+          // $first_phase_value["primary_rune"] = explode('-',$first_phase_value["primary_rune"]);
+          // $first_phase_value["secondary_rune"] = explode('-',$first_phase_value["secondary_rune"]);
+        }
+        if ($list_regular_table[$i] == "skill_order_table" ) {
+          // var_dump($return_data_array[$list_regular_table[$i]]);
+          $return_data_array[$list_regular_table[$i]]["order_list"] = explode('-',$return_data_array[$list_regular_table[$i]]["order_list"]);
+          // $first_phase_value["primary_rune"] = explode('-',$first_phase_value["primary_rune"]);
+          // $first_phase_value["secondary_rune"] = explode('-',$first_phase_value["secondary_rune"]);
+        }
+        // var_dump($return_data_array[$list_regular_table[$i]]);
+
+
+        // unset($return_data_array[$list_regular_table[$i]["build_id"]);
+      }
+      $return_data_array["item_detail_set"] = [];
+      for ($i=0; $i < sizeof($return_data_array["item_set"]); $i++) {
+        $this->database->query('SELECT * from item_detail_set where item_set_id =:item_set_id ')
+                       ->bind(':item_set_id',$return_data_array["item_set"][$i]["item_set_id"]);
+        $temp_item_array[$i] = $this->database->resultset();
+        array_push($return_data_array["item_detail_set"],$temp_item_array[$i][0]);
+      }
+      // var_dump($return_data_array["item_detail_set"]);
+
+      // $return_data_array["item_detail_set"] = $temp_item_array;
+      // var_dump($return_data_array);
+      for ($i=0; $i < sizeof($return_data_array["item_detail_set"]); $i++) {
+        // var_dump($return_data_array["item_detail_set"][$i]);
+        $return_data_array["item_detail_set"][$i]["items"] = json_decode($return_data_array["item_detail_set"][$i]["items"]);
+      }
+      unset($return_data_array["build_guide"]["ip"]);
+      return $return_data_array;
     }
     public function get_initial_data() {
         $orgainzed_spell_data = [];
@@ -128,12 +196,24 @@ if (!class_exists('dataServiceRead')) {
         // var_dump($spell_return_data);
         $this->response["spells"] = $orgainzed_spell_data;
 
-        $this->database->query('select * from build_guide order by champion_id DESC');
-
-        $build_return_data = $this->database->resultset();
-
-        $this->response["builds"] = $build_return_data;
+        $this->response["builds"] = $this->load_all_build_and_its_data();
         // var_dump($this->response);
+        $rune_category = ["precision","domination","sorcery","resolve","inspiration"];
+        for ($i=0; $i < sizeof($rune_category); $i++) {
+          $this->database->query('SELECT * from runes where category = :category')
+                         ->bind(":category",$rune_category[$i]);
+          $runes_return_data = $this->database->resultset();
+          for ($j=0; $j <sizeof($runes_return_data); $j++) {
+            unset($runes_return_data[$j]["category"]);
+          }
+          $this->response["runes"][$rune_category[$i]] = $runes_return_data;
+        }
+
+        // echo "<pre>";
+
+        // var_dump($runes_return_data);
+
+        // echo "</pre>";
 
         // echo $champion_data["id"] . "<br>";
         // echo $champion_data["name"] . "<br>";
@@ -187,6 +267,13 @@ if (!class_exists('dataServiceRead')) {
       $this->response = $retur_user_name;
       return $this->response;
     }
+    private function load_all_build_and_its_data(){
+      $this->database->query('select build_id, champion_id, skin_id, update_time,build_name from build_guide order by update_time DESC');
+
+      $build_return_data = $this->database->resultset();
+
+      return $build_return_data;
+    }
     public function view_user_build(){
       $this->database->query('select *, user.user_name
                               from build_guide
@@ -205,6 +292,8 @@ if (!class_exists('dataServiceRead')) {
     private $current_build_id = 0;
     private $set_validation;
     private $create_response_array = [];
+    private $array_return_to_front_end = [];
+    private $build_create_flag = false;
     private $build_for_creation = ["champion_id"=>0,
                                     "user_id"=>0,
                                     "date_create"=>"",
@@ -220,6 +309,7 @@ if (!class_exists('dataServiceRead')) {
     //
     // }
     private function user_validation($build_id,$user_id){
+
       $this->db_validation->query('select build_id from build_guide where user_id =
                                   :user_id')
                           ->bind(':user_id',$user_id);
@@ -233,26 +323,26 @@ if (!class_exists('dataServiceRead')) {
       return false;
     }
     private function set_validation($build_id,$table_name,$phase_value){
-        echo "I am in the set validation \n";
-        echo $table_name . "   " . $build_id ."\n";
+        // we select everything from table by build_id, if the return data is empty, it means we should create a entry
 
         $this->db_validation->query('select * from '.$table_name.' where build_id =
                                     :build_id')
                             ->bind(':build_id',$build_id);
         $table_col_and_entry = $this->db_validation->resultset();
-        var_dump($table_col_and_entry);
+        // var_dump($table_col_and_entry);
         if ($table_col_and_entry == NULL) {
-          echo "\n table_col_and_entry empty \n";
+          // echo "\n table_col_and_entry empty \n";
           $this->set_validation = "create";
         }else {
-          echo "\n table_col_and_entry NOT empty \n";
+          // if the data want to store have value 0 on primary key, we should create;
 
           $first_value = array_keys($table_col_and_entry[0]);
           $this->set_pri_key = $first_value[0];
           if ($phase_value[$this->set_pri_key]==0) {
-            var_dump($phase_value);
+            // var_dump($phase_value);
             $this->set_validation = "create";
           }
+          // code below is about update validation. if the FK matches and PK matches, we update
           $this->db_validation->query('select '.$this->set_pri_key.' from '.$table_name.' where build_id =
                                       :build_id')
                               ->bind(':build_id',$build_id);
@@ -270,8 +360,10 @@ if (!class_exists('dataServiceRead')) {
     }
     private function build_guide_insert_or_update ($input_array){
       if ($input_array["build_id"]==0) {
+        $input_array["build_name"] = htmlentities($input_array["build_name"]);
         $this->current_build_id = $this->database->insert($input_array,"build_guide");
-        $this->create_response_array["build_id"]=$this->current_build_id;
+        // $this->create_response_array["build_id"]=$this->current_build_id;
+        $this->build_create_flag = true;
         return $this->current_build_id;
       }else {
         if ($this->user_validation($input_array["build_id"],$input_array["user_id"])) {
@@ -281,9 +373,12 @@ if (!class_exists('dataServiceRead')) {
           unset($input_array["date_create"]);
           // var_dump($input_array);
           // echo "build id is " . $temp_build_id ."\n";
+          $input_array["build_name"] = htmlentities($input_array["build_name"]);
+
           $this->database->update($input_array,"build_guide","build_id = ".$temp_build_id);
         }else {
-          return -1;
+          throw new Exception(2);
+
         }
       }
     }
@@ -291,24 +386,42 @@ if (!class_exists('dataServiceRead')) {
     //                     ->bind(':pk_value', $data_set_col_entry[$this->set_pri_key])
     //                     ->execute();
 
-    private function special_set_validation($special_fk_name,$special_fk_value,$table_name,$phase_value){
-      $this->db_validation->query('select * from '.$table_name.' where '.$special_fk_name.' =
-                                  :fk_value')
-                          ->bind(':fk_value',$special_fk_value);
-      $table_col_and_entry = $this->db_validation->resultset();
-      echo "in special set validation \n";
-      var_dump($table_col_and_entry);
-      $first_value = array_keys($table_col_and_entry[0]);
-      $this->set_pri_key = $first_value[0];
-      if ($table_col_and_entry[0][$this->set_pri_key] == $phase_value[$this->set_pri_key]) {
-        $this->set_validation = "update";
-        echo "detail_id match\n";
-      }else {
-        $this->set_validation = "";
-      }
 
+    private function insert_note($note,$build_id){
+      $encode_note = htmlentities($note);
+      $this->db_validation->query('INSERT into note (note, build_id) values (:note, :build_id)')
+                                     ->bind(":note",$encode_note)
+                                     ->bind(":build_id",$build_id)
+                                     ->execute();
+      $note_id = $this->db_validation->lastInsertId();
+      return $note_id;
     }
+    private function update_note($note,$note_id){
+      $encode_note = htmlentities($note);
 
+      $this->db_validation->query('UPDATE note set note = :note where note_id = :note_id')
+                          ->bind(":note",$encode_note)
+                          ->bind(":note_id",$note_id)
+                          ->execute();
+    }
+    private function get_ip(){
+      $ipaddress = '';
+      if (isset($_SERVER['HTTP_CLIENT_IP']))
+          $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+      else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+          $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      else if(isset($_SERVER['HTTP_X_FORWARDED']))
+          $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+      else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+          $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+      else if(isset($_SERVER['HTTP_FORWARDED']))
+          $ipaddress = $_SERVER['HTTP_FORWARDED'];
+      else if(isset($_SERVER['REMOTE_ADDR']))
+          $ipaddress = $_SERVER['REMOTE_ADDR'];
+      else
+          $ipaddress = 'UNKNOWN';
+      return $ipaddress;
+    }
     public function save_data($data_to_db) {
       $deal_table_build_guide = false;
       $multiple_entry = true;
@@ -322,12 +435,16 @@ if (!class_exists('dataServiceRead')) {
                             "date_create"=>"",
                             "update_time"=>"",
                             "build_name"=>"",
-                            "skin_id"=>0];
-      echo "<pre>";
+                            "skin_id"=>0,
+                            "ip"=>""];
+      // echo "<pre>";
       // var_dump($data_to_db);
       //if $first_phase_value is array, which is dealing table
       //if $first_phase_value is not array, they are col and entry of build_guide
+      $validation = new data_validation();
+      $validation::init_validation($data_to_db);
       foreach ($data_to_db as $first_phase_key => $first_phase_value) {
+        $multiple_entry = true;
         // var_dump($data_to_db);
         // array type stuff are belong to set tables, others are build_info
         if (gettype($first_phase_value) !="array") {
@@ -338,6 +455,8 @@ if (!class_exists('dataServiceRead')) {
               }else {
                 $build_guide_array[$col] = $first_phase_value;
               }
+            }elseif ($col == "ip") {
+              $build_guide_array[$col] = $this->get_ip();
             }
           }
           // var_dump($build_guide_array);
@@ -346,69 +465,136 @@ if (!class_exists('dataServiceRead')) {
           if (!$deal_table_build_guide) {
             $this->build_guide_insert_or_update($build_guide_array);
             $deal_table_build_guide = true;
+            $data_to_db["build_id"] = $this->current_build_id;
           }
-
-
-          // $this->database->query('INSERT INTO champions (champion_id, champion_name, data)
-          //                     VALUES (:champion_id, :champion_name, :data)')
-          //                 ->bind(':champion_name', $champion_name)
-          //                 ->bind(':champion_id', $champion_data["id"])
-          //                 ->bind(':data',json_encode($champion_data))
-          //                 ->execute();
-
           foreach ($first_phase_value as $second_phase_key => $second_phase_value) {
+
+            // echo "in checking type \n";
+            // var_dump($second_phase_key);
+            // var_dump(gettype($second_phase_value));
             if (gettype($second_phase_value) !="array") {
+              // echo "not array tyype\n";
+              // echo "$first_phase_key \n";
               $multiple_entry = false;
-              break;
             }
             else {
+              // echo "array tyype\n";
+              //
+              // echo "$first_phase_key \n";
+
               $multiple_entry = true;
-              break;
             }
+
+            break;
           }
           // if there is no multiple entry, we will add the build_id back to the table
           if(!$multiple_entry){
-            echo "the table name is " . $first_phase_key ."\n";
+            // echo "not multiple entry the table name is " . $first_phase_key ."\n";
+
             $first_phase_value["build_id"] = $this->current_build_id;
             $this->set_validation($build_guide_array["build_id"],$first_phase_key,$first_phase_value);
+            if ($first_phase_key == "rune_set") {
+              // var_dump($first_phase_value);
+              $first_phase_value["primary_rune"] = implode('-',$first_phase_value["primary_rune"]);
+              $first_phase_value["secondary_rune"] = implode('-',$first_phase_value["secondary_rune"]);
+
+
+            }
+            if ($first_phase_key == "skill_order_table") {
+              $first_phase_value["order_list"] = implode('-',$first_phase_value["order_list"]);
+            }
+            // var_dump(array_keys($first_phase_value)[0]);
             if ($this->set_validation=="create") {
-              array_push($this->create_response_array,[$first_phase_key=>$this->database->insert($first_phase_value,$first_phase_key)]);
-              var_dump($this->create_response_array);
+              // var_dump($first_phase_value);
+              $note_id = $this->insert_note($first_phase_value["note"],$this->current_build_id);
+              $temp_note = $first_phase_value["note"];
+              unset($first_phase_value["note"]);
+              $first_phase_value["note_id"] = $note_id;
+              // var_dump($first_phase_value);
+              $first_phase_value[array_keys($first_phase_value)[0]] = $this->database->insert($first_phase_value,$first_phase_key);
+              // var_dump($first_phase_value);
+              if ($first_phase_key == "rune_set") {
+                // var_dump($first_phase_value);
+                $first_phase_value["primary_rune"] = explode('-',$first_phase_value["primary_rune"]);
+                $first_phase_value["secondary_rune"] = explode('-',$first_phase_value["secondary_rune"]);
+
+              }
+              if ($first_phase_key == "skill_order_table") {
+                $first_phase_value["order_list"] = explode('-',$first_phase_value["order_list"]);
+              }
+              unset($first_phase_value["note_id"]);
+              $first_phase_value["note"] = $temp_note;
+              unset($first_phase_value["build_id"]);
+              $data_to_db[$first_phase_key] = $first_phase_value;
+
+              // array_push($this->create_response_array,[$first_phase_key=>$this->database->insert($first_phase_value,$first_phase_key)]);
+              // var_dump($this->create_response_array);
               $this->set_validation=="";
             }elseif ($this->set_validation=="update") {
               unset($first_phase_value["build_id"]);
               $temp_pk = $first_phase_value[$this->set_pri_key];
               unset($first_phase_value[$this->set_pri_key]);
+              $this->db_validation->query('SELECT note_id from '.$first_phase_key.' where '.$this->set_pri_key.' = '.$temp_pk);
+              $specific_note_id = $this->db_validation->resultset();
+              $specific_note_id = $specific_note_id[0]["note_id"];
+              // var_dump($specific_note_id);
+              $this->update_note($first_phase_value["note"],$specific_note_id);
+              $temp_note = $first_phase_value["note"];
+              unset($first_phase_value["note"]);
               $this->database->update($first_phase_value,$first_phase_key, "build_id = ".$this->current_build_id." and ".$this->set_pri_key." = ".$temp_pk);
               $this->set_validation=="";
+              if ($first_phase_key == "rune_set") {
+                // var_dump($first_phase_value);
+                $first_phase_value["primary_rune"] = explode('-',$first_phase_value["primary_rune"]);
+                $first_phase_value["secondary_rune"] = explode('-',$first_phase_value["secondary_rune"]);
+
+              }
+              if ($first_phase_key == "skill_order_table") {
+                $first_phase_value["order_list"] = explode('-',$first_phase_value["order_list"]);
+              }
+              $first_phase_value["note"] = $temp_note;
+              // $data_to_db[$first_phase_key] = $first_phase_value;
+              // echo $this->set_pri_key . '\n';
+              $temp_array[$this->set_pri_key] = $temp_pk;
+              array_merge_recursive($temp_array,$data_to_db[$first_phase_key]);
+              // var_dump($data_to_db);
             }else {
-              return -1;
+              throw new Exception(2);
             }
           }
           else {
             // there is mutiple entry, need to do it saperately
             // var_dump($first_phase_value);
+            // echo "Jerry is good as fuck";
+            // echo "multiple entry the table name is " . $first_phase_key ."\n";
+
             foreach ($first_phase_value as $data_set => $data_set_col_entry) {
               switch ($first_phase_key) {
                 case 'item_detail_set':
                     // special case is that the table doesn't has build_id as FK
-                    echo "In the swtich special case the table name is " . $first_phase_key ."\n";
-                    var_dump($fk_for_item_detail[$forloop_count]);
-                    var_dump($data_set_col_entry);
+
+                    // echo "In the swtich special case the table name is " . $first_phase_key ."\n";
+                    // var_dump($fk_for_item_detail[$forloop_count]);
+                    // var_dump($data_set_col_entry);
                     if ($data_set_col_entry["item_set_id"] == 0) {
                       $data_set_col_entry["item_set_id"] = $fk_for_item_detail[$forloop_count];
-                      $forloop_count ++;
                       $data_set_col_entry["items"] = json_encode($data_set_col_entry["items"]);
                       $particular_fk = $this->database->insert($data_set_col_entry,$first_phase_key);
-                      array_push($this->create_response_array,[$first_phase_key=>[$data_set=>$particular_fk]]);
+                      $data_to_db[$first_phase_key][$data_set]["detail_id"] = $particular_fk;
+                      $data_to_db[$first_phase_key][$data_set]["item_set_id"] = $fk_for_item_detail[$forloop_count];
+
+                      // var_dump($data_to_db);
+                      $forloop_count ++;
+
+                      // array_push($this->create_response_array,[$first_phase_key=>[$data_set=>$particular_fk]]);
                     }else {
-                      $this->special_set_validation("item_set_id",$data_set_col_entry["item_set_id"],$first_phase_key,$data_set_col_entry);
+                      $this->set_validation = data_validation::special_set_validation("item_set_id",$data_set_col_entry["item_set_id"],$first_phase_key,$data_set_col_entry);
                       if ($this->set_validation=="update") {
                         $temp_pk = $data_set_col_entry[$this->set_pri_key];
                         $data_set_col_entry["items"] = json_encode($data_set_col_entry["items"]);
                         $this->database->update($data_set_col_entry,$first_phase_key,$this->set_pri_key." = ".$temp_pk);
                       }else {
-                        return -1;
+                        throw new Exception(2);
                       }
 
                     }
@@ -421,28 +607,59 @@ if (!class_exists('dataServiceRead')) {
                     //                 ->bind(':data',json_encode($champion_data))
                     //                 ->execute();
                 case 'skill_order_table':
-
+                      // var_dump($data_set_col_entry);
                   break;
                 default:
                     // default case is that the table has build_id as FK
                     $data_set_col_entry["build_id"] = $this->current_build_id;
                     // var_dump($data_set_col_entry);
-                    echo "the table name is " .$first_phase_key;
+                    // echo "the table name is " .$first_phase_key . "\n";
+                    // var_dump($data_set_col_entry);
                     if ($data_set_col_entry["remove"]) {
                       $first_value = array_keys($data_set_col_entry);
                       $this->set_pri_key = $first_value[0];
                       $this->db_validation->query('DELETE FROM '.$first_phase_key.' where '.$this->set_pri_key.' = :pk_value')
                                           ->bind(':pk_value', $data_set_col_entry[$this->set_pri_key])
                                           ->execute();
+                      // var_dump($data_to_db[$first_phase_key]);
+                      unset($data_to_db[$first_phase_key][$data_set]);
+                      // var_dump($data_to_db[$first_phase_key]);
+                      $against_temp_array = [];
+                      foreach ($data_to_db[$first_phase_key] as $key => $value) {
+                        array_push($against_temp_array,$value);
+                        // var_dump($against_temp_array);
+                      }
+                      // for ($i=0; $i < sizeof($data_to_db[$first_phase_key]); $i++) {
+                      //     echo "the index is " . $i ."\n";
+                      //     var_dump($data_to_db[$first_phase_key][$i]);
+                      //     // array_push($against_temp_array,$data_to_db[$first_phase_key][$i]);
+                      // }
+                      $data_to_db[$first_phase_key] = $against_temp_array;
+                      // var_dump($data_to_db);
                       continue;
                     }else {
                       unset($data_set_col_entry["remove"]);
                     }
+                    unset($data_set_col_entry["set_location"]);
+                    if($first_phase_key == "item_set"){
+                      // var_dump($data_set_col_entry);
+                      $data_set_col_entry["set_name"] = htmlentities($data_set_col_entry["set_name"]);
+                    }
                     $this->set_validation($data_set_col_entry["build_id"],$first_phase_key,$data_set_col_entry);
                     if ($this->set_validation=="create") {
+                      $note_id = $this->insert_note($data_set_col_entry["note"],$this->current_build_id);
+                      unset($data_set_col_entry["note"]);
+                      $data_set_col_entry["note_id"] = $note_id;
+
                       $particular_fk = $this->database->insert($data_set_col_entry,$first_phase_key);
-                      array_push($this->create_response_array,[$first_phase_key=>[$data_set=>$particular_fk]]);
-                      var_dump($this->create_response_array);
+                      $first_value = array_keys($data_set_col_entry);
+
+                      $this->set_pri_key = $first_value[0];
+                      $data_set_col_entry[$this->set_pri_key] = $particular_fk;
+                      $data_to_db[$first_phase_key][$data_set][$this->set_pri_key] = $particular_fk;
+                      // var_dump($data_to_db);
+                      // array_push($this->create_response_array,[$first_phase_key=>[$data_set=>$particular_fk]]);
+                      // var_dump($this->create_response_array);
                       if ($first_phase_key == "item_set") {
                         array_push($fk_for_item_detail,$particular_fk);
                       }
@@ -451,10 +668,21 @@ if (!class_exists('dataServiceRead')) {
                       unset($data_set_col_entry["build_id"]);
                       $temp_pk = $data_set_col_entry[$this->set_pri_key];
                       unset($data_set_col_entry[$this->set_pri_key]);
+
+                      $this->db_validation->query('SELECT note_id from '.$first_phase_key.' where '.$this->set_pri_key.' = '.$temp_pk);
+                      $specific_note_id = $this->db_validation->resultset();
+                      $specific_note_id = $specific_note_id[0]["note_id"];
+                      // var_dump($specific_note_id);
+                      $this->update_note($data_set_col_entry["note"],$specific_note_id);
+                      unset($data_set_col_entry["note"]);
+
                       $this->database->update($data_set_col_entry,$first_phase_key,"build_id = ".$this->current_build_id." and ".$this->set_pri_key." = ".$temp_pk);
+                      $temp_array[$this->set_pri_key] = $temp_pk;
+                      // var_dump($data_to_db[$first_phase_key][$data_set]);
                       $this->set_validation="";
                     }else {
-                      return -1;
+                      throw new Exception(2);
+
                     }
                     break;
               }
@@ -462,8 +690,24 @@ if (!class_exists('dataServiceRead')) {
           }
         }
       }
-      echo "</pre>";
-      return $this->create_response_array;
+      // echo "<pre>";
+
+      // var_dump($this->create_response_array);
+      $last_key = "";
+      // $final_form = call_user_func_array('array_merge_recursive',$this->create_response_array);
+      if ($this->build_create_flag) {
+        $final_form["build_id"] = $this->current_build_id;
+      }
+      // var_dump($data_to_db);
+      // var_dump($final_form);
+      // $temp_keys = array_keys($this->create_response_array);
+
+      // foreach ($this->create_response_array as $key => $value) {
+      //   $array_key = array_keys($value[0]);
+      //   // var_dump($value);
+      // }
+      // echo "</pre>";
+      return $data_to_db;
     }
   }
 }

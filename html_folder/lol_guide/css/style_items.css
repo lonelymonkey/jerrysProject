@@ -25,7 +25,7 @@
   width: 60%;
   min-width: 297px;
   overflow: auto;
-  max-height: 500px;
+  max-height: 800px;
 
 }
 
@@ -44,6 +44,7 @@
 }
 .item_icon{
   float: left;
+  cursor: pointer;
 
 }
 .item_block{
@@ -65,7 +66,7 @@
 }
 
 .item_block .popover.fade.right.in{
-  min-width: 700px;
+  min-width: 400px;
   font-size: 25px;
 }
 
@@ -132,6 +133,10 @@ font > a {
 .item_list_name{
   float: left;
   width: 90%;
+  padding-left: 10px;
+  font-size: 20px;
+  padding-top: 5px;
+
 }
 
 .item_search_title{
@@ -168,4 +173,17 @@ font > a {
 }
 .item_empty_container{
   float: left;
+}
+#create_champion_select_field{
+  overflow: auto;
+}
+input[type="text"]{
+  color: black;
+}
+.item_list_title{
+  font-size: 30px;
+}
+.item_active_button{
+  background-color: black;
+  color: white;
 }
