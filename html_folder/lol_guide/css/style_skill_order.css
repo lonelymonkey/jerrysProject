@@ -15,14 +15,20 @@
 .skill_selection_holder{
   overflow: auto;
 }
+input[type="checkbox" class = "skill_check_box"]{
+  height:40px;
+  width: 40px;
+}
+
 input[type="checkbox"]{
   height:30px;
   width: 30px;
 }
+
 .skill_div{
   width: 40px;
   float: left;
-  margin-right: 5px;
+  margin-right: 15px;
 
 }
 ul.skill_list_div{
@@ -38,6 +44,9 @@ ul.skill_list_div{
   float: left;
 
 }
+.skill_name{
+  font-size: 35px;
+}
 .skill_count_name{
   float: left;
   width: 30px;
@@ -50,4 +59,7 @@ ul.skill_list_div{
   font-size: 35px;
   padding-bottom: 30px;
   padding-left: 30px;
+}
+.skill_passive_css{
+  font-size: 25px;
 }

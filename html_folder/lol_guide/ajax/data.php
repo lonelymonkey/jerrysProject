@@ -95,6 +95,10 @@ try {
         $response['errMsg'] = "Err : Some notes are too long, the length limit is 600";
         $response['status'] = -2;
         break;
+      case '16':
+        $response['errMsg'] = "Err : This chapmion does not have this skin";
+        $response['status'] = -2;
+        break;
       default:
         $response['errMsg'] = "Something wrong with data you save, please try again";
         break;

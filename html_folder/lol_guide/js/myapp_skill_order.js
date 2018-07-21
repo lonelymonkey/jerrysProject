@@ -23,6 +23,7 @@
     },
   };
   var skill_selected_champion_data;
+  var skill_note_string_count = 0;
   myApp.skill_order_champion = function (champion_id){
     console.log("I am the skill order, the champion id is",champion_id);
     skill_init();
@@ -63,7 +64,7 @@
                               <div class = "skill_icon"></div>
                               <div class ="skill_selection_holder">
                                 <div class = "skill_name"></div>
-                                <div class = "skill_check_list">
+                                <div class = "skill_check_list skill_passive_css">
                                   Passive
                                 </div>
                               </div>
@@ -102,6 +103,7 @@
                               <div>Note :</div>
                               <textarea class = "skill_input_note" cols = "60" rows = "5"></textarea>
                             </div>
+                            <div class = "skill_note_count note_count_css">${skill_note_string_count}/600</div>
                         </div>
     `;
     if (!myApp.skill_champion_decided_flag) {
@@ -262,7 +264,9 @@
     $(".skill_input_note").keyup(function(){
       console.log("key in value is ",this);
       myApp.save_build.skill_order_table.note = $(".skill_input_note").val();
-      console.log(myApp.save_build.skill_order_table);
+      skill_note_string_count = $(".skill_input_note").val().length;
+      $(".skill_note_count").html(`${skill_note_string_count}/600`);
+      // console.log(myApp.save_build.skill_order_table);
     });
   }
   function skill_init_popover (content_info,count){

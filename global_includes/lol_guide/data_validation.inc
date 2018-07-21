@@ -57,6 +57,22 @@ class data_validation
     data_validation::vs_validation($data_to_db["against_champion"]);
     data_validation::skill_validation($data_to_db["skill_order_table"]);
   }
+  public static function skin_validation($skin_id,$champion_id) {
+    $db = new Database();
+    $skin_validation_flag = false;
+    $db->query('SELECT skin_id from skin where champion_id = :champion_id')
+       ->bind(":champion_id",$champion_id);
+    $skin_id_list = $db->resultset();
+    for ($i=0; $i < sizeof($skin_id_list); $i++) {
+      if ($skin_id_list[$i]["skin_id"] == $skin_id) {
+        $skin_validation_flag = true;
+      }
+    }
+    if (!$skin_validation_flag) {
+      throw new Exception(16);
+
+    }
+  }
   public static function guide_summary_validation($data){
     $champion_supported = [81,102,103,114,143,268];
     $champion_flag = false;
@@ -95,6 +111,7 @@ class data_validation
         throw new Exception(14);
       }
     }
+    data_validation::skin_validation($data["skin_id"],$data["champion_id"]);
   }
   public static function skill_validation($data){
     $const_qwe = 5;

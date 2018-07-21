@@ -103,3 +103,10 @@
   padding-bottom: 30px;
   padding-left: 30px;
 }
+.note_count_css{
+  color: white;
+  font-size: 25px;
+  padding-top: 10px;
+  padding-right: 97px;
+  float: right;
+}

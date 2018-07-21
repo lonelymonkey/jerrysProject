@@ -42,6 +42,7 @@
   }
   var primary_interval;
   var secondary_interval;
+  var rune_note_string_count = 0
 
   myApp.runes_build_writing_frame = function (){
     // console.log("primary_flag",primary_flag);
@@ -71,7 +72,7 @@
         <div class = "rune_note_field">
             <div>Note :</div>
             <textarea class = "rune_input_note" cols = "30" rows = "5"></textarea>
-
+            <div class = "rune_note_count note_count_css">${rune_note_string_count}/600</div>
         </div>
       </div>
       <div class = "rune_selection_field">
@@ -134,6 +135,8 @@
   function rune_bind_note_ui (){
     $(".rune_input_note").keyup(function(){
       myApp.save_build.rune_set.note = $(".rune_input_note").val();
+      rune_note_string_count =  $(".rune_input_note").val().length;
+      $('.rune_note_count').html(`${rune_note_string_count}/600`);
       console.log(myApp.save_build.rune_set);
     });
 

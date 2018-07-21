@@ -77,11 +77,12 @@ CREATE TABLE `skill_order_table` (
 /*skill enum*/
 /*move background to build, 1 build 1 skin*/
 CREATE TABLE `skin` (
+  `db_skin_id` int(11) NOT NULL auto_increment,
   `skin_id` int(11) NOT NULL,
   `champion_id` int(11) NOT NULL,
-  PRIMARY KEY  (`skin_id`),
+  PRIMARY KEY  (`db_skin_id`),
   FOREIGN KEY (`champion_id`) REFERENCES champions(champion_id) ON DELETE CASCADE
-) ENGINE=innodb DEFAULT CHARSET=latin1;
+) ENGINE=innodb AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `skill_order_link_to_note` (
   `skill_order_id` int(11) NOT NULL auto_increment,

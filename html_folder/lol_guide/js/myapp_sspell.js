@@ -5,6 +5,7 @@
 (function(myApp){
   var first_spell_on = false;
   var second_spell_on = false;
+  var spell_note_string_count = 0;
   myApp.sspell_build_writing_frame = function (){
     var pool_members = "";
     sspell_init();
@@ -30,11 +31,14 @@
                         <div>Note : </div>
 
                         <textarea class = "spell_input_note" rows = "5" cols = "60"></textarea>
-                      </div>`;
+                      </div>
+                      <div class = "spell_note_count note_count_css">${spell_note_string_count}/600</div>`;
     $("#pool_and_selection").html(spell_field);
 
     $(".spell_input_note").keyup(function(){
       console.log("key in value is ",$(".spell_input_note").val());
+      spell_note_string_count = $(".spell_input_note").val().length;
+      $('.spell_note_count').html(`${spell_note_string_count}/600`);
       myApp.save_build.spell_set.note = $(".spell_input_note").val();
     });
     for (var i = 0; i < myApp.spells.length; i++) {

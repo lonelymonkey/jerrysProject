@@ -21,6 +21,7 @@
   var largest_count = 0;
   var local_set_number = 0;
   var removed_set_id_array = [];
+  item_note_string_count = 0;
   var bind_set_name_ui = function(set_number){
     $( "#item_set_name-"+set_number).keyup(function() {
       console.log("we are set # "+ set_number);
@@ -92,6 +93,7 @@
                             <div class = "item_notes_writing_area">
                                 <textarea class ="item_input_note" rows="8" cols="52" id ="item_notes-${set_number}"></textarea>
                             </div>
+                            <div class = "item_note_count-${set_number} note_count_css">Max : 600</div>
                         </div>`;
     $(".item_pool_and_choice").show();
     $(".item_choice").html(item_choice_frame);
@@ -99,7 +101,7 @@
     for (var i = 0; i < myApp.save_build.item_set.length; i++) {
       if (set_number == myApp.save_build.item_set[i].set_location) {
         new_location = i;
-        $(`.item_notes_${i} textarea`).val(myApp.save_build.item_set[i].note);
+        $(`.item_notes-${i} textarea`).val(myApp.save_build.item_set[i].note);
         break;
       }
     }
@@ -121,6 +123,10 @@
           console.log("set location is ", myApp.save_build.item_set[i].set_location);
           console.log("index is ", true_index);
           myApp.save_build.item_set[i].note = $(this).val();
+          item_note_string_count = $(this).val().length;
+          console.log("item_note_string_count",item_note_string_count);
+          console.log("myApp.save_build.item_set[i].set_location",myApp.save_build.item_set[i].set_location);
+          // $(`.item_note_count-${myApp.save_build.item_set[i].set_location}`).html(`${item_note_string_count}/600`);
           break;
         }
       }
