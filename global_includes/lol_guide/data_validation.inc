@@ -165,11 +165,11 @@ class data_validation
     $db = new Database();
     $one_day = 86400;
     $today = strtotime("now");
-    $db->query('SELECT date_create from build_guide where ip = :ip order by date_create desc limit 3')
+    $db->query('SELECT date_create from build_guide where ip = :ip order by date_create desc limit 30')
        ->bind(":ip",$ip);
     $result_list = $db->resultset();
-    if (sizeof($result_list)>=3) {
-      $third_result = strtotime($result_list[2]["date_create"]);
+    if (sizeof($result_list)>=30) {
+      $third_result = strtotime($result_list[29]["date_create"]);
       $time_diff = $third_result - $today;
       if ($time_diff<$one_day) {
         throw new Exception(7);
