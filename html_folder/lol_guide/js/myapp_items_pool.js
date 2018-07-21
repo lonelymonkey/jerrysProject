@@ -90,6 +90,10 @@
   }
 
   myApp.items_build_writing_frame = function (){
+    console.log("myApp.create_flag is ",myApp.create_flag);
+    if (myApp.create_flag) {
+      myApp.item_reset();
+    }
     var items_guide_frame =
     `<div class = "item_edit_field">
           <div class = "item_sets_tap">

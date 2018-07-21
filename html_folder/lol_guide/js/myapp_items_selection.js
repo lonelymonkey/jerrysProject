@@ -34,9 +34,14 @@
 
 
 
-
+  myApp.item_reset = function (){
+    largest_count = 0;
+    removed_set_id_array = [];
+    local_set_number = 0;
+    myApp.create_flag = false;
+  }
   myApp.item_add_set = function () {
-
+    console.log();
     if (removed_set_id_array.length != 0) {
       console.log(removed_set_id_array);
       removed_set_id_array.sort(function(a,b){return a-b});

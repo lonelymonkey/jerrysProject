@@ -83,6 +83,8 @@ require_once "data_validation.inc";
         $return_data_array["item_detail_set"][$i]["items"] = json_decode($return_data_array["item_detail_set"][$i]["items"]);
       }
       unset($return_data_array["build_guide"]["ip"]);
+      unset($return_data_array["build_guide"]["date_create"]);
+
       return $return_data_array;
     }
     public function get_initial_data() {
@@ -366,7 +368,7 @@ require_once "data_validation.inc";
         $this->build_create_flag = true;
         return $this->current_build_id;
       }else {
-        if ($this->user_validation($input_array["build_id"],$input_array["user_id"])) {
+
           $temp_build_id = $input_array["build_id"];
           $this->current_build_id = $input_array["build_id"];
           unset($input_array["build_id"]);
@@ -376,10 +378,6 @@ require_once "data_validation.inc";
           $input_array["build_name"] = htmlentities($input_array["build_name"]);
 
           $this->database->update($input_array,"build_guide","build_id = ".$temp_build_id);
-        }else {
-          throw new Exception(2);
-
-        }
       }
     }
     // $this->db_validation->query('DELETE FROM '.$first_phase_key.' where '.$this->set_pri_key.' = :pk_value')

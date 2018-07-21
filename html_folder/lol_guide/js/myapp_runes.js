@@ -44,6 +44,8 @@
   var secondary_interval;
 
   myApp.runes_build_writing_frame = function (){
+    // console.log("primary_flag",primary_flag);
+    // console.log("secondary_flag",secondary_flag);
 
     var rune_frame =
     `
@@ -112,6 +114,15 @@
       </div>
     `;
     $("#pool_and_selection").html(rune_frame);
+    if (myApp.create_flag) {
+      secondary_flag = false;
+      primary_flag = false;
+      clearInterval(primary_interval);
+      clearInterval(secondary_interval);
+      first_time_build_pri = true;
+      first_time_build_sec = true;
+      myApp.create_flag = false;
+    }
       rune_restore();
       myApp.rune_bind_ui("all");
       rune_bind_note_ui();

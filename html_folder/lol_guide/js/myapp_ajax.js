@@ -33,7 +33,7 @@
           if (response.status <0) {
             $(".create_error_display_section").css("display","block");
             $(".create_error_display_section").html(response.errMsg);
-            $(".create_error_display_section").fadeOut(1500);
+            $(".create_error_display_section").fadeOut(2000);
 
             console.log(response.errMsg);
           }else {

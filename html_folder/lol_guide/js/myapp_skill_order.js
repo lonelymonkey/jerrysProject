@@ -33,6 +33,10 @@
     }
   }
   myApp.skill_order_writing_frame = function (){
+    if(myApp.create_flag){
+      myApp.skill_champion_decided_flag = false;
+      myApp.create_flag = false;
+    }
     console.log("gest teset gest ");
     var skill_frame = `
                         <div class = "skill_containner">

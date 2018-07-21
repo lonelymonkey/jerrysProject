@@ -30,6 +30,8 @@
     if (myApp.create_flag) {
       largest_count = 0;
       removed_set_id_array = [];
+      local_set_count = 0;
+      myApp.create_flag = false;
     }
     console.log(largest_count);
   }
