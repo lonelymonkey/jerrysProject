@@ -39,6 +39,7 @@
     largest_count = 0;
     removed_set_id_array = [];
     local_set_number = 0;
+    item_which_set = 0;
     myApp.create_flag = false;
   }
   myApp.item_add_set = function () {
@@ -183,6 +184,8 @@
   }
   myApp.item_pool_to_selection = function (item_id){
     console.log("the select item id is " + item_id);
+    console.log("myApp.save_build.item_detail_set",JSON.stringify(myApp.save_build.item_detail_set));
+    console.log("item_which_set",item_which_set);
     if (myApp.save_build.item_detail_set[item_which_set].items.length<24) {
       myApp.save_build.item_detail_set[item_which_set].items.push(item_id);
     }

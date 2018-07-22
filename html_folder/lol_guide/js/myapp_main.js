@@ -203,6 +203,8 @@ myApp.load_exist_build = function (){
     // console.log(build_set_frame);
     $(id+' .content').append(build_set_frame);
   }
+  myApp.main_check_hash();
+
 }
 
 
@@ -264,7 +266,13 @@ myApp.writing = function (temp_build){
     console.log(myApp.save_build);
     myApp.create_writing_frame(false);
 }
-
+myApp.main_check_hash = function (){
+  console.log("window.location.hash is ",window.location.hash);
+  var build_id =  window.location.hash.substring(1);
+  if (build_id != 0) {
+    myApp.display_view_guide(build_id);
+  }
+}
 myApp.load = function(cfg){
   save_config(cfg);
   build_frame();

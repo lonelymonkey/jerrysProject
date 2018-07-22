@@ -33,13 +33,14 @@
           if (response.status <0) {
             $(".create_error_display_section").css("display","block");
             $(".create_error_display_section").html(response.errMsg);
-            $(".create_error_display_section").fadeOut(2000);
 
             console.log(response.errMsg);
           }else {
             myApp.read_responser_after_save_build(response);
           }
           $(".save_button").html(`<button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>`);
+          $(".create_error_display_section").css("display","none;");
+
 
 
 
@@ -54,6 +55,7 @@
       url : '../ajax/data.php',
       data : { function : 'get_all_data_from_build',data : JSON.stringify(build_id)},
       success : function(response) {
+        window.location.hash = build_id;
         myApp.display_get_build_detail(response.data);
       }
     })
@@ -82,6 +84,7 @@
         console.log(response);
         myApp.read_initial_data(response);
         myApp.load_exist_build();
+        
       }
     })
   }

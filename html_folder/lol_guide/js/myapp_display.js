@@ -14,6 +14,7 @@
   var display_get_data_ojb;
   var complete_return_data;
   myApp.display_view_guide = function (build_id){
+    console.log("build_id = ", build_id);
     $('.loarding_area').html('<img src = "../assets/other/loader-transparent-85px.gif">');
     myApp_ajax.get_target_build_data(build_id);
   }

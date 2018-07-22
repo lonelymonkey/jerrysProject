@@ -69,6 +69,7 @@ require_once "data_validation.inc";
       }
       $return_data_array["item_detail_set"] = [];
       $list_array_keys = array_keys($return_data_array["item_set"]);
+      // var_dump($return_data_array["item_set"]);
       if (gettype($return_data_array["item_set"][$list_array_keys[0]]) !="array") {
         $this->database->query('SELECT * from item_detail_set where item_set_id =:item_set_id ')
                        ->bind(':item_set_id',$return_data_array["item_set"]["item_set_id"]);
@@ -100,7 +101,8 @@ require_once "data_validation.inc";
 
       unset($return_data_array["build_guide"]["ip"]);
       unset($return_data_array["build_guide"]["date_create"]);
-
+      // var_dump($return_data_array);
+      // exit;
       return $return_data_array;
     }
     public function get_initial_data() {

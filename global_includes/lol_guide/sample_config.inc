@@ -9,6 +9,6 @@ defined('DB_NAME') or define("DB_NAME", "lol_guide");
 
 defined('INCLUDE_PATH') or define('INCLUDE_PATH', 'C:/xampp/htdocs/personal_project/global_includes/lol_guide');
 
-
+error_reporting(0);
 
 ?>
