@@ -171,7 +171,7 @@ myApp.load_exist_build = function (){
                             <div class = "col-md-3">Build Name</div>
                             <div class = "col-md-3">champion</div>
                             <div class = "col-md-3">update time</div>
-                            <div class = "col-md-3"></div>
+                            <div class = "col-md-3 loarding_area"></div>
                           <div>`
   $(id+' .content').html(view_buile_title);
 

@@ -68,20 +68,36 @@ require_once "data_validation.inc";
         // unset($return_data_array[$list_regular_table[$i]["build_id"]);
       }
       $return_data_array["item_detail_set"] = [];
-      for ($i=0; $i < sizeof($return_data_array["item_set"]); $i++) {
+      $list_array_keys = array_keys($return_data_array["item_set"]);
+      if (gettype($return_data_array["item_set"][$list_array_keys[0]]) !="array") {
         $this->database->query('SELECT * from item_detail_set where item_set_id =:item_set_id ')
-                       ->bind(':item_set_id',$return_data_array["item_set"][$i]["item_set_id"]);
-        $temp_item_array[$i] = $this->database->resultset();
-        array_push($return_data_array["item_detail_set"],$temp_item_array[$i][0]);
+                       ->bind(':item_set_id',$return_data_array["item_set"]["item_set_id"]);
+        $temp_item_array = $this->database->resultset();
+        // var_dump($temp_item_array[0]);
+
+        array_push($return_data_array["item_detail_set"],$temp_item_array[0]);
+        // var_dump($return_data_array["item_detail_set"]);
+        $return_data_array["item_detail_set"][0]["items"] = json_decode($return_data_array["item_detail_set"][0]["items"]);
+
+      }else {
+        for ($i=0; $i < sizeof($return_data_array["item_set"]); $i++) {
+          // var_dump($return_data_array["item_set"]);
+
+          $this->database->query('SELECT * from item_detail_set where item_set_id =:item_set_id ')
+                         ->bind(':item_set_id',$return_data_array["item_set"][$i]["item_set_id"]);
+          $temp_item_array[$i] = $this->database->resultset();
+          array_push($return_data_array["item_detail_set"],$temp_item_array[$i][0]);
+      }
+        for ($i=0; $i < sizeof($return_data_array["item_detail_set"]); $i++) {
+          // var_dump($return_data_array["item_detail_set"][$i]);
+          $return_data_array["item_detail_set"][$i]["items"] = json_decode($return_data_array["item_detail_set"][$i]["items"]);
+      }
       }
       // var_dump($return_data_array["item_detail_set"]);
 
       // $return_data_array["item_detail_set"] = $temp_item_array;
       // var_dump($return_data_array);
-      for ($i=0; $i < sizeof($return_data_array["item_detail_set"]); $i++) {
-        // var_dump($return_data_array["item_detail_set"][$i]);
-        $return_data_array["item_detail_set"][$i]["items"] = json_decode($return_data_array["item_detail_set"][$i]["items"]);
-      }
+
       unset($return_data_array["build_guide"]["ip"]);
       unset($return_data_array["build_guide"]["date_create"]);
 

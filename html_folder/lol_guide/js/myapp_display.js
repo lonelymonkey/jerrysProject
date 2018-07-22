@@ -14,6 +14,7 @@
   var display_get_data_ojb;
   var complete_return_data;
   myApp.display_view_guide = function (build_id){
+    $('.loarding_area').html('<img src = "../assets/other/loader-transparent-85px.gif">');
     myApp_ajax.get_target_build_data(build_id);
   }
   function display_build_ui_structure (obj){
@@ -98,27 +99,45 @@
     medium :[],
     hard :[]
     };
-
+    console.log("against_champion.length",against_champion.length);
     $(".display_vs_css").click(function (){
       console.log("I am clicked my child is ",$(this).children(".display_vs_content"));
       $(this).children(".display_vs_content").slideToggle("slow");
     });
     var level = Object.keys(vs_level_container);
-    for (var i = 0; i < against_champion.length; i++) {
-      if (against_champion[i].diffculty < 3) {
+    console.log("against_champion.isArray" , against_champion.isArray);
+    if (Array.isArray(against_champion)) {
+      for (var i = 0; i < against_champion.length; i++) {
+        if (against_champion[i].diffculty < 3) {
+          // console.log("it is easy, level ",against_champion[i].diffculty);
+          vs_level_container.easy.push(against_champion[i]);
+        }else if (against_champion[i].diffculty >= 3 && against_champion[i].diffculty < 7) {
+          // console.log("it is medium, level ",against_champion[i].diffculty);
+          vs_level_container.medium.push(against_champion[i]);
+
+        }else {
+          // console.log("it is hard, level ",against_champion[i].diffculty);
+          vs_level_container.hard.push(against_champion[i]);
+        }
+      }
+    }
+    else {
+      if (against_champion.diffculty < 3) {
         // console.log("it is easy, level ",against_champion[i].diffculty);
-        vs_level_container.easy.push(against_champion[i]);
-      }else if (against_champion[i].diffculty >= 3 && against_champion[i].diffculty < 7) {
+        vs_level_container.easy.push(against_champion);
+      }else if (against_champion.diffculty >= 3 && against_champion.diffculty < 7) {
         // console.log("it is medium, level ",against_champion[i].diffculty);
-        vs_level_container.medium.push(against_champion[i]);
+        vs_level_container.medium.push(against_champion);
 
       }else {
         // console.log("it is hard, level ",against_champion[i].diffculty);
-        vs_level_container.hard.push(against_champion[i]);
+        vs_level_container.hard.push(against_champion);
       }
     }
+
     for (var i = 0; i < level.length; i++) {
       console.log(level[i]);
+      console.log(vs_level_container.hard);
       for (var j = 0; j < vs_level_container[level[i]].length; j++) {
         var display_treat_level = Number(vs_level_container[level[i]][j].diffculty)+1;
 
@@ -311,11 +330,29 @@
     var item_set_name;
     var item_note_id;
     var item_info_data;
-    for (var i = 0; i < item.length; i++) {
-      item_set_name = item[i].set_name;
-      item_note_id = item[i].note_id;
+    if (Array.isArray(item)) {
+      for (var i = 0; i < item.length; i++) {
+        item_set_name = item[i].set_name;
+        item_note_id = item[i].note_id;
+        var item_structure  = `
+        <div class = "item_set_container_css item_set_container_${i}">
+
+          <div class = "display_item_detail"></div>
+          <div class = "display_title_note_holder">
+              <div class = "item_set_title">${item_set_name}</div>
+              <div data-toggle = "popover" class = "item_set_note">note</div>
+          </div>
+
+        </div>
+        `;
+        $(".display_items_holder").append(item_structure);
+        display_note_popover(item_note_id);
+      }
+    }else {
+      item_set_name = item.set_name;
+      item_note_id = item.note_id;
       var item_structure  = `
-      <div class = "item_set_container_css item_set_container_${i}">
+      <div class = "item_set_container_css item_set_container_${0}">
 
         <div class = "display_item_detail"></div>
         <div class = "display_title_note_holder">
@@ -328,6 +365,7 @@
       $(".display_items_holder").append(item_structure);
       display_note_popover(item_note_id);
     }
+
     for (var i = 0; i < detail.length; i++) {
       for (var j = 0; j < detail[i].items.length; j++) {
         $(`.item_set_container_${i} .display_item_detail`).append(`<div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div>`);
