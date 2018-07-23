@@ -112,16 +112,11 @@ function build_frame() {
   <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
      <div class="navbar-header">
-       <a class="navbar-brand" href="#" onclick="myApp_ajax.load()">Guide LOL</a>
+       <a class="navbar-brand" href="#" onclick="myApp_ajax.load()">Guide LOL - main page</a>
      </div>
      <ul class="nav navbar-nav">
        <li class="dropdown">
-         <a class="dropdown-toggle" data-toggle="dropdown" href="#">User
-         <span class="caret"></span></a>
-         <ul class="dropdown-menu">
-           <li><a href="#" onclick='myApp.create_writing_frame(true) '>Create</a></li>
-           <li><a href="#" onclick='myApp.load_users_build()'>Your Guide</a></li>
-         </ul>
+         <a href="#" onclick='myApp.create_writing_frame(true) '>Create</a>
        </li>
      </ul>
    </div>
