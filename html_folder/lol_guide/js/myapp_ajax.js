@@ -31,17 +31,17 @@
         data : { function : 'save_data', data : buildString },
         success : function(response) {
           if (response.status <0) {
+            $(".create_error_display_section").removeClass("create_save_succeed");
             $(".create_error_display_section").css("display","block");
             $(".create_error_display_section").html(response.errMsg);
 
             console.log(response.errMsg);
           }else {
             myApp.read_responser_after_save_build(response);
+            $(".create_error_display_section").html("Save Succesffully !");
+            $(".create_error_display_section").addClass("create_save_succeed");
           }
           $(".save_button").html(`<button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>`);
-          $(".create_error_display_section").css("display","none;");
-
-
 
 
         }
@@ -84,7 +84,7 @@
         console.log(response);
         myApp.read_initial_data(response);
         myApp.load_exist_build();
-        
+
       }
     })
   }

@@ -16,8 +16,8 @@
                               <div class = "col-md-3 save_button">
                                 <button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>
                               </div>
-                              <div class = "col-md-6">
-                                Build Name : <input type="text" id="build_name">
+                              <div class = "col-md-6 create_build_name ">
+                                Build Name : <input class = "create_build_name_input_area" type="text" id="build_name">
                               </div>
                               <div class = "col-md-3">
                                   <div id = "selected_champion">
@@ -67,7 +67,8 @@
     // console.log(myApp.save_build);
     var stringnify_build = JSON.stringify(myApp.save_build);
     if (myApp.save_build.champion_id == 0 || myApp.save_build.build_name =="") {
-      console.log("please check the build name or the champion");
+      $(".create_error_display_section").css("display","block");
+      $(".create_error_display_section").html('please check the build name or the champion');
     }else {
       $(".save_button").html(`<div class = "save_loading"><img src = "../assets/other/loader-transparent-85px.gif"></div>`)
       myApp_ajax.save_build(stringnify_build);

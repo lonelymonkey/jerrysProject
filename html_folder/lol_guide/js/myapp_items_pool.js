@@ -32,7 +32,7 @@
       $(".item_pool_display").html("");
       item_keyword = $("#item_search").val();
       reg = new RegExp("^" + item_keyword,"i");
-      reg1 = new RegExp(item_keyword,"i")
+      reg1 = new RegExp(item_keyword,"i");
       // console.log(reg);
       // console.log(reg1);
       var item_empty = true;
@@ -72,12 +72,6 @@
           item_init_popover(e);
           item_empty= false;
         }
-        // // console.log(test_reg.test(str));
-        //
-        // if (test_reg.test(str)) {
-        //   console.log(e.item_name);
-        //
-        // }
 
       });
       if (item_empty) {

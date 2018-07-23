@@ -84,7 +84,7 @@
       // background: linear-gradient(to right, transparent, mistyrose)
 
       $(".display_guide_name").html(obj.build_guide.build_name);
-      $(".display_background_holder").css("background",`radial-gradient(circle closest-corner at 58% 65%,transparent,black),url(../assets/display/${obj.build_guide.champion_id}/${skin_id}.png)`);
+      $(".display_background_holder").css("background",`radial-gradient(circle closest-corner at 50% 60%,transparent,black),url(../assets/display/${obj.build_guide.champion_id}/${skin_id}.png)`);
       $(".display_background_holder").css("background-size","1200px auto");
       $(".display_background_holder").css("background-repeat","no-repeat");
       display_sspell_section (obj.spell_set)

@@ -26,7 +26,7 @@
     `;
     $("#pool_and_selection").html(champion_frame);
     vs_champion_restore_difficulty();
-
+    console.log("removed_set_id_array",removed_set_id_array);
     if (myApp.create_flag) {
       largest_count = 0;
       removed_set_id_array = [];
@@ -37,83 +37,68 @@
   }
 
   function vs_champion_restore_difficulty(){
+    largest_count = 0;
+    local_set_count = 0;
     for (var i = 0; i < myApp.save_build.against_champion.length; i++) {
-      var vs_champion_set_frame = `
-      <div class = "row vs_champion_set" id = "vs_champion_set-${local_set_count}">
-          <div class = "col-md-2 vs_champion_set_champion">
-            <button onclick = "myApp.vs_champion_select_champion(${local_set_count})" class="create_select_champion btn btn-md" data-toggle="modal" data-target="#myModal">&#43;</button>
-          </div>
-          <div class = "col-md-6 vs_champion_set_difficulty">
-              <div class = "vs_champion_difficulty_frame" id = "vs_champion_frame">
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_0" id = "vs_champion_level-${local_set_count}-0"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_1" id = "vs_champion_level-${local_set_count}-1"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_2" id = "vs_champion_level-${local_set_count}-2"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_3" id = "vs_champion_level-${local_set_count}-3"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_4" id = "vs_champion_level-${local_set_count}-4"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_5" id = "vs_champion_level-${local_set_count}-5"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_6" id = "vs_champion_level-${local_set_count}-6"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_7" id = "vs_champion_level-${local_set_count}-7"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_8" id = "vs_champion_level-${local_set_count}-8"></div>
-                  <div class = "vs_champion_level_common vs_champion_difficulty_level_9" id = "vs_champion_level-${local_set_count}-9"></div>
-              </div>
-          </div>
-          <div class = "col-md-3 vs_champion_set_notes">
-            <textarea class = "vs_input_note" rows = "3" cols = "20"></textarea>
-          </div>
-          <div class = "col-md-1 vs_champion_set_remove">
-              <button class = "vs_set_remove_button" onclick = "myApp.vs_champion_remove_set(${local_set_count})">&#10008;</button>
-          </div>
-      </div>
-      `;
-      $(".vs_champion_detail_field").append(vs_champion_set_frame);
+      removed_set_id_array = [];
+      var retore = true;
+      console.log("length of against champion", myApp.save_build.against_champion.length);
+      myApp.save_build.against_champion[i].set_location = i;
 
-      $("#vs_champion_level-"+i+"-"+myApp.save_build.against_champion[i].diffculty).addClass("vs_champion_active");
-      if (myApp.save_build.against_champion[i].champion_id !=0) {
-        $("#vs_champion_set-"+i+" .vs_champion_set_champion").html(`<img class="vs_champion_select_champion"
-            data-toggle="modal" data-target="#myModal"
-            onclick = "myApp.vs_champion_select_champion(${i})"
-            src="../assets/champion_icon/`+myApp.save_build.against_champion[i].champion_id+`.png"
-            alt="`+myApp.save_build.against_champion[i].champion_id+`">`);
-        $("#vs_champion_set-"+i+" .vs_champion_select_champion" ).css("opacity",1);
-        // myApp.save_build.against_champion[champion_parent].champion_id = select_champion_id;
-      }
-      console.log(myApp.save_build.against_champion[i].note);
-      $(`#vs_champion_set-${local_set_count} .vs_input_note`).val(myApp.save_build.against_champion[i].note);
-      if (removed_set_id_array.length == 0) {
-        local_set_count ++;
-        largest_count = local_set_count;
+      myApp.vs_champion_add_set(retore);
+      if (myApp.save_build.against_champion[i].champion_id != 0) {
+        $(`#vs_champion_set-${i} .vs_champion_set_champion`).html(`<img class = "vs_class_champion_select_champion" data-toggle = "modal" data-target = "#myModal"
+        onclick = "myApp.vs_champion_select_champion(${i})" src = ../assets/champion_icon/${myApp.save_build.against_champion[i].champion_id}.png>`);
+      }else {
+        $(`#vs_champion_set-${i} .vs_champion_set_champion`).html(`<button onclick="myApp.vs_champion_select_champion(${i})" class="create_select_champion btn btn-md" data-toggle="modal" data-target="#myModal">+</button>`)
       }
 
-      bind_set_level_ui();
+      $(`#vs_champion_level-${i}-${myApp.save_build.against_champion[i].diffculty}`).addClass('vs_champion_active');
     }
+    bind_set_level_ui();
+
   }
   myApp.vs_champion_remove_set = function (set_id){
     console.log(set_id);
     removed_set_id_array.push(set_id);
     console.log("length of myApp.save_build.against_champion is " + myApp.save_build.against_champion.length);
+    var true_location = 0;
+    console.log("before looking for true location",myApp.save_build.against_champion);
     for (var i = 0; i < myApp.save_build.against_champion.length; i++) {
-      console.log(JSON.stringify(myApp.save_build.against_champion[i]));
+      console.log(myApp.save_build.against_champion[i]);
       if (myApp.save_build.against_champion[i].set_location == set_id) {
-        if (myApp.save_build.against_champion.length ==1) {
-          myApp.save_build.against_champion[i].remove = true;
-          myApp_ajax.save_build(JSON.stringify(myApp.save_build));
-          // myApp.save_build.against_champion.pop();
-        }
-        else {
-          myApp.save_build.against_champion[i].remove = true;
-          // First, set the remove flag to true, and then call ajax and save it first,
-          // Finally remove it from against_champion array
-          myApp_ajax.save_build(JSON.stringify(myApp.save_build))
-          // myApp.save_build.against_champion.splice(i,1);
-        }
+        true_location = i;
         break;
       }
     }
+    for (var i = 0; i < myApp.save_build.against_champion.length; i++) {
+      // console.log(JSON.stringify(myApp.save_build.against_champion[i]));
+
+      if (myApp.save_build.against_champion[i].set_location == set_id) {
+        if (myApp.save_build.build_id == 0) {
+          myApp.save_build.against_champion.splice(true_location,1);
+
+        }else {
+            myApp.save_build.against_champion[i].remove = true;
+            myApp_ajax.save_build(JSON.stringify(myApp.save_build));
+            // myApp.save_build.against_champion.pop();
+
+            // myApp.save_build.against_champion[i].remove = true;
+            // First, set the remove flag to true, and then call ajax and save it first,
+            // Finally remove it from against_champion array
+            // myApp_ajax.save_build(JSON.stringify(myApp.save_build))
+            // myApp.save_build.against_champion.splice(i,1);
+        }
+
+        break;
+      }
+    }
+    console.log("against champion", myApp.save_build.against_champion);
     $("#vs_champion_set-"+set_id).remove();
     console.log(myApp.save_build.against_champion);
   }
 
-  myApp.vs_champion_add_set = function(){
+  myApp.vs_champion_add_set = function(restore){
     just_removed = false;
     console.log("length of removed_set_id_array is " + removed_set_id_array.length);
     console.log(removed_set_id_array);
@@ -159,15 +144,17 @@
     `;
     if (myApp.save_build.against_champion.length < 99) {
       $(".vs_champion_detail_field").append(vs_champion_set_frame);
+      if (!restore) {
+        myApp.save_build.against_champion.push({
+                              against_id : 0,
+                              champion_id : 0,
+                              diffculty : 0,
+                              note : "",
+                              remove : false,
+                              set_location : local_set_count
+                            });
+      }
 
-      myApp.save_build.against_champion.push({
-                            against_id : 0,
-                            champion_id : 0,
-                            diffculty : 0,
-                            note : "",
-                            remove : false,
-                            set_location : local_set_count
-                          });
     }
 
 
@@ -272,7 +259,7 @@ myApp.vs_champion_select_champion = function (index) {
           </div>
           <div class="modal-body" >
               <div class = "search">
-                  <input placeholder="Search champion">
+                  <input class = "vs_search_champion" placeholder="Search champion">
                   <div id="create_champion_select_field">
                   </div>
               </div>
@@ -288,9 +275,40 @@ myApp.vs_champion_select_champion = function (index) {
           <img data-dismiss="modal" onclick ="myApp.vs_champion_move_champion_to_selection(${myApp.champions[i].champion_id},${champion_parent})
            "src="../assets/champion_icon/`+myApp.champions[i].champion_id+`.png"
            alt="`+myApp.champions[i].champion_id+`">
+          <div class = "vs_search_champion_name">${myApp.champions[i].champion_name}</div>
         </div>`);
     }
+    $(`.vs_search_champion`).keyup(function(){
+      $("#create_champion_select_field").html("");
+      var value = $(this).val();
+      reg = new RegExp("^" + value,"i");
+      reg1 = new RegExp(value,"i");
+      myApp.champions.forEach((e)=>{
+        item_str = e.champion_name;
+        if (reg.test(item_str)) {
+          // console.log(e.item_name);
+          var  champion_block = ` <div class ="create_list_champion">
+              <img data-dismiss="modal" onclick ="myApp.vs_champion_move_champion_to_selection(${e.champion_id},${champion_parent})
+               "src="../assets/champion_icon/`+e.champion_id+`.png"
+               alt="`+e.champion_id+`">
+               <div class = "vs_search_champion_name">${e.champion_name}</div>
 
+            </div>`;
+          $("#create_champion_select_field").append(champion_block);
+        }else if (reg1.test(item_str)) {
+          var  champion_block = ` <div class ="create_list_champion">
+              <img data-dismiss="modal" onclick ="myApp.vs_champion_move_champion_to_selection(${e.champion_id},${champion_parent})
+               "src="../assets/champion_icon/`+e.champion_id+`.png"
+               alt="`+e.champion_id+`">
+               <div class = "vs_search_champion_name">${e.champion_name}</div>
+
+            </div>`;
+          $("#create_champion_select_field").append(champion_block);
+        }
+
+      });
+
+    });
 }
   return myApp;
 }))

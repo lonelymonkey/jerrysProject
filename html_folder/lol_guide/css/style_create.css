@@ -1,3 +1,11 @@
+.create_build_name{
+  font-size: 30px;
+  color: white;
+}
+.create_build_name_input_area{
+  color: black;
+  font-size: 25px;
+}
 .create_champion_select_field{
   display: none;
 }
@@ -21,7 +29,7 @@
 }
 .create_list_champion{
   float: left;
-  margin-right: 30px;
+  margin-right: 25px;
   padding-top: 50px;
 }
 #selected_champion{
@@ -63,6 +71,9 @@
   display : none;
   font-size: 30;
   color: white;
+}
+.create_save_succeed{
+  color: green;
 }
 #save:hover {background-color: #3e8e41}
 
