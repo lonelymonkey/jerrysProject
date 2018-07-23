@@ -39,21 +39,21 @@
     var skill_frame = `
                         <div class = "skill_containner">
                             <div class = "skill_info_checkbox">
-                              <div class = "skill_count_title">Count:</div>
+                              <div class = "skill_count_title">Remaining skill point count down:</div>
                               <div class = "skill_count_display">
-                                  <div class = "skill_count_name">Q:</div>
+                                  <div class = "skill_count_name">Q</div>
                                   <div class = "skill_count_number" id = "q"></div>
                               </div>
                               <div class = "skill_count_display">
-                                  <div class = "skill_count_name">W:</div>
+                                  <div class = "skill_count_name">W</div>
                                   <div class = "skill_count_number" id = "w"></div>
                               </div>
                               <div class = "skill_count_display">
-                                  <div class = "skill_count_name">E:</div>
+                                  <div class = "skill_count_name">E</div>
                                   <div class = "skill_count_number" id = "e"></div>
                               </div>
                               <div class = "skill_count_display">
-                                  <div class = "skill_count_name">R:</div>
+                                  <div class = "skill_count_name">R</div>
                                   <div class = "skill_count_number" id = "r"></div>
                               </div>
                             </div>
@@ -212,14 +212,16 @@
         if(this.checked) {
             // console.log(this);
             var temp_value = this.value;
-            var temp_name = this.name
+            var temp_name = this.name;
+            console.log("the name is ",this.name);
+            console.log("the value is " ,this.value);
             if (skill_check_list_obj[this.name].count != 0) {
               myApp.save_build.skill_order_table.order_list[this.value] = this.name;
               $(`input[type="checkbox"][value = ${this.value}]`).prop('checked',false);
               $(`input[type="checkbox"][name=${this.name}][value = ${this.value}]`).prop('checked',true);
               skill_check_list_obj[this.name].count = skill_check_list_obj[this.name].count - 1;
               skill_check_list_obj[this.name].record.push(this.value);
-              $("#"+this.name).html(skill_check_list_obj[this.name].count);
+              // $("#"+this.name).html(skill_check_list_obj[this.name].count);
               $.each(skill_check_list_obj, function(index, e) {
                   // console.log(index);
                   for (var i = 0; i < e.record.length; i++) {
@@ -233,8 +235,30 @@
                     }
                   }
               });
+              var obj_key = Object.keys(skill_check_list_obj);
+              for (var i = 0; i < obj_key.length; i++) {
+                $("#"+obj_key[i]).html(skill_check_list_obj[obj_key[i]].count);
 
-
+              }
+              console.log("skill_check_list_obj",skill_check_list_obj);
+              // var console.log(); = {
+              //   q : {
+              //     count : 5,
+              //     record : []
+              //   },
+              //   w : {
+              //     count : 5,
+              //     record : []
+              //   },
+              //   e : {
+              //     count : 5,
+              //     record : []
+              //   },
+              //   r: {
+              //     count : 3,
+              //     record : []
+              //   },
+              // };
 
 
 
@@ -243,6 +267,7 @@
 
             }
 
+            console.log("check the skill_order_table", myApp.save_build.skill_order_table.order_list);
 
         }else if (!this.checked) {
             var index = skill_check_list_obj[this.name].record.indexOf(this.value);
@@ -254,7 +279,9 @@
 
             // console.log(skill_check_list_obj);
 
-            // console.log(myApp.save_build.skill_order_table.order);
+            console.log(myApp.save_build.skill_order_table.order);
+            console.log("skill_check_list_obj",skill_check_list_obj);
+
 
         }
     });

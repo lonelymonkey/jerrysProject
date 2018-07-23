@@ -42,7 +42,12 @@ ul.skill_list_div{
 .skill_count_display{
   width: 25%;
   float: left;
+  font-size: 30;
 
+}
+.skill_count_title{
+  font-size: 30px;
+  padding-bottom: 20px;
 }
 .skill_name{
   font-size: 35px;
@@ -54,6 +59,7 @@ ul.skill_list_div{
 .skill_count_number{
   float: left;
   width:50%;
+  padding-left: 10px;
 }
 .skill_note_field{
   font-size: 35px;
