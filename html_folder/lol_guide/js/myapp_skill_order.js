@@ -29,16 +29,13 @@
     skill_init();
     if (myApp.current_page == "skill") {
       console.log("the current page is ",myApp.current_page);
-      myApp.champion_decided_flag = true;
+      myApp.skill_champion_decided_flag = true;
       myApp.skill_order_writing_frame();
     }
   }
   myApp.skill_order_writing_frame = function (){
-    if(myApp.create_flag){
-      myApp.skill_champion_decided_flag = false;
-      myApp.create_flag = false;
-    }
-    console.log("gest teset gest ");
+
+    console.log("myApp.champion_decided_flag",myApp.champion_decided_flag);
     var skill_frame = `
                         <div class = "skill_containner">
                             <div class = "skill_info_checkbox">

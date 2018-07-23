@@ -22,10 +22,6 @@
     }
   }
   myApp.skin_writing_frame = function (){
-        if(myApp.create_flag){
-          myApp.skill_champion_decided_flag = false;
-          myApp.create_flag = false;
-        }
         if (!myApp.skill_champion_decided_flag) {
           $("#pool_and_selection").html("<div class = 'skill_skin_warning'>Please pick a chamion first</div>");
 
