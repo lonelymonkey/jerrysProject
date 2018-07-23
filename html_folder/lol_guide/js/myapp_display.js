@@ -389,9 +389,15 @@
     return item_info;
   }
   function display_note_handler(note_id){
+    var default_note = "The author does not leave any note in this section";
     for (var i = 0; i < display_get_data_ojb.note.length; i++) {
       if (display_get_data_ojb.note[i].note_id == note_id) {
-        return display_get_data_ojb.note[i].note;
+        if (display_get_data_ojb.note[i].note == "") {
+          return default_note;
+        }else {
+          return display_get_data_ojb.note[i].note;
+
+        }
       }
     }
   }
@@ -451,6 +457,7 @@
   function display_note_popover (note_id){
     var item_note;
     item_note = display_note_handler(note_id);
+
     var content_frame = `<div class="media sspell_popover">
                               <div class="media-body sspell_popover_description display_note_popover_css">
                                   <div class = "sspell_popover_detail">`+item_note+`</div>
