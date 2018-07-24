@@ -3,6 +3,7 @@
   color: white;
   padding-top: 15px;
 }
+
 .create_build_name_input_area{
   color: black;
   font-size: 25px;
@@ -102,4 +103,8 @@
 }
 .save_loading{
   width: 100px;
+}
+.create_tab_active{
+  background-color: white;
+  color: black;
 }

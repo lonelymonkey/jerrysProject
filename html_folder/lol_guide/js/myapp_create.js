@@ -28,12 +28,12 @@
                           <div class = "create_error_display_section"></div>
                           <div class = "writing_field">
                             <div class = "field_selection">
-                              <div class = "field_tag" onclick="myApp.select_field('spells')">Summoner Spell </div>
-                              <div class = "field_tag" onclick="myApp.select_field('skill')">Ability order </div>
-                              <div class = "field_tag" onclick="myApp.select_field('items')">Items </div>
-                              <div class = "field_tag" onclick="myApp.select_field('runes')">Runes </div>
-                              <div class = "field_tag" onclick="myApp.select_field('against_champion')">Against champion </div>
-                              <div class = "field_tag" onclick="myApp.select_field('skin')"class = "field_tag" >Skin</div>
+                              <div id= "field_tag_spells" class = "field_tag" onclick="myApp.select_field('spells')">Summoner Spell </div>
+                              <div id = "field_tag_skill" class = "field_tag" onclick="myApp.select_field('skill')">Ability order </div>
+                              <div id = "field_tag_items"  class = "field_tag" onclick="myApp.select_field('items')">Items </div>
+                              <div id = "field_tag_runes"  class = "field_tag" onclick="myApp.select_field('runes')">Runes </div>
+                              <div id = "field_tag_against_champion"  class = "field_tag" onclick="myApp.select_field('against_champion')">Against champion </div>
+                              <div id = "field_tag_skin"  class = "field_tag" onclick="myApp.select_field('skin')" >Skin</div>
                             </div>
                             <div id ="pool_and_selection"></div>
                          </div>`;
@@ -162,34 +162,42 @@
   /************aboveis the test dummy build for backend*************/
 
   myApp.select_field = function (field_name) {
-
+    $(`.field_tag`).removeClass('create_tab_active');
     switch (field_name) {
       case "spells":
         myApp.current_page = "spells";
-
+        $(`#field_tag_${field_name}`).addClass('create_tab_active');
         myApp.sspell_build_writing_frame();
 
         break;
       case "items":
         myApp.current_page = "items";
+        $(`#field_tag_${field_name}`).addClass('create_tab_active');
+
         myApp.items_build_writing_frame();
         break;
       case "runes":
         myApp.current_page = "runes";
+        $(`#field_tag_${field_name}`).addClass('create_tab_active');
 
         myApp.runes_build_writing_frame();
         break;
       case "against_champion":
         myApp.current_page = "against_champion";
+        $(`#field_tag_${field_name}`).addClass('create_tab_active');
+
         myApp.vschampion_build_writing_frame();
         break;
       case "skill":
         myApp.current_page = "skill";
+        $(`#field_tag_${field_name}`).addClass('create_tab_active');
 
         myApp.skill_order_writing_frame();
         break;
       case "skin":
         myApp.current_page = "skin";
+        $(`#field_tag_${field_name}`).addClass('create_tab_active');
+
         myApp.skin_writing_frame();
         break;
       default:
