@@ -243,8 +243,13 @@ class data_validation
       if ($item_count != sizeof($data[$i]["items"])) {
         throw new Exception(1);
       }
+      if (sizeof($data[$i]["items"] == 0)) {
+        throw new Exception(17);
+
+      }
       $item_count = 0;
     }
+
     return $count;
   }
   private static function rune_validation($data){

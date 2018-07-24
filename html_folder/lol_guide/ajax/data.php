@@ -99,6 +99,10 @@ try {
         $response['errMsg'] = "Err : This chapmion does not have this skin";
         $response['status'] = -2;
         break;
+      case '17':
+        $response['errMsg'] = "Err : item set needs at least one item";
+        $response['status'] = -2;
+        break;
       default:
         $response['errMsg'] = "Something wrong with data you save, please try again";
         break;
