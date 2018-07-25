@@ -22,8 +22,12 @@
       record : []
     },
   };
+  var normal_skill_point = 5;
+  var ultimate_skill_poit = 3;
   var skill_selected_champion_data;
   var skill_note_string_count = 0;
+  var skill_array_key = Object.keys(skill_check_list_obj);
+
   myApp.skill_order_champion = function (champion_id){
     console.log("I am the skill order, the champion id is",champion_id);
     skill_init();
@@ -154,6 +158,31 @@
     };
 
   }
+  function skill_display_remian_point(){
+    for (var i = 0; i < skill_array_key.length; i++) {
+        $(`input[name =${skill_array_key[i]}]:checked`).each(function(){
+          console.log("this.name ", this.name);
+          console.log("this.value ", this.value);
+          skill_check_list_obj[this.name].record.push(this.value);
+          console.log("skill_check_list_obj[this.name].record", skill_check_list_obj[this.name].record);
+        });
+    }
+    for (var i = 0; i < skill_array_key.length; i++) {
+      if (skill_array_key[i] == 'r') {
+
+
+        $("#"+skill_array_key[i]).html(ultimate_skill_poit-skill_check_list_obj[skill_array_key[i]].record.length);
+        skill_check_list_obj[skill_array_key[i]].record = [];
+
+      }else {
+
+
+        $("#"+skill_array_key[i]).html(normal_skill_point-skill_check_list_obj[skill_array_key[i]].record.length);
+        skill_check_list_obj[skill_array_key[i]].record = [];
+
+      }
+    }
+  }
   function skill_restore(){
     // I will do restore save data here
     console.log(myApp.save_build.skill_order_table.order_list);
@@ -169,11 +198,10 @@
       }
 
     }
+    skill_display_remian_point();
+
     //
-    $.each(skill_check_list_obj, function(index, e) {
-        $("#"+index).html(e.count);
-    });
-    $(".skill_input_note").val(myApp.save_build.skill_order_table.note);
+
 
   }
   function skill_build_checklist(){
@@ -208,11 +236,9 @@
   }
   // $('input[type="checkbox"][name="q"][value = 2]').prop('checked',false);
   function skill_bind_ui(){
-    var normal_skill_point = 5;
-    var ultimate_skill_poit = 3;
+
     var temp_count = 0;
     // console.log("the name is ",this.name);
-    var skill_array_key = Object.keys(skill_check_list_obj);
     var max_point = 5;
     $("input:checkbox").change(function() {
         if(this.checked) {
@@ -235,29 +261,7 @@
               $(`input[type="checkbox"][value = ${this.value}]`).prop('checked',false);
               $(`input[type="checkbox"][name=${this.name}][value = ${this.value}]`).prop('checked',true);
               // $("#"+this.name).html(skill_check_list_obj[this.name].count);
-              for (var i = 0; i < skill_array_key.length; i++) {
-                  $(`input[name =${skill_array_key[i]}]:checked`).each(function(){
-                    console.log("this.name ", this.name);
-                    console.log("this.value ", this.value);
-                    skill_check_list_obj[this.name].record.push(this.value);
-                    console.log("skill_check_list_obj[this.name].record", skill_check_list_obj[this.name].record);
-                  });
-              }
-              for (var i = 0; i < skill_array_key.length; i++) {
-                if (skill_array_key[i] == 'r') {
-
-
-                  $("#"+skill_array_key[i]).html(ultimate_skill_poit-skill_check_list_obj[skill_array_key[i]].record.length);
-                  skill_check_list_obj[skill_array_key[i]].record = [];
-
-                }else {
-
-
-                  $("#"+skill_array_key[i]).html(normal_skill_point-skill_check_list_obj[skill_array_key[i]].record.length);
-                  skill_check_list_obj[skill_array_key[i]].record = [];
-
-                }
-              }
+              skill_display_remian_point();
             }else {
               $(`input[type="checkbox"][name=${this.name}][value = ${this.value}]`).prop('checked',false);
             }
@@ -266,29 +270,8 @@
             console.log("this.name",this.name);
             console.log("this.value",this.value);
             myApp.save_build.skill_order_table.order_list[this.value] = "";
-            for (var i = 0; i < skill_array_key.length; i++) {
-                $(`input[name =${skill_array_key[i]}]:checked`).each(function(){
-                  console.log("this.name ", this.name);
-                  console.log("this.value ", this.value);
-                  skill_check_list_obj[this.name].record.push(this.value);
-                  console.log("skill_check_list_obj[this.name].record", skill_check_list_obj[this.name].record);
-                });
-            }
-            for (var i = 0; i < skill_array_key.length; i++) {
-              if (skill_array_key[i] == 'r') {
+            skill_display_remian_point();
 
-
-                $("#"+skill_array_key[i]).html(ultimate_skill_poit-skill_check_list_obj[skill_array_key[i]].record.length);
-                skill_check_list_obj[skill_array_key[i]].record = [];
-
-              }else {
-
-
-                $("#"+skill_array_key[i]).html(normal_skill_point-skill_check_list_obj[skill_array_key[i]].record.length);
-                skill_check_list_obj[skill_array_key[i]].record = [];
-
-              }
-            }
 
         }
     });
