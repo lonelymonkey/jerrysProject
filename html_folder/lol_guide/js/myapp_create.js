@@ -35,7 +35,7 @@
                               <div id = "field_tag_against_champion"  class = "field_tag" onclick="myApp.select_field('against_champion')">Against champion </div>
                               <div id = "field_tag_skin"  class = "field_tag" onclick="myApp.select_field('skin')" >Skin</div>
                             </div>
-                            <div id ="pool_and_selection"></div>
+                            <div id ="pool_and_selection">Please click the tabs above to start</div>
                          </div>`;
      $(id + ' .content').html(writing_frame);
      if (!create) {
@@ -238,7 +238,7 @@
       init();
       myApp.rune_clean = true;
       myApp.create_writing_frame(true);
-      
+
     }
 
 
