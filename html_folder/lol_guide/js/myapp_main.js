@@ -112,11 +112,11 @@ function build_frame() {
   <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
      <div class="navbar-header">
-       <a class="navbar-brand" href="#" onclick="myApp_ajax.load()">Guide LOL - main page</a>
+       <a class="navbar-brand main_page_title" href="#" onclick="myApp_ajax.load()">Guide LOL - main page</a>
      </div>
      <ul class="nav navbar-nav">
        <li class="dropdown">
-         <a href="#" onclick='myApp.create_writing_frame(true) '>Create</a>
+         <a class = "main_page_create" href="#" onclick='myApp.create_writing_frame(true) '>Create</a>
        </li>
      </ul>
    </div>
@@ -162,12 +162,18 @@ function save_config (cfg){
 }
 
 myApp.load_exist_build = function (){
-  var view_buile_title = `<div class = "row view_buile_title">
+  var view_buile_title = `
+                          <div class = "main_hint">
+                              <h10>Click "Create" to stark building your guide</h10>
+                              <h10>Click "view" to view other people's guide</h10>
+                          </div>
+                          <div class = "row view_buile_title">
                             <div class = "col-md-3">Build Name</div>
                             <div class = "col-md-3">champion</div>
                             <div class = "col-md-3">update time</div>
                             <div class = "col-md-3 loarding_area"></div>
-                          <div>`
+                          </div>
+`
   $(id+' .content').html(view_buile_title);
 
   // var build_page = `<div class = "view_exist_build">
