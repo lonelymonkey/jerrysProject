@@ -206,7 +206,7 @@
   myApp.check_exist_set = function(){
     for (var i = 0; i < myApp.save_build.item_detail_set.length; i++) {
       console.log(i);
-        $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${i})" class = "btn btn-md item_set_button_${i}">Item set #</button>`);
+        $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${i})" class = "btn btn-md item_set_button_${i}">Item set # ${i}</button>`);
         myApp.save_build.item_set[i].set_location = i;
     }
   };
