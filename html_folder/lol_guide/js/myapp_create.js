@@ -36,10 +36,14 @@
                               <div id = "field_tag_skin"  class = "field_tag" onclick="myApp.select_field('skin')" >Skin</div>
                             </div>
                             <div id ="pool_and_selection">
-                              <div class = "create_start_msg">Please click the tabs above to start</div>
+                              <div class = "create_start_msg"></div>
                             </div>
                          </div>`;
      $(id + ' .content').html(writing_frame);
+     // go to first page directly
+     myApp.current_page = "spells";
+     $(`#field_tag_spells`).addClass('create_tab_active');
+     myApp.sspell_build_writing_frame();
      if (!create) {
        if (myApp.save_build.champion_id!=0) {
          $("#pick_champion").val(myApp.save_build.champion_id);
@@ -210,6 +214,7 @@
     console.log(myApp.save_build);
     myApp.save_build.build_id=0;
     myApp.save_build.champion_id=0;
+    myApp.save_build.skin_id=0;
     myApp.save_build.build_name="";
     myApp.save_build.spell_set = {
                             spell_set_id : 0,
@@ -236,7 +241,7 @@
   }
   myApp.creat_move_champion_to_selection = function (select_champion_id){
     console.log("champion select is "+select_champion_id);
-    if (myApp.save_build.champion_id != 0) {
+    if (myApp.save_build.champion_id != 0 && select_champion_id != myApp.save_build.champion_id) {
       init();
       myApp.rune_clean = true;
       myApp.create_writing_frame(true);
