@@ -54,6 +54,7 @@
       }
 
       $(`#vs_champion_level-${i}-${myApp.save_build.against_champion[i].diffculty}`).addClass('vs_champion_active');
+      $(`#vs_champion_set-${i} .vs_input_note`).val(myApp.save_build.against_champion[i].note);
     }
     bind_set_level_ui();
 
