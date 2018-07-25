@@ -240,7 +240,7 @@
   function display_get_spell_info (spell_id){
     var spell_info = {id:0,name:"",description:""}
     for (var i = 0; i < myApp.spells.length; i++) {
-      if (myApp.spells[i].spell_id = spell_id) {
+      if (myApp.spells[i].spell_id == spell_id) {
         spell_info.id = spell_id;
         spell_info.name = myApp.spells[i].spell_name;
         spell_info.description = myApp.spells[i].spell_data.description;
