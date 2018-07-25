@@ -34,6 +34,7 @@
           }
           skin_bind_ui ();
         }
+        $(`.skin_img_container:has(img[alt="${myApp.save_build.skin_id}"])`).css("border-color","green");
   }
   function skin_bind_ui (){
     $(".skin_img").click(function (){
