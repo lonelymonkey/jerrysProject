@@ -234,11 +234,13 @@
   }
   myApp.creat_move_champion_to_selection = function (select_champion_id){
     console.log("champion select is "+select_champion_id);
+    if (myApp.save_build.champion_id != 0) {
+      init();
+      myApp.rune_clean = true;
+      myApp.create_writing_frame(true);
+      
+    }
 
-    myApp.save_build.champion_id = select_champion_id;
-    myApp.skill_champion_decided_flag = true;
-    myApp.skill_order_champion(select_champion_id);
-    myApp.skin_champion(select_champion_id);
 
     console.log(myApp.save_build);
     $("#selected_champion").html(`<img class="create_select_champion"
@@ -247,6 +249,11 @@
         src="../assets/champion_icon/`+select_champion_id+`.png"
         alt="`+select_champion_id+`">`);
     $(".create_select_champion").css("opacity",1);
+    myApp.save_build.champion_id = select_champion_id;
+    myApp.skill_champion_decided_flag = true;
+    myApp.skill_order_champion(select_champion_id);
+    myApp.skin_champion(select_champion_id);
+
   }
   myApp.create_select_champion = function () {
     // $("#create_champion_select_field").html("");

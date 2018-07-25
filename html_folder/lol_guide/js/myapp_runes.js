@@ -9,7 +9,7 @@
   var secondary_flag = false;
   var first_time_build_pri = true;
   var first_time_build_sec = true;
-
+  myApp.rune_clean = false;
   var rune_detect =
   {
     primary : false,
@@ -115,7 +115,7 @@
       </div>
     `;
     $("#pool_and_selection").html(rune_frame);
-    if (myApp.create_flag) {
+    if (myApp.create_flag || myApp.rune_clean) {
       secondary_flag = false;
       primary_flag = false;
       clearInterval(primary_interval);
@@ -123,6 +123,17 @@
       first_time_build_pri = true;
       first_time_build_sec = true;
       myApp.create_flag = false;
+      pri_selected = {
+        keystone : [],
+        tier1 :[],
+        tier2 :[],
+        tier3 :[],
+      };
+      sec_selected = {
+        tier1  :[],
+        tier2 :[],
+        tier3 :[],
+      };
     }
       rune_restore();
       myApp.rune_bind_ui("all");
