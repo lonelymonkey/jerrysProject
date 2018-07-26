@@ -140,7 +140,9 @@ require_once "data_validation.inc";
                   // var_dump($champion_array_type_data);
                   $champion_spell = $champion_array_type_data->spells;
                   $champion_passive = $champion_array_type_data->passive;
-                  // var_dump($this->champion_spell);
+                  $champion_title = $champion_array_type_data->title;
+                  $champion_detail["title"] = $champion_title;
+                  // var_dump($champion_detail);
                   foreach ($champion_spell as $champion_spell_order => $spell_detail) {
                     // var_dump($spell_detail);
                     $champion_qwer["name"] = $spell_detail->name;

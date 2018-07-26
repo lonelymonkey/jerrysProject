@@ -100,6 +100,14 @@ myApp.read_initial_data = function(obj){
   myApp.items = obj.data.items;
   myApp.exist_builds = obj.data.builds;
   myApp.runes = obj.data.runes;
+  if (window.location.hash == "") {
+    console.log("hash tag is empty");
+    myApp.load_exist_build();
+
+  }else {
+    console.log("hash tag is not empty");
+    myApp.main_check_hash();
+  }
 
   // console.log(myApp.champions);
   console.log(myApp.spells);
@@ -112,7 +120,7 @@ function build_frame() {
   <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
      <div class="navbar-header">
-       <a class="navbar-brand main_page_title" href="#" onclick="myApp_ajax.load()">Guide LOL - main page</a>
+       <a class="navbar-brand main_page_title" href="#" onclick="myApp_ajax.load()">Home</a>
      </div>
      <ul class="nav navbar-nav">
        <li class="dropdown">
@@ -162,7 +170,9 @@ function save_config (cfg){
 }
 
 myApp.load_exist_build = function (){
+  console.log("i am loading exist build");
   var view_buile_title = `
+                          <div class = "main_logo">LOL-Guide</div>
                           <div class = "main_hint">
                               <h10>Click "Create" to stark building your guide</h10>
                               <h10>Click "view" to view other people's guide</h10>
@@ -170,8 +180,9 @@ myApp.load_exist_build = function (){
                           <div class = "row view_buile_title">
                             <div class = "col-md-3">Build Name</div>
                             <div class = "col-md-3">champion</div>
-                            <div class = "col-md-3">update time</div>
                             <div class = "col-md-3 loarding_area"></div>
+                            <div class = "col-md-3">update time</div>
+
                           </div>
 `
   $(id+' .content').html(view_buile_title);
@@ -195,16 +206,15 @@ myApp.load_exist_build = function (){
       }
     }
     var temp = JSON.stringify(myApp.exist_builds[i]);
-    build_set_frame = `<div class = "row build_set_frame">
-                            <div  class ="col-md-3">`+ myApp.exist_builds[i].build_name +`</div>
-                            <div  class ="col-md-3"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
-                            <div  class ="col-md-3"> `+ myApp.exist_builds[i].update_time +` </div>
-                            <div  class ="col-md-3 main_view"> <button onclick="myApp.display_view_guide(${myApp.exist_builds[i].build_id})" class = "btn btn-lg">view</button> </div>
+    build_set_frame = `<div class = "row build_set_frame" onclick="myApp.display_view_guide(${myApp.exist_builds[i].build_id})">
+                            <div  class ="col-md-3 main_build_css main_build_name_css">`+ myApp.exist_builds[i].build_name +`</div>
+                            <div  class ="col-md-3 main_champion_icon_css"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
+                            <div  class ="col-md-3 main_build_css main_champion_name_css"> ${current_champion_name}</div>
+                            <div  class ="col-md-3 main_build_css"> `+ myApp.exist_builds[i].update_time +` </div>
                         </div>`;
     // console.log(build_set_frame);
     $(id+' .content').append(build_set_frame);
   }
-  myApp.main_check_hash();
 
 }
 

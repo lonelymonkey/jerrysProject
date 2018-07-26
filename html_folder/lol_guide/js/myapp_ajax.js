@@ -83,7 +83,6 @@
         // console.log('we got our initial data back');
         console.log(response);
         myApp.read_initial_data(response);
-        myApp.load_exist_build();
 
       }
     })

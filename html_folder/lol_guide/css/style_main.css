@@ -4,6 +4,11 @@ body{
   background: black;
   background-repeat : no-repeat;
 }
+.main_logo{
+  font-size: 50px;
+  color: white;
+  padding-bottom: 20px;
+}
 .layered-image {
   background: linear-gradient(to right, transparent, mistyrose),
       url("https://mdn.mozillademos.org/files/15525/critters.png");
@@ -36,12 +41,31 @@ body{
   top: 15px;
 }
 
+.main_build_css{
+  padding-top: 60px;
+  font-size: 30px;
+  padding-bottom: 30px;
+}
+.main_champion_name_css{
+  font-size: 50px;
+  padding-top: 50px;
+}
+.main_build_name_css{
+  padding-left: 30px;
+  word-wrap: break-word;
+}
+.main_champion_icon_css{
+  padding-top: 20px;
+  padding-left: 30px;
+}
+
 .build_set_frame{
   background-color: rgba(109,115,156,0.6);
   border-radius: 25px;
   margin-top: 25px;
   color: white;
   font-size: 25px;
+  cursor: pointer;
 }
 nav.main_nav_bar{
   color: red;

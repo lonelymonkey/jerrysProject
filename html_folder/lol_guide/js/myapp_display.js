@@ -30,11 +30,16 @@
               <div class = "display_content_holder">
                   <div class = "display_guide_name">
                   </div>
-                  <div class = "display_sspell_holder">
-                    <div class = "display_sspell_whole_container"></div>
+                  <div class = "display_selected_champion_name">
                   </div>
-                  <div class = "display_item_rune_container">
+                  <div class = "display_sspell_holder display_border_bottom">
+                    <div class = "display_sspell_whole_container">
+                      <div class = "display_vs_title">Summoner Spell Set</div>
+                    </div>
+                  </div>
+                  <div class = "display_item_rune_container display_border_bottom">
                     <div class = "display_rune_holer">
+                      <div class = "display_vs_title">Rune</div>
                       <ul class = "display_css_rune display_primary_rune display_rune_position">
                         <li class = "display_primary_rune_0 display_rune_li_css">
                         </li>
@@ -57,11 +62,12 @@
                       </ul>
                     </div>
                     <div class = "display_items_holder">
+                      <div class = "display_vs_title">Item Build Path</div>
                     </div>
                   </div>
-                  <div class = "display_ability_container">
-
+                  <div class = "display_ability_container display_border_bottom">
                   </div>
+                  <div class = "display_threat_container">
                     <div class = "display_vs_title">Thread & Diffculty</div>
                     <div class = "display_vs_easy display_vs_css">
                       <div class ="display_level_title ">Easy</div>
@@ -70,20 +76,25 @@
                     <div class = "display_vs_medium display_vs_css">
                       <div class ="display_level_title">Medium</div>
                       <div class = "display_vs_content"></div>
-
                     </div>
                     <div class = "display_vs_hard display_vs_css">
                       <div class ="display_level_title">Hard</div>
                       <div class = "display_vs_content"></div>
-
                     </div>
                   </div>
+
               </div>
       </div>`);
       // $(".display_background_holder").css("background-image",`url(../assets/display/${102}/${1}.png)`);
       // background: linear-gradient(to right, transparent, mistyrose)
 
       $(".display_guide_name").html(obj.build_guide.build_name);
+      for (var i = 0; i < myApp.champions.length; i++) {
+        if (myApp.champions[i].champion_id == obj.build_guide.champion_id) {
+          $(`.display_selected_champion_name`).html(myApp.champions[i].champion_name + " : " +myApp.champions[i].title);
+          break;
+        }
+      }
       $(".display_background_holder").css("background",`radial-gradient(circle closest-corner at 50% 60%,transparent,black),url(../assets/display/${obj.build_guide.champion_id}/${skin_id}.png)`);
       $(".display_background_holder").css("background-size","1200px auto");
       $(".display_background_holder").css("background-repeat","no-repeat");
@@ -92,7 +103,11 @@
       display_item_section (obj.item_set,obj.item_detail_set);
       display_ability_section(obj.skill_order_table,obj.build_guide.champion_id);
       display_vs_section(obj.against_champion);
-      // console.log(obj.rune_set);
+      $(".display_note_title").click(function (){
+        // $(this).parent().children(".display_note_slide_children").slideToggle("slow");
+        $(this).parent().children(".display_note_slide_children").toggle("slide");
+
+      });
   }
   function display_vs_section(against_champion){
     var vs_level_container = {
@@ -100,10 +115,11 @@
     medium :[],
     hard :[]
     };
+    note = "";
     console.log("against_champion.length",against_champion.length);
-    $(".display_vs_css").click(function (){
+    $(".display_level_title").click(function (){
       console.log("I am clicked my child is ",$(this).children(".display_vs_content"));
-      $(this).children(".display_vs_content").slideToggle("slow");
+      $(this).parent().children(".display_vs_content").slideToggle("slow");
     });
     var level = Object.keys(vs_level_container);
     console.log("against_champion.isArray" , against_champion.isArray);
@@ -137,14 +153,21 @@
     }
 
     for (var i = 0; i < level.length; i++) {
-      console.log(level[i]);
       console.log(vs_level_container.hard);
+      if (vs_level_container[level[i]].length == 0) {
+        console.log("this diffculty level has no champion",level[i]);
+        $(`.display_vs_${level[i]}`).css("display","none");
+
+      }else {
+        $(`.display_vs_${level[i]}`).css("display","block");
+
+      }
       for (var j = 0; j < vs_level_container[level[i]].length; j++) {
         var display_treat_level = Number(vs_level_container[level[i]][j].diffculty)+1;
 
         var vs_thread_ui_frame = `
           <div class = "display_vs_set">
-            <div data-toggle = "popover" class = "display_vs_champion_icon">
+            <div class = "display_vs_champion_icon">
               <img src = "../assets/champion_icon/${vs_level_container[level[i]][j].champion_id}.png">
             </div>
             <div class = "display_vs_treat_level_section">
@@ -153,10 +176,14 @@
               </div>
             </div>
 
+
           </div>
+          <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_vs_note"></div></div>
+          
         `;
         $(`.display_vs_${level[i]} .display_vs_content`).append(vs_thread_ui_frame);
-        display_note_popover(vs_level_container[level[i]][j].note_id);
+        note = display_note_handler(vs_level_container[level[i]][j].note_id);
+        $(`.display_vs_note`).html(note);
 
       }
     }
@@ -164,12 +191,12 @@
   function display_ability_section(skill_order,champion_id){
     var skill_container = ["q","w","e","r"];
     var skill_info;
+    var note = "";
     console.log("skill order is ",skill_order);
     var display_ability_frame = `
     <div class = display_ability_content_holder>
       <div class = "display_ability_title">
       SKill Level-up Order
-        <div data-toggle = "popover" class = "item_set_note">note</div>
       </div>
 
       <div class = "display_ability_passive display_ability_list_frame">
@@ -186,10 +213,11 @@
 
       </div>
     </div>
+    <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_ability_note"></div></div>
     `;
     var display_ability_check_list;
     $(".display_ability_container").html(display_ability_frame);
-    display_note_popover(skill_order.note_id);
+
     for (var i = 0; i < skill_container.length; i++) {
       $(`.display_ability_${skill_container[i]}`).html(`<div data-toggle = "popover" class = "display_ability_icon"><img src = "../assets/skill/${champion_id}/${i}.png"></div>`);
       skill_info = display_get_ability_info(champion_id,i);
@@ -208,6 +236,8 @@
     $(`.display_ability_passive .display_ability_icon`).html(`<img src = "../assets/skill/${champion_id}/4.png">`);
     skill_info = display_get_ability_info(champion_id,4);
     display_ability_init_popover(skill_info);
+    note = display_note_handler(skill_order.note_id);
+    $(`.display_ability_note`).html(note);
 
 
   }
@@ -234,8 +264,10 @@
     spell_info = display_get_spell_info(sspell_set.spell_id_2);
     $(".display_sspell_whole_container").append(`<div data-toggle = "popover" class = "display_sspell_container"><img src = "../assets/sspell_icon/${sspell_set.spell_id_2}.png"></div>`);
     display_init_popover("sspell_icon",spell_info);
-    $(".display_sspell_holder").append(`<div class = "display_sspell_note_container"><div data-toggle = "popover" class = "item_set_note display_sspel_note">note</div><div>`);
-    display_note_popover(sspell_set.note_id);
+    $(".display_sspell_whole_container").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note"></div></div>`);
+    note = display_note_handler(sspell_set.note_id);
+    $(`.display_sspel_note`).html(note);
+
   }
   function display_get_spell_info (spell_id){
     var spell_info = {id:0,name:"",description:""}
@@ -320,9 +352,9 @@
     rune_note = display_note_handler(rune_set.note_id)
     $(".display_primary_rune .display_css_rune_pool").css('border-color',"rgba("+rune_category_color[primary_rune_category][0]+", "+rune_category_color[primary_rune_category][1]+", "+rune_category_color[primary_rune_category][2]+", 1)")
     $(".display_secondary_rune .display_css_rune_pool").css('border-color',"rgba("+rune_category_color[secondary_rune_category][0]+", "+rune_category_color[secondary_rune_category][1]+", "+rune_category_color[secondary_rune_category][2]+", 1)")
-    $(".display_secondary_rune").append(`<div class = "display_rune_container display_note_css"><div data-toggle = "popover" class = "item_set_note display_sspel_note">note</div><div>`);
+    $(".display_rune_holer").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_rune_note"></div></div>`);
+    $(`.display_rune_note`).html(rune_note);
 
-    display_note_popover(rune_set.note_id);
 
   }
   function display_item_section (item,detail){
@@ -331,23 +363,24 @@
     var item_set_name;
     var item_note_id;
     var item_info_data;
+    var note = "";
     if (Array.isArray(item)) {
       for (var i = 0; i < item.length; i++) {
         item_set_name = item[i].set_name;
         item_note_id = item[i].note_id;
         var item_structure  = `
         <div class = "item_set_container_css item_set_container_${i}">
-
+          <div class = "item_set_title">${item_set_name}</div>
           <div class = "display_item_detail"></div>
           <div class = "display_title_note_holder">
-              <div class = "item_set_title">${item_set_name}</div>
-              <div data-toggle = "popover" class = "item_set_note">note</div>
+            <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_item_note"></div></div>
           </div>
 
         </div>
         `;
         $(".display_items_holder").append(item_structure);
-        display_note_popover(item_note_id);
+        note = display_note_handler(item_note_id);
+        $(`.item_set_container_${i} .display_item_note`).html(note);
       }
     }else {
       item_set_name = item.set_name;
@@ -358,14 +391,17 @@
         <div class = "display_item_detail"></div>
         <div class = "display_title_note_holder">
             <div class = "item_set_title">${item_set_name}</div>
-            <div data-toggle = "popover" class = "item_set_note">note</div>
+            <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_item_note"></div></div>
         </div>
 
       </div>
       `;
       $(".display_items_holder").append(item_structure);
-      display_note_popover(item_note_id);
+      note = display_note_handler(item_note_id);
+      $(`.item_set_container_${0} .display_item_note`).html(note);
+
     }
+    // $(".display_rune_holer").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_rune_note"></div></div>`);
 
     for (var i = 0; i < detail.length; i++) {
       for (var j = 0; j < detail[i].items.length; j++) {
