@@ -132,20 +132,16 @@ ul.display_rune_ul{
   color: black;
   background-color: white;
 }
-.display_sspell_note_container{
+
+.rune_content_holder{
   overflow: auto;
-  width: 70%;
-  /* float: left; */
 }
 .display_sspell_holder{
   min-height: 260px;
+  padding-top: 70px;
 }
 .item_set_container_css{
-  float: left;
-  margin-right: 50px;
-  min-height: 100px;
-  min-width: 100px;
-  margin-bottom: 50px;
+
 }
 .display_note_slide_children{
   display: none;
@@ -189,7 +185,6 @@ ul.display_rune_ul{
 }
 .display_sspell_whole_container{
   overflow: auto;
-  padding-top: 100px;
   padding-bottom: 40px;
 }
 .display_sspell_container{
@@ -246,6 +241,7 @@ ul.display_rune_ul{
   border-color: #242448;
   padding-left: 23px;
   padding-bottom: 17px;
+  display : inline-block;
 }
 .display_level_title{
   font-size: 35px;
@@ -254,11 +250,14 @@ ul.display_rune_ul{
   cursor: pointer;
 
 }
+.item_set_container_css{
+  display: inline-block;
+}
 .display_vs_champion_icon{
   float: left;
   width: 20%;
 }
-.display_vs_title{
+.display_section_title{
   color: white;
   font-size: 40px;
   padding-bottom: 30px;

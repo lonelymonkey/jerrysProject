@@ -33,42 +33,44 @@
                   <div class = "display_selected_champion_name">
                   </div>
                   <div class = "display_sspell_holder display_border_bottom">
+                    <div class = "display_section_title">Summoner Spell Set</div>
                     <div class = "display_sspell_whole_container">
-                      <div class = "display_vs_title">Summoner Spell Set</div>
                     </div>
                   </div>
                   <div class = "display_item_rune_container display_border_bottom">
                     <div class = "display_rune_holer">
-                      <div class = "display_vs_title">Rune</div>
-                      <ul class = "display_css_rune display_primary_rune display_rune_position">
-                        <li class = "display_primary_rune_0 display_rune_li_css">
-                        </li>
-                        <li class = "display_primary_rune_1 display_rune_li_css">
-                        </li>
-                        <li class = "display_primary_rune_2 display_rune_li_css">
-                        </li>
-                        <li class = "display_primary_rune_3 display_rune_li_css">
-                        </li>
-                        <li class = "display_primary_rune_4 display_rune_li_css">
-                        </li>
-                      </ul>
-                      <ul class = "display_css_rune display_secondary_rune display_rune_position">
-                        <li class = "display_secondary_rune_0 display_rune_li_css">
-                        </li>
-                        <li class = "display_secondary_rune_1 display_rune_li_css">
-                        </li>
-                        <li class = "display_secondary_rune_2 display_rune_li_css">
-                        </li>
-                      </ul>
+                      <div class = "display_section_title">Rune</div>
+                      <div class = "rune_content_holder">
+                        <ul class = "display_css_rune display_primary_rune display_rune_position">
+                          <li class = "display_primary_rune_0 display_rune_li_css">
+                          </li>
+                          <li class = "display_primary_rune_1 display_rune_li_css">
+                          </li>
+                          <li class = "display_primary_rune_2 display_rune_li_css">
+                          </li>
+                          <li class = "display_primary_rune_3 display_rune_li_css">
+                          </li>
+                          <li class = "display_primary_rune_4 display_rune_li_css">
+                          </li>
+                        </ul>
+                        <ul class = "display_css_rune display_secondary_rune display_rune_position">
+                          <li class = "display_secondary_rune_0 display_rune_li_css">
+                          </li>
+                          <li class = "display_secondary_rune_1 display_rune_li_css">
+                          </li>
+                          <li class = "display_secondary_rune_2 display_rune_li_css">
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                     <div class = "display_items_holder">
-                      <div class = "display_vs_title">Item Build Path</div>
+                      <div class = "display_section_title">Item Build Path</div>
                     </div>
                   </div>
                   <div class = "display_ability_container display_border_bottom">
                   </div>
                   <div class = "display_threat_container">
-                    <div class = "display_vs_title">Thread & Diffculty</div>
+                    <div class = "display_section_title">Thread & Diffculty</div>
                     <div class = "display_vs_easy display_vs_css">
                       <div class ="display_level_title ">Easy</div>
                       <div class = "display_vs_content"></div>
@@ -179,7 +181,7 @@
 
           </div>
           <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_vs_note"></div></div>
-          
+
         `;
         $(`.display_vs_${level[i]} .display_vs_content`).append(vs_thread_ui_frame);
         note = display_note_handler(vs_level_container[level[i]][j].note_id);
@@ -258,13 +260,14 @@
     // console.log(sspell_set);
     var note = "";
     var spell_info;
+
     spell_info = display_get_spell_info(sspell_set.spell_id_1);
     $(".display_sspell_whole_container").append(`<div data-toggle = "popover" class = "display_sspell_container"><img src = "../assets/sspell_icon/${sspell_set.spell_id_1}.png"></div>`);
     display_init_popover("sspell_icon",spell_info);
     spell_info = display_get_spell_info(sspell_set.spell_id_2);
     $(".display_sspell_whole_container").append(`<div data-toggle = "popover" class = "display_sspell_container"><img src = "../assets/sspell_icon/${sspell_set.spell_id_2}.png"></div>`);
     display_init_popover("sspell_icon",spell_info);
-    $(".display_sspell_whole_container").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note"></div></div>`);
+    $(".display_sspell_holder").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note"></div></div>`);
     note = display_note_handler(sspell_set.note_id);
     $(`.display_sspel_note`).html(note);
 
