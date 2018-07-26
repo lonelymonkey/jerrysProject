@@ -34,7 +34,11 @@
 
 
 
-
+  myApp.item_check_tab = function (){
+    if (local_set_number > 0) {
+      myApp.item_detail_frame(0);
+    }
+  }
   myApp.item_reset = function (){
     largest_count = 0;
     removed_set_id_array = [];
@@ -53,7 +57,7 @@
     }else {
       largest_count = local_set_number;
     }
-    $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${local_set_number})" class = "btn btn-md item_set_button_${local_set_number}">Item set #${local_set_number}</button>`);
+    $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${local_set_number})" class = "btn btn-md item_set_button_${local_set_number} item_tab_css">Item set #${local_set_number}</button>`);
     // console.log("item add set");
     // console.log(JSON.stringify(myApp.save_build));
     myApp.save_build.item_set.push({
@@ -80,8 +84,8 @@
     var new_location = 0;
     var item_choice_frame = `
                         <div class = "item_set_name">
-                            <span>item set Name: </span> <input id = "item_set_name-${set_number}" type = "text" placeholder = "Enter set name...">
-                            <button onclick = "myApp.item_remove_set(${set_number})" >&#10008;</button>
+                            <div class = "item_title_holder">item set Name: </div> <input class = "item_set_name_css form-control" id = "item_set_name-${set_number}" type = "text" placeholder = "Enter set name...">
+                            <button class = "item_remove_button_css" onclick = "myApp.item_remove_set(${set_number})" >&#10008;</button>
                         </div>
                         <div class = "item_chosen">
                           <div class = "item_empty_icon_field"></div>
@@ -92,7 +96,7 @@
                                 Notes
                             </div>
                             <div class = "item_notes_writing_area">
-                                <textarea class ="item_input_note" rows="8" cols="52" id ="item_notes-${set_number}"></textarea>
+                                <textarea class ="form-control item_input_note" rows="8" cols="52" id ="item_notes-${set_number}"></textarea>
                             </div>
                             <div class = "item_note_count-${set_number} note_count_css">Max : 600</div>
                         </div>`;
@@ -206,7 +210,7 @@
   myApp.check_exist_set = function(){
     for (var i = 0; i < myApp.save_build.item_detail_set.length; i++) {
       console.log(i);
-        $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${i})" class = "btn btn-md item_set_button_${i}">Item set # ${i}</button>`);
+        $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${i})" class = "btn btn-md item_set_button_${i} item_tab_css">Item set # ${i}</button>`);
         myApp.save_build.item_set[i].set_location = i;
     }
   };

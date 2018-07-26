@@ -71,7 +71,7 @@
         </div>
         <div class = "rune_note_field">
             <div>Note :</div>
-            <textarea class = "rune_input_note" cols = "30" rows = "5"></textarea>
+            <textarea class = "form-control rune_input_note" cols = "30" rows = "5"></textarea>
             <div class = "rune_note_count note_count_css">${rune_note_string_count}/600</div>
         </div>
       </div>

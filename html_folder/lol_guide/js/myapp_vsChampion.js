@@ -136,7 +136,7 @@
             </div>
         </div>
         <div class = "col-md-3 vs_champion_set_notes">
-          <textarea class = "vs_input_note" rows = "3" cols = "20"></textarea>
+          <textarea class = "form-control vs_input_note" rows = "3" cols = "20"></textarea>
         </div>
         <div class = "col-md-1 vs_champion_set_remove">
             <button class = "vs_set_remove_button" onclick = "myApp.vs_champion_remove_set(${local_set_count})">&#10008;</button>
@@ -260,7 +260,7 @@ myApp.vs_champion_select_champion = function (index) {
           </div>
           <div class="modal-body" >
               <div class = "search">
-                  <input class = "vs_search_champion" placeholder="Search champion">
+                  <input class = "form-control vs_search_champion" placeholder="Search champion">
                   <div id="create_champion_select_field">
                   </div>
               </div>
@@ -282,32 +282,52 @@ myApp.vs_champion_select_champion = function (index) {
     $(`.vs_search_champion`).keyup(function(){
       $("#create_champion_select_field").html("");
       var value = $(this).val();
+      var temp_array = [];
+      var final_array = [];
+      var not_priority = [];
+      var dupicate_flag = false;
+      var match_champion = false;
       reg = new RegExp("^" + value,"i");
       reg1 = new RegExp(value,"i");
       myApp.champions.forEach((e)=>{
         item_str = e.champion_name;
         if (reg.test(item_str)) {
-          // console.log(e.item_name);
-          var  champion_block = ` <div class ="create_list_champion">
-              <img data-dismiss="modal" onclick ="myApp.vs_champion_move_champion_to_selection(${e.champion_id},${champion_parent})
-               "src="../assets/champion_icon/`+e.champion_id+`.png"
-               alt="`+e.champion_id+`">
-               <div class = "vs_search_champion_name">${e.champion_name}</div>
+          final_array.push(e);
+          temp_array.push(e);
+          match_champion = true;
+        }
+        if (reg1.test(item_str)) {
+          for (var i = 0; i < temp_array.length; i++) {
+            if (temp_array[i].champion_id == e.champion_id) {
+              dupicate_flag = true;
+              break;
+            }
+          }
+          if (!dupicate_flag) {
+            not_priority.push(e);
+          }
+          match_champion = true;
+          dupicate_flag = false;
 
-            </div>`;
-          $("#create_champion_select_field").append(champion_block);
-        }else if (reg1.test(item_str)) {
+        }
+
+      });
+      final_array = final_array.concat(not_priority);
+      if (match_champion) {
+        for (var i = 0; i < final_array.length; i++) {
           var  champion_block = ` <div class ="create_list_champion">
-              <img data-dismiss="modal" onclick ="myApp.vs_champion_move_champion_to_selection(${e.champion_id},${champion_parent})
-               "src="../assets/champion_icon/`+e.champion_id+`.png"
-               alt="`+e.champion_id+`">
-               <div class = "vs_search_champion_name">${e.champion_name}</div>
+              <img data-dismiss="modal" onclick ="myApp.vs_champion_move_champion_to_selection(${final_array[i].champion_id},${champion_parent})
+               "src="../assets/champion_icon/`+final_array[i].champion_id+`.png"
+               alt="`+final_array[i].champion_id+`">
+               <div class = "vs_search_champion_name">${final_array[i].champion_name}</div>
 
             </div>`;
           $("#create_champion_select_field").append(champion_block);
         }
+      }else {
+        $("#create_champion_select_field").append("The champion with this name does not exist");
 
-      });
+      }
 
     });
 }

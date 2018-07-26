@@ -36,47 +36,56 @@
       // console.log(reg);
       // console.log(reg1);
       var item_empty = true;
+      var temp_array = [];
+      var final_array = [];
+      var not_priority = [];
+      var dupicate_flag = false;
       myApp.items.forEach((e)=>{
         item_str = e.item_name;
         if (reg.test(item_str)) {
-          // console.log(e.item_name);
-          var  item_block = ` <div class = "item_block" id = "item-${e.item_id}">
-                                <div class = "item_icon" data-toggle="popover">
-                                  <img onclick = "myApp.item_pool_to_selection(${e.item_id})" src = "../assets/item_icon/`+e.item_id+`.png">
-                                </div>
-                                <div class = "item_name">
-                                  `+ e.item_name +`
-                                </div>
-                                <div class = "item_price">
-                                  `+ e.total_cost +`
-                                </div>
-                              </div>
-                            `;
-          $(".item_pool_display").append(item_block);
-          item_init_popover(e);
+          console.log(e.item_name);
+          temp_array.push(e);
+          final_array.push(e);
+
           item_empty= false;
-        }else if (reg1.test(item_str)) {
-          var  item_block = ` <div class = "item_block" id = "item-${e.item_id}">
-                                <div class = "item_icon" data-toggle="popover">
-                                  <img onclick = "myApp.item_pool_to_selection(${e.item_id})" src = "../assets/item_icon/`+e.item_id+`.png">
-                                </div>
-                                <div class = "item_name">
-                                  `+ e.item_name +`
-                                </div>
-                                <div class = "item_price">
-                                  `+ e.total_cost +`
-                                </div>
-                              </div>
-                            `;
-          $(".item_pool_display").append(item_block);
-          item_init_popover(e);
+        }
+        if (reg1.test(item_str)) {
+          for (var i = 0; i < temp_array.length; i++) {
+            if (temp_array[i].item_id == e.item_id) {
+              dupicate_flag = true;
+              break;
+            }
+          }
+          if (!dupicate_flag) {
+            console.log(e.item_name);
+            not_priority.push(e);
+          }
+          dupicate_flag = false;
           item_empty= false;
         }
 
       });
+      final_array = final_array.concat(not_priority);
       if (item_empty) {
         $(".item_pool_display").html('<div class = "item_not_match">No items match by conditions</div>');
 
+      }else {
+        for (var i = 0; i < final_array.length; i++) {
+          var  item_block = ` <div class = "item_block" id = "item-${final_array[i].item_id}">
+                                <div class = "item_icon" data-toggle="popover">
+                                  <img onclick = "myApp.item_pool_to_selection(${final_array[i].item_id})" src = "../assets/item_icon/`+final_array[i].item_id+`.png">
+                                </div>
+                                <div class = "item_name">
+                                  `+ final_array[i].item_name +`
+                                </div>
+                                <div class = "item_price">
+                                  `+ final_array[i].total_cost +`
+                                </div>
+                              </div>
+                            `;
+          $(".item_pool_display").append(item_block);
+          item_init_popover(final_array[i]);
+        }
       }
 
     });
@@ -91,7 +100,7 @@
     var items_guide_frame =
     `<div class = "item_edit_field">
           <div class = "item_sets_tap">
-              <button onclick = "myApp.item_add_set()" class ="btn btn-md">Set &#43;</button>
+              <button onclick = "myApp.item_add_set()" class ="btn btn-md item_tab_css">Set &#43;</button>
           </div>
           <div class = "item_pool_and_choice">
                 <div class = "item_choice"></div>
@@ -101,7 +110,7 @@
                           Item Search
                       </div>
 
-                        <input id = "item_search" onclick = "myApp.item_search()" type = "text" placeholder = "Item name...">
+                        <input id = "item_search" class = "form-control" onclick = "myApp.item_search()" type = "text" placeholder = "Item name...">
 
                     </div>
                     <div class = "item_pool_selection">
@@ -118,6 +127,7 @@
     myApp.check_exist_set();
     item_display_list ();
     item_catagory_list();
+    myApp.item_check_tab();
 
   }
   function item_catagory_list (){

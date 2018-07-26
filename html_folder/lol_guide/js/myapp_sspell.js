@@ -30,7 +30,7 @@
                       <div class = "spell_note_field">
                         <div>Note : </div>
 
-                        <textarea class = "spell_input_note" rows = "5" cols = "60"></textarea>
+                        <textarea class = "form-control spell_input_note" rows = "5" cols = "60"></textarea>
                       </div>
                       <div class = "spell_note_count note_count_css">${spell_note_string_count}/600</div>`;
     $("#pool_and_selection").html(spell_field);

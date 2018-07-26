@@ -2,11 +2,29 @@
   font-size: 30px;
   color: white;
   padding-top: 15px;
+  padding-bottom: 15px;
 }
-
+.save_button{
+  margin-top: 20;
+  float: left;
+  width: 15%;
+  margin-left: 30px;
+}
+.create_select_champion_button{
+  margin-top: 20;
+}
+.create_select_champion_title_holder{
+  color: white;
+  font-size: 25px;
+  width: 50%;
+  float: left;
+  margin-top: 20px;
+  margin-right: 25px;
+}
 .create_build_name_input_area{
   color: black;
   font-size: 25px;
+  margin-top: 15px;
 }
 .create_champion_select_field{
   display: none;
@@ -37,6 +55,7 @@
 #selected_champion{
   height: 80px;
   width: 80px;
+  float: left;
 }
 
 #save{
@@ -46,7 +65,7 @@
   cursor: pointer;
   outline: none;
   color: #fff;
-  background-color: #4CAF50;
+  background-color: #2b2c37;
   border: none;
   border-radius: 15px;
   box-shadow: 0 9px #999;
@@ -78,19 +97,19 @@
 .create_save_succeed{
   color: green;
 }
-#save:hover {background-color: #3e8e41}
+#save:hover {background-color: gray}
 
 #save:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
+  background-color: white;
+  color: black;
+  box-shadow: 0 5px #5e5989;
   transform: translateY(4px);
 }
 
 .field_selection{
   overflow: auto;
   background-color: rgba(0,0,0,0.6);
-  border-radius: 5px;
-  border-style: groove;
+
 }
 #pool_and_selection{
   background-color: rgba(0,0,0,1);

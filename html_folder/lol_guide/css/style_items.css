@@ -16,7 +16,14 @@
   width: 55%;
   padding-bottom: 22px;
 }
-
+.item_tab_css{
+  margin-top: 10;
+  margin-left: 10;
+  padding: 10;
+}
+.item_notes_writing_area{
+  margin-right: 20px;
+}
 .item_chosen{
 
 }
@@ -25,7 +32,7 @@
   width: 60%;
   min-width: 297px;
   overflow: auto;
-  max-height: 800px;
+  max-height: 871px;
 
 }
 
@@ -138,10 +145,17 @@ font > a {
   padding-top: 5px;
 
 }
-
+#item_search{
+  font-size: 25px;
+}
 .item_search_title{
   color: white;
+  font-size: 30px;
+  padding-bottom: 10px;
 
+}
+.item_search_field{
+  width: 60%;
 }
 .item_not_match{
   color: white;
@@ -168,8 +182,18 @@ font > a {
   overflow: auto;
   padding-left: 6px;
 }
-.item_set_name > span{
+.item_set_name_css{
+  width: 50%;
+  float: left;
+}
+.item_remove_button_css{
+  margin-left: 10px;
+  margin-top: 5px;
+}
+.item_title_holder{
   color: white;
+  padding-bottom: 12px;
+  font-size: 25px;
 }
 .item_empty_container{
   float: left;
