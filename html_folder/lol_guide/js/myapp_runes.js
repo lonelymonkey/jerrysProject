@@ -69,13 +69,10 @@
         <div class = "rune_pool" id = "rune_category_inspiration">
           <img onclick = "myApp.rune_select_rune('inspiration')" src = "../assets/runes_icon/inspiration.png">
         </div>
-        <div class = "rune_note_field">
-            <div>Note :</div>
-            <textarea class = "form-control rune_input_note" cols = "30" rows = "5"></textarea>
-            <div class = "rune_note_count note_count_css">${rune_note_string_count}/600</div>
-        </div>
+
       </div>
       <div class = "rune_selection_field">
+        <div>
           <div class = "rune_selected_category" id = "rune_primary">
             <div class = "primary_rune_container">
               <div class = "rune_selection_category" id = "primary_rune_category">
@@ -112,6 +109,12 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class = "rune_note_field">
+          <div>Note :</div>
+          <textarea class = "form-control rune_input_note note_control" cols = "30" rows = "5"></textarea>
+          <div class = "rune_note_count note_count_css">${rune_note_string_count}/600</div>
       </div>
     `;
     $("#pool_and_selection").html(rune_frame);
@@ -136,6 +139,7 @@
       };
     }
       rune_restore();
+      $('.note_count_css').html(`${$('.note_control').val().length}/600`);
       myApp.rune_bind_ui("all");
       rune_bind_note_ui();
 

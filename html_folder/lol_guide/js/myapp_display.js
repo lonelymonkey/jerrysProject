@@ -180,7 +180,7 @@
 
 
           </div>
-          <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_vs_note"></div></div>
+          <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_vs_note"></div></div>
 
         `;
         $(`.display_vs_${level[i]} .display_vs_content`).append(vs_thread_ui_frame);
@@ -215,7 +215,7 @@
 
       </div>
     </div>
-    <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_ability_note"></div></div>
+    <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_ability_note"></div></div>
     `;
     var display_ability_check_list;
     $(".display_ability_container").html(display_ability_frame);
@@ -267,9 +267,9 @@
     spell_info = display_get_spell_info(sspell_set.spell_id_2);
     $(".display_sspell_whole_container").append(`<div data-toggle = "popover" class = "display_sspell_container"><img src = "../assets/sspell_icon/${sspell_set.spell_id_2}.png"></div>`);
     display_init_popover("sspell_icon",spell_info);
-    $(".display_sspell_holder").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note"></div></div>`);
+    $(".display_sspell_whole_container").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_sspell_note_block"></div></div>`);
     note = display_note_handler(sspell_set.note_id);
-    $(`.display_sspel_note`).html(note);
+    $(`.display_note_block`).html(note);
 
   }
   function display_get_spell_info (spell_id){
@@ -355,7 +355,7 @@
     rune_note = display_note_handler(rune_set.note_id)
     $(".display_primary_rune .display_css_rune_pool").css('border-color',"rgba("+rune_category_color[primary_rune_category][0]+", "+rune_category_color[primary_rune_category][1]+", "+rune_category_color[primary_rune_category][2]+", 1)")
     $(".display_secondary_rune .display_css_rune_pool").css('border-color',"rgba("+rune_category_color[secondary_rune_category][0]+", "+rune_category_color[secondary_rune_category][1]+", "+rune_category_color[secondary_rune_category][2]+", 1)")
-    $(".display_rune_holer").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_rune_note"></div></div>`);
+    $(".display_rune_holer").append(`<div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_rune_note"></div></div>`);
     $(`.display_rune_note`).html(rune_note);
 
 
@@ -376,7 +376,7 @@
           <div class = "item_set_title">${item_set_name}</div>
           <div class = "display_item_detail"></div>
           <div class = "display_title_note_holder">
-            <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_item_note"></div></div>
+            <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_item_note"></div></div>
           </div>
 
         </div>
@@ -394,7 +394,7 @@
         <div class = "display_item_detail"></div>
         <div class = "display_title_note_holder">
             <div class = "item_set_title">${item_set_name}</div>
-            <div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_item_note"></div></div>
+            <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_item_note"></div></div>
         </div>
 
       </div>
@@ -404,7 +404,7 @@
       $(`.item_set_container_${0} .display_item_note`).html(note);
 
     }
-    // $(".display_rune_holer").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_sspel_note display_rune_note"></div></div>`);
+    // $(".display_rune_holer").append(`<div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_rune_note"></div></div>`);
 
     for (var i = 0; i < detail.length; i++) {
       for (var j = 0; j < detail[i].items.length; j++) {

@@ -30,11 +30,11 @@
                       <div class = "spell_note_field">
                         <div>Note : </div>
 
-                        <textarea class = "form-control spell_input_note" rows = "5" cols = "60"></textarea>
+                        <textarea class = "form-control spell_input_note note_control" rows = "5" cols = "60"></textarea>
                       </div>
                       <div class = "spell_note_count note_count_css">${spell_note_string_count}/600</div>`;
     $("#pool_and_selection").html(spell_field);
-
+    $('.note_count_css').html(`${$('.note_control').val().length}/600`);
     $(".spell_input_note").keyup(function(){
       console.log("key in value is ",$(".spell_input_note").val());
       spell_note_string_count = $(".spell_input_note").val().length;
@@ -55,12 +55,12 @@
 
         // "<div data-toggle=`popover` class = `spell_list_sspell` id = `sspell"+myApp.spells[i].spell_id+"`><img onclick = `myApp.sspell_pool_to_selection("+spell_data_bundle+")`src = `../assets/sspell_icon/"+myApp.spells[i].spell_id+".png`></div>"
       $(".spell_pool").append(sspell);
-      console.log(spell_data_bundle);
+      // console.log(spell_data_bundle);
       initiate_sspell_popover(spell_data_bundle);
     }
     sspell_reload();
-    console.log("test test test");
-    console.log(myApp.save_build);
+    // console.log("test test test");
+    // console.log(myApp.save_build);
 
   }
   function sspell_init(){
@@ -76,6 +76,8 @@
       myApp.sspell_pool_to_selection(myApp.save_build.spell_set.spell_id_2);
     }
     $(".spell_input_note").val(myApp.save_build.spell_set.note);
+    console.log("note area content",$('.note_control').val());
+    console.log("note area length",$('.note_control').val().length);
   }
   myApp.sspell_pool_to_selection = function (pool_member_id) {
     console.log(pool_member_id);
@@ -134,7 +136,7 @@
     $(".popover.fade.bottom.in").remove();
   }
   initiate_sspell_popover = function (popover_content){
-    console.log(popover_content.description);
+    // console.log(popover_content.description);
     var content_frame = `<div class="media sspell_popover">
                               <div class = "sspell_popover_icon">
                                 <img src="../assets/sspell_icon/`+popover_content.id+`.png"class="media-object" alt="Sample Image">

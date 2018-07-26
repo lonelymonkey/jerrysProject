@@ -102,7 +102,7 @@
                             </div>
                             <div class = "skill_note_field">
                               <div>Note :</div>
-                              <textarea class = "form-control skill_input_note" cols = "60" rows = "5"></textarea>
+                              <textarea class = "form-control skill_input_note note_control" cols = "60" rows = "5"></textarea>
                             </div>
                             <div class = "skill_note_count note_count_css">${skill_note_string_count}/600</div>
                         </div>
@@ -115,6 +115,7 @@
       skill_build_checklist();
       skill_restore();
       skill_bind_ui();
+      $('.note_count_css').html(`${$('.note_control').val().length}/600`);
 
       console.log(myApp.save_build.champion_id);
       for (var i = 0; i < myApp.champions.length; i++) {

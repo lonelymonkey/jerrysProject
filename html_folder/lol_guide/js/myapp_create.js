@@ -12,6 +12,7 @@
   }
   myApp.create_writing_frame = function (create){
     myApp.create_flag = create;
+
     var writing_frame = ` <div class = "row create_main_function">
                               <div class = "col-md-3 save_button">
                                 <button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>
@@ -20,7 +21,7 @@
                                 Build Name : <input class = "form-control create_build_name_input_area" type="text" id="build_name">
                               </div>
                               <div class = "col-md-3 create_select_champion_button">
-                                  <div class = "create_select_champion_title_holder">Champion : </div>              
+                                  <div class = "create_select_champion_title_holder">Champion : </div>
                                   <div id = "selected_champion">
                                     <button onclick = "myApp.create_select_champion()" class="create_select_champion btn btn-md" data-toggle="modal" data-target="#myModal">&#43;</button>
                                   </div>
@@ -42,9 +43,8 @@
                          </div>`;
      $(id + ' .content').html(writing_frame);
      // go to first page directly
-     myApp.current_page = "spells";
      $(`#field_tag_spells`).addClass('create_tab_active');
-     myApp.sspell_build_writing_frame();
+     console.log("create flag",myApp.create_flag);
      if (!create) {
        if (myApp.save_build.champion_id!=0) {
          $("#pick_champion").val(myApp.save_build.champion_id);
@@ -52,10 +52,16 @@
        if (myApp.save_build.build_name != "") {
          $("#build_name").val(myApp.save_build.build_name);
        }
+       console.log("myApp.current_page",myApp.current_page);
+       myApp.select_field(myApp.current_page);
      }else {
        init();
        $("#pick_champion").val(myApp.save_build.champion_id);
        $("#build_name").val(myApp.save_build.build_name);
+       myApp.current_page = "spells";
+
+       myApp.sspell_build_writing_frame();
+
      }
 
      $("#pick_champion").focusout(function(){
@@ -67,6 +73,7 @@
        myApp.save_build.build_name  = $("#build_name").val();
        console.log("build name is "+myApp.save_build.build_name);
      });
+     myApp.create_flag = false;
   }
   myApp.send_build_to_ajax = function (){
     // console.log(myApp.save_build);
@@ -244,8 +251,9 @@
     console.log("champion select is "+select_champion_id);
     if (myApp.save_build.champion_id != 0 && select_champion_id != myApp.save_build.champion_id) {
       init();
+
       myApp.rune_clean = true;
-      myApp.create_writing_frame(true);
+      myApp.create_writing_frame(false);
 
     }
 

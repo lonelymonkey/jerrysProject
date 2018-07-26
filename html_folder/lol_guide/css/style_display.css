@@ -113,20 +113,16 @@ ul.display_rune_ul{
   font-size: 12px;
   padding: 2px;
 }
-.display_sspel_note{
-  font-size: 30px;
-  color: white;
-  min-height: 140px;
-  word-wrap: break-word;
-  padding-bottom: 30px;
+
+.display_sspell_note_container{
+  display: inline-block;
 }
 .display_note_title{
   color: white;
   font-size: 35px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
   cursor: pointer;
-  width: 100px;
-
+  display: inline-block;
 }
 .display_note_title:hover{
   color: black;
@@ -138,7 +134,7 @@ ul.display_rune_ul{
 }
 .display_sspell_holder{
   min-height: 260px;
-  padding-top: 70px;
+  padding-top: 130px;
 }
 .item_set_container_css{
 
@@ -147,6 +143,20 @@ ul.display_rune_ul{
   display: none;
   max-width: 600px;
   padding-top: 20px;
+}
+.display_note_block{
+  font-size: 30px;
+  color: white;
+  min-height: 140px;
+  word-wrap: break-word;
+  padding-bottom: 30px;
+}
+.display_sspell_note_block{
+  min-height: 0px;
+  max-width: none;
+  padding-bottom: 0px;
+  padding-top: 0px;
+
 }
 .display_note_popover_css{
   min-width: 100px;
