@@ -210,4 +210,11 @@ input[type="text"]{
 .item_active_button{
   background-color: black;
   color: white;
+  border-style: solid;
+  border-color: white;
+  border-radius: 3px;
+}
+.item_active_button:hover{
+  color: white;
+
 }

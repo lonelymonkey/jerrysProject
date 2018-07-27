@@ -364,7 +364,7 @@
 
     // console.log(item_from);
     if (item_from == null) {
-      console.log("emptyarray");
+      // console.log("emptyarray");
     }else {
       item_from.forEach((e) =>{
         path = "../assets/item_icon/"+e+".png";

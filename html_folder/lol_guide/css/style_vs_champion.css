@@ -1,5 +1,5 @@
 .vs_champion_set{
-  max-width: 910px;
+  width: 100%;
   color : white;
   padding-top: 20px;
   padding-left: 20px;
@@ -14,11 +14,17 @@
 }
 .vs_champion_set_difficulty{
   padding-top: 10px;
-  padding-left: 30px;
+  padding-left: 91px;
 
+}
+.vs_title_holder{
+  overflow: auto;
 }
 .vs_champion_set_champion{
   padding-left: 41;
+}::selection
+.vs_champion_set_remove{
+  margin-top: 32px;
 }
 
 .vs_champion_select_champion{
@@ -156,7 +162,7 @@
   padding-left: 40px;
 }
 .vs_champion_note{
-  width: 45%;
+  padding-left: 90px;
 }
 .vs_champion_set_notes{
   padding-top: 10px;

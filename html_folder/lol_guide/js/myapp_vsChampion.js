@@ -13,14 +13,14 @@
     var champion_frame =
     `
       <div class = "vs_champion_field">
-        <div>
+        <div class = "vs_title_holder">
             <div class = "vs_champion_title vs_champion_champion">Champion</div>
             <div class = "vs_champion_title vs_champion_difficulty">Treat Level</div>
             <div class = "vs_champion_title vs_champion_note">Note</div>
         </div>
         <div class = "vs_champion_detail_field"></div>
         <div class = "vs_champion_add">
-            <button class = "vs_champion_add_set" onclick = "myApp.vs_champion_add_set()">Add</button>
+            <button class = "vs_champion_add_set btn brn-md" onclick = "myApp.vs_champion_add_set()">Add</button>
         </div>
       </div>
     `;
@@ -118,10 +118,10 @@
     }
     var vs_champion_set_frame = `
     <div class = "row vs_champion_set" id = "vs_champion_set-${local_set_count}">
-        <div class = "col-md-2 vs_champion_set_champion">
+        <div class = "col-md-1 vs_champion_set_champion">
           <button onclick = "myApp.vs_champion_select_champion(${local_set_count})" class="create_select_champion btn btn-md" data-toggle="modal" data-target="#myModal">&#43;</button>
         </div>
-        <div class = "col-md-6 vs_champion_set_difficulty">
+        <div class = "col-md-5 vs_champion_set_difficulty">
             <div class = "vs_champion_difficulty_frame" id = "vs_champion_frame">
                 <div class = "vs_champion_level_common vs_champion_difficulty_level_0" id = "vs_champion_level-${local_set_count}-0"></div>
                 <div class = "vs_champion_level_common vs_champion_difficulty_level_1" id = "vs_champion_level-${local_set_count}-1"></div>
@@ -135,8 +135,8 @@
                 <div class = "vs_champion_level_common vs_champion_difficulty_level_9" id = "vs_champion_level-${local_set_count}-9"></div>
             </div>
         </div>
-        <div class = "col-md-3 vs_champion_set_notes">
-          <textarea class = "form-control vs_input_note" rows = "3" cols = "20"></textarea>
+        <div class = "col-md-5 vs_champion_set_notes">
+          <textarea class = "form-control vs_input_note" rows = "5" cols = "20"></textarea>
         </div>
         <div class = "col-md-1 vs_champion_set_remove">
             <button class = "vs_set_remove_button" onclick = "myApp.vs_champion_remove_set(${local_set_count})">&#10008;</button>
