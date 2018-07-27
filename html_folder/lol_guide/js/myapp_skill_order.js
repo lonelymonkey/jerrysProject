@@ -4,6 +4,8 @@
 
 (function(myApp){
   myApp.champion_decided_flag = false;
+  var level_list = ["q","w","e","r"];
+
   var skill_check_list_obj = {
     q : {
       count : 5,
@@ -206,34 +208,17 @@
 
   }
   function skill_build_checklist(){
-    var temp_var = "";
-    for (var i = 0; i < 4; i++) {
-      switch (i) {
-        case 0:
-          temp_var = 'q';
-          break;
-        case 1:
-          temp_var = 'w';
-          break;
-        case 2:
-          temp_var = 'e';
-          break;
-        case 3:
-          temp_var = 'r';
-          break;
+    for (var i = 0; i < level_list.length; i++) {
+      type = level_list[i];
+      var view = "<ul class = 'skill_list'>";
+      for (var j = 0; j < 18; j++) {
+          level = j+1;
+
+          view += '<li><div>'+j+'</div><div><label class="custom-checkbox"><input class="skill_check_box" name="'+type+'" value="'+level+'" type="checkbox"><span class="checkmark">&check;</span></label></div></li>';
       }
-        for (var j = 0; j < 18; j++) {
-          // console.log("test, this is ",j);
-          $("#"+i+" .skill_check_list").append(`<div class = "skill_div">
-                                              <ul class = "skill_list_div">
-                                                  <li>${j+1}</li>
-                                                  <li><input class = "skill_check_box" type = "checkbox" name = "${temp_var}" value = "${j}"></li>
-                                              </ul>
-                                            </div>`);
-        }
-
+      view += "</ul>";
+      $(`#${i} .skill_check_list`).append(view);
     }
-
   }
   // $('input[type="checkbox"][name="q"][value = 2]').prop('checked',false);
   function skill_bind_ui(){
