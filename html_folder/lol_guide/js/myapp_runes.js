@@ -147,6 +147,26 @@
 
 
   }
+  myApp.rune_reset = function (){
+    secondary_flag = false;
+    primary_flag = false;
+    clearInterval(primary_interval);
+    clearInterval(secondary_interval);
+    first_time_build_pri = true;
+    first_time_build_sec = true;
+    myApp.create_flag = false;
+    pri_selected = {
+      keystone : [],
+      tier1 :[],
+      tier2 :[],
+      tier3 :[],
+    };
+    sec_selected = {
+      tier1  :[],
+      tier2 :[],
+      tier3 :[],
+    };
+  }
   function rune_bind_note_ui (){
     $(".rune_input_note").keyup(function(){
       myApp.save_build.rune_set.note = $(".rune_input_note").val();

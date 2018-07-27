@@ -136,9 +136,7 @@ ul.display_rune_ul{
   min-height: 260px;
   padding-top: 130px;
 }
-.item_set_container_css{
 
-}
 .display_note_slide_children{
   display: none;
   max-width: 600px;
@@ -260,9 +258,7 @@ ul.display_rune_ul{
   cursor: pointer;
 
 }
-.item_set_container_css{
-  display: inline-block;
-}
+
 .display_vs_champion_icon{
   float: left;
   width: 20%;
@@ -365,4 +361,9 @@ ul.display_rune_ul{
 }
 .display_vs_set{
   overflow: auto;
+}
+ul.display_css_rune > li {
+  overflow: auto;
+  min-height: 221px;
+  padding-bottom: 46px;
 }

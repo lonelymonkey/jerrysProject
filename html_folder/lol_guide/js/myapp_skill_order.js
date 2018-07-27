@@ -214,7 +214,7 @@
       for (var j = 0; j < 18; j++) {
           level = j+1;
 
-          view += '<li><div>'+level+'</div><div><label class="custom-checkbox"><input class="skill_check_box" name="'+type+'" value="'+level+'" type="checkbox"><span class="checkmark">&check;</span></label></div></li>';
+          view += '<li><div>'+level+'</div><div><label class="custom-checkbox"><input class="skill_check_box" name="'+type+'" value="'+j+'" type="checkbox"><span class="checkmark">&check;</span></label></div></li>';
       }
       view += "</ul>";
       $(`#${i} .skill_check_list`).append(view);

@@ -245,7 +245,8 @@
     myApp.save_build.item_detail_set = [];
     myApp.save_build.against_champion = [];
     myApp.skill_champion_decided_flag = false;
-
+    myApp.item_reset();
+    myApp.rune_reset();
   }
   myApp.creat_move_champion_to_selection = function (select_champion_id){
     console.log("champion select is "+select_champion_id);

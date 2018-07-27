@@ -35,6 +35,7 @@
 
 
   myApp.item_check_tab = function (){
+    console.log("local_set_number",local_set_number);
     if (local_set_number > 0) {
       myApp.item_detail_frame(0);
     }
@@ -139,9 +140,9 @@
     });
     bind_set_name_ui(new_location);
     item_add_emtpy_icon();
-    console.log("I am in item set # " + new_location);
-    console.log(myApp.save_build.item_set[0]);
-    console.log("the item set name is " + myApp.save_build.item_set[new_location].set_name);
+    // console.log("I am in item set # " + new_location);
+    // console.log(myApp.save_build.item_set[0]);
+    // console.log("the item set name is " + myApp.save_build.item_set[new_location].set_name);
     $("#item_set_name-"+set_number).val(myApp.save_build.item_set[new_location].set_name);
     for (var i = 0; i < myApp.save_build.item_detail_set[new_location].items.length; i++) {
       $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[new_location].items[i]+`.png">`);
@@ -208,6 +209,7 @@
     $("#item_empty_container-"+myApp.save_build.item_detail_set[item_which_set].items.length).html(`<img  class = "item_empty_icon" src = "../assets/other/item_empty.png">`);
   }
   myApp.check_exist_set = function(){
+    console.log("check exist set");
     for (var i = 0; i < myApp.save_build.item_detail_set.length; i++) {
       console.log(i);
         $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${i})" class = "btn btn-md item_set_button_${i} item_tab_css">Item set # ${i}</button>`);
