@@ -13,20 +13,25 @@ img.resize {
   margin-bottom: 40px;
 }
 .display_selected_champion_name{
-  color: white;
+  color: #867a7a;
   font-size: 40px;
   padding-top: 30px;
   font-style: italic;
 }
+.display_champion_title{
+  font-size: 30px;
+  margin-top: 20;
+}
 .display_content_holder{
-  position: absolute;
-  top: 0px;
+  position: relative;
+  bottom: 606px;
   padding-bottom: 200px;
 }
 .display_guide_name{
-  color: white;
+  color: #d3aa16;
   font-size: 55px;
   padding-top: 60px;
+  font-weight: bold;
 }
 .display_rune_li{
   overflow: auto;
@@ -98,7 +103,7 @@ ul.display_rune_ul{
 .display_items_holder{
   width: 50%;
   float: left;
-  color: white;
+  color: #d3aa16;
   overflow: auto;
 }
 .item_set_title{
@@ -118,12 +123,15 @@ ul.display_rune_ul{
   display: inline-block;
 }
 .display_note_title{
-  color: white;
+  color: #d3aa16;
   font-size: 30px;
   margin-bottom: 20px;
   cursor: pointer;
   display: inline-block;
   text-align: center;
+}
+.display_note_title_bottom_part{
+  color: black
 }
 .display_note_title_thread{
   margin-left: 25px;
@@ -138,13 +146,17 @@ ul.display_rune_ul{
 }
 .display_sspell_holder{
   min-height: 260px;
-  padding-top: 130px;
+  padding-top: 63px;;
 }
 
 .display_note_slide_children{
   display: none;
   max-width: 600px;
   padding-top: 20px;
+}
+.display_note_slide{
+  word-wrap: break-word;
+  /* width: 100%; */
 }
 .display_note_block{
   font-size: 30px;
@@ -186,7 +198,6 @@ ul.display_rune_ul{
   border-color: #354d8b;
 }
 .display_item_detail_frame{
-  margin-top: 20px;
   border-style: solid;
   border-width: 3px;
   border-radius: 3px;
@@ -194,15 +205,13 @@ ul.display_rune_ul{
   display: inline-block;
 
 }
-.display_item_block{
-  margin-right: 25px;
-}
+
 .item_show_name {
   font-size: 20px;
 }
 .display_item_detail_name{
   margin-top: 15px;
-  font-size: 20px;
+  font-size: 15px;
   display: none;
 }
 .display_sspell_whole_container{
@@ -218,9 +227,10 @@ ul.display_rune_ul{
 
 }
 .display_ability_title{
-  color: white;
+  color: black;
   font-size: 35px;
   padding-bottom: 20px;
+  font-style: italic;
 }
 .display_ability_list_frame{
   min-height: 100px;
@@ -267,7 +277,7 @@ ul.display_rune_ul{
 }
 .display_level_title{
   font-size: 35px;
-  color: white;
+  color: black;
   padding-bottom: 30px;
   cursor: pointer;
   font-weight: bold;
@@ -280,7 +290,7 @@ ul.display_rune_ul{
   width: 20%;
 }
 .display_section_title{
-  color: white;
+  color: #d3aa16;
   font-size: 40px;
   padding-bottom: 30px;
   font-style: italic;
@@ -354,13 +364,19 @@ ul.display_rune_ul{
 }
 .display_vs_champion_name{
   width: 20%;
-  color: white;
+  color: black;
   font-size: 50px;
 
 }
 .display_item_block{
-  overflow: auto;
+  margin-right: 25px;
   display: inline-block;
+  width: 70px;
+  margin-top: 25px;
+}
+.display_item_align{
+  margin: auto;
+
 }
 .display_vs_css{
   margin-bottom: 40px;
@@ -370,6 +386,7 @@ ul.display_rune_ul{
 }
 .display_vs_set{
   overflow: auto;
+  margin-bottom: 30px;
 }
 ul.display_css_rune > li {
   overflow: auto;

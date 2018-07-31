@@ -1,13 +1,16 @@
 body{
   /* background: linear-gradient(to bottom, transparent, black), url(); */
-  /* background: linear-gradient(to bottom, black,gray); */
-  background: black;
+  background: linear-gradient(to bottom, black,#d3aa16);
+  /* background: black; */
   background-repeat : no-repeat;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 .main_logo{
   font-size: 50px;
   color: white;
   padding-bottom: 20px;
+  margin: auto;
+  width: 50%;
 }
 .layered-image {
   background: linear-gradient(to right, transparent, mistyrose),
@@ -25,17 +28,24 @@ body{
   position: relative;
   padding: 0;
   width: 1200px;
+  /* background: linear-gradient(to bottom, black,#d3aa16); */
+
 }
 .view_buile_title{
-  background-color: rgba(109,115,156,0.6);
+
+  /* background-color: rgba(109,115,156,0.6); */
   font-size: 38px;
   border-radius: 15px;
-  color: white;
+  color:#d3aa16;
+  margin-left: 0px;
+  margin-right: 0px;
+
   }
 .main_hint{
   font-size: 30px;
-  color: white;
+  color: rgbA(211,170,22,0.5);
   padding-bottom: 16px;
+
 }
 .main_view {
   top: 15px;
@@ -60,12 +70,16 @@ body{
 }
 
 .build_set_frame{
-  background-color: rgba(109,115,156,0.6);
+  /* background-color: rgba(109,115,156,0.6); */
   border-radius: 25px;
   margin-top: 25px;
   color: white;
   font-size: 25px;
   cursor: pointer;
+  margin-left: 0px;
+  border-style: double;
+  border-width: 5px;
+  margin-right: 0px;
 }
 nav.main_nav_bar{
   color: red;

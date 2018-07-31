@@ -207,6 +207,10 @@ input[type="text"]{
 .item_list_title{
   font-size: 30px;
 }
+.item_input_note{
+  margin: auto;
+  width: 92%;
+}
 .item_active_button{
   background-color: black;
   color: white;

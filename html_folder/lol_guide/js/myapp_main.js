@@ -172,16 +172,18 @@ function save_config (cfg){
 myApp.load_exist_build = function (){
   console.log("i am loading exist build");
   var view_buile_title = `
-                          <div class = "main_logo">LOL-Guide</div>
+                          <div class = "main_logo">
+                            <div class = "main_logo"><a href="https://clipartxtras.com/download/fde1093db25b44bd77d9fa7d9fb3d2222e106bbf.html"><img src = "../assets/other/poro-2.png"></a></div>
+                          </div>
                           <div class = "main_hint">
                               <h10>Click "Create" to stark building your guide</h10>
                               <h10>Click builds below to view other people's guide</h10>
                           </div>
                           <div class = "row view_buile_title">
                             <div class = "col-md-3">Build Name</div>
-                            <div class = "col-md-3">champion</div>
+                            <div class = "col-md-3">Champion</div>
                             <div class = "col-md-3 loarding_area"></div>
-                            <div class = "col-md-3">update time</div>
+                            <div class = "col-md-3">Update time</div>
 
                           </div>
 `

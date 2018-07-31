@@ -44,7 +44,7 @@
     console.log("myApp.champion_decided_flag",myApp.champion_decided_flag);
     var skill_frame = `
                         <div class = "skill_containner">
-                            <div class = "skill_info_checkbox">
+                            <div class = "skill_info_checkbox skill_countdown_place">
                               <div class = "skill_count_title">Remaining skill point count down:</div>
                               <div class = "skill_count_display">
                                   <div class = "skill_count_name">Q</div>

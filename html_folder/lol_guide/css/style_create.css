@@ -74,7 +74,7 @@
 
 .writing_field{
   margin-top: 30px;
-  overflow: auto;
+  /* overflow: auto; */
 }
 .field_tag{
   float: left;
@@ -114,7 +114,7 @@
 #pool_and_selection{
   background-color: rgba(0,0,0,1);
   margin-top: 20px;
-  overflow: auto;
+  /* overflow: auto; */
   border-radius: 10px;
   min-height: 400px;
   color: white;

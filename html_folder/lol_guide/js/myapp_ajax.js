@@ -38,7 +38,7 @@
             console.log(response.errMsg);
           }else {
             myApp.read_responser_after_save_build(response);
-            $(".create_error_display_section").html("Save Succesffully ! Please go to the main page to view your build");
+            $(".create_error_display_section").html("Save Successfully ! Please go to the Home page to view your build");
             $(".create_error_display_section").addClass("create_save_succeed");
           }
           $(".save_button").html(`<button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>`);

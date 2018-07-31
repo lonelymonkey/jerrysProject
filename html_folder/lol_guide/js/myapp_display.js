@@ -74,7 +74,7 @@
                   <div class = "display_ability_container display_border_bottom">
                   </div>
                   <div class = "display_threat_container">
-                    <div class = "display_section_title">Thread & Diffculty</div>
+                    <div class = "display_ability_title">Thread & Diffculty</div>
                     <div class = "display_vs_easy display_vs_css">
                       <div class ="display_level_title ">Easy</div>
                       <div class = "display_vs_content"></div>
@@ -97,11 +97,14 @@
       $(".display_guide_name").html(obj.build_guide.build_name);
       for (var i = 0; i < myApp.champions.length; i++) {
         if (myApp.champions[i].champion_id == obj.build_guide.champion_id) {
-          $(`.display_selected_champion_name`).html(myApp.champions[i].champion_name + " : " +myApp.champions[i].title);
+          $(`.display_selected_champion_name`).html(`<div>${myApp.champions[i].champion_name}</div><div class = "display_champion_title">${myApp.champions[i].title}</div>`);
+
           break;
         }
-      }
-      $(".display_background_holder").css("background",`radial-gradient(circle closest-corner at 50% 60%,transparent,black),url(../assets/display/${obj.build_guide.champion_id}/${skin_id}.png)`);
+      };
+      $(".display_background_holder").css("background",`linear-gradient(to top, transparent,black),url(../assets/display/${obj.build_guide.champion_id}/${skin_id}.png)`);
+
+      // $(".display_background_holder").css("background",`radial-gradient(circle closest-corner at 50% 60%,transparent,black),url(../assets/display/${obj.build_guide.champion_id}/${skin_id}.png)`);
       $(".display_background_holder").css("background-size","1200px auto");
       $(".display_background_holder").css("background-repeat","no-repeat");
       display_sspell_section (obj.spell_set)
@@ -195,23 +198,29 @@
 
         var vs_thread_ui_frame = `
           <div class = "display_vs_set">
-            <div class = "display_vs_champion_icon">
-              <img src = "../assets/champion_icon/${vs_level_container[level[i]][j].champion_id}.png">
-            </div>
-            <div class = "display_vs_treat_level_section">
-              <div class = "display_vs_champion_name">${champion_name}</div>
-              <div class = "display_vs_threat_level_bar_${vs_level_container[level[i]][j].diffculty}">
+            <div style = "overflow :auto">
+              <div class = "display_vs_champion_icon">
+                <img src = "../assets/champion_icon/${vs_level_container[level[i]][j].champion_id}.png">
+              </div>
+              <div class = "display_vs_treat_level_section">
+                <div class = "display_vs_champion_name">${champion_name}</div>
+                <div class = "display_vs_threat_level_bar_${vs_level_container[level[i]][j].diffculty}">
+                </div>
               </div>
             </div>
-
+            <div class = "display_note_slide "><div class = "display_note_title_bottom_part display_note_title display_note_flag_${i}_${j} display_note_title_thread">Note</div><div class = "display_note_slide_children display_note_block display_vs_note"></div></div>
 
           </div>
-          <div class = "display_note_slide "><div class = "display_note_title display_note_title_thread">Note</div><div class = "display_note_slide_children display_note_block display_vs_note"></div></div>
 
         `;
         $(`.display_vs_${level[i]} .display_vs_content`).append(vs_thread_ui_frame);
         note = display_note_handler(vs_level_container[level[i]][j].note_id);
-        $(`.display_vs_note`).html(note);
+        if (note =="") {
+          $(`.display_note_flag_${i}_${j}`).hide();
+          console.log("note is empty");
+        }else {
+          $(`.display_vs_note`).html(note);
+        }
 
       }
     }
@@ -224,7 +233,7 @@
     var display_ability_frame = `
     <div class = display_ability_content_holder>
       <div class = "display_ability_title">
-      SKill Level-up Order
+      Skill Level-up Order
       </div>
 
       <div class = "display_ability_passive display_ability_list_frame">
@@ -241,7 +250,7 @@
 
       </div>
     </div>
-    <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_ability_note"></div></div>
+    <div class = "display_note_slide "><div class = "display_note_title display_note_title_bottom_part">Note</div><div class = "display_note_slide_children display_note_block display_ability_note"></div></div>
     `;
     var display_ability_check_list;
     $(".display_ability_container").html(display_ability_frame);
@@ -265,7 +274,13 @@
     skill_info = display_get_ability_info(champion_id,4);
     display_ability_init_popover(skill_info);
     note = display_note_handler(skill_order.note_id);
-    $(`.display_ability_note`).html(note);
+    if (note =="") {
+      $(`.display_ability_container .display_note_title`).hide();
+      console.log(" display_ability_content_holder note is empty");
+    }else {
+      $(`.display_ability_note`).html(note);
+
+    }
 
 
   }
@@ -295,7 +310,14 @@
     display_init_popover("sspell_icon",spell_info);
     $(".display_sspell_whole_container").append(`<div class = "display_note_slide display_sspell_note_container"><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_sspell_note_block"></div></div>`);
     note = display_note_handler(sspell_set.note_id);
-    $(`.display_note_block`).html(note);
+
+    if (note =="") {
+      $(`.display_sspell_note_container .display_note_title`).hide();
+      console.log(" display_ability_content_holder note is empty");
+    }else {
+      $(`.display_sspell_note_block`).html(note);
+
+    }
 
   }
   function display_get_spell_info (spell_id){
@@ -382,7 +404,14 @@
     $(".display_primary_rune .display_css_rune_pool").css('border-color',"rgba("+rune_category_color[primary_rune_category][0]+", "+rune_category_color[primary_rune_category][1]+", "+rune_category_color[primary_rune_category][2]+", 1)")
     $(".display_secondary_rune .display_css_rune_pool").css('border-color',"rgba("+rune_category_color[secondary_rune_category][0]+", "+rune_category_color[secondary_rune_category][1]+", "+rune_category_color[secondary_rune_category][2]+", 1)")
     $(".display_rune_holer").append(`<div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_rune_note"></div></div>`);
-    $(`.display_rune_note`).html(rune_note);
+    if (rune_note =="") {
+      $(`.display_rune_holer .display_note_title`).hide();
+      console.log(" display_ability_content_holder note is empty");
+    }else {
+      $(`.display_rune_note`).html(rune_note);
+
+
+    }
 
 
   }
@@ -408,7 +437,13 @@
         `;
         $(".display_items_holder").append(item_structure);
         note = display_note_handler(item_note_id);
-        $(`.item_set_container_${i} .display_item_note`).html(note);
+        if (note =="") {
+          $(`.item_set_container_${i} .display_note_title`).hide();
+          console.log(" display_ability_content_holder note is empty");
+        }else {
+          $(`.item_set_container_${i} .display_item_note`).html(note);
+
+        }
       }
     }else {
       item_set_name = item.set_name;
@@ -425,7 +460,13 @@
       `;
       $(".display_items_holder").append(item_structure);
       note = display_note_handler(item_note_id);
-      $(`.item_set_container_${0} .display_item_note`).html(note);
+      if (note =="") {
+        $(`.item_set_container_${0} .display_note_title`).hide();
+        console.log(" display_ability_content_holder note is empty");
+      }else {
+        $(`.item_set_container_${0} .display_item_note`).html(note);
+
+      }
     }
     // $(".display_rune_holer").append(`<div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_rune_note"></div></div>`);
     console.log(detail);
@@ -438,7 +479,7 @@
               break;
             }
           }
-          $(`.item_set_container_${i} .display_item_detail`).append(`<div class = "display_item_block"><div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div><div class = "display_item_detail_name">${item_name}</div></div>`);
+          $(`.item_set_container_${i} .display_item_detail`).append(`<div class = "display_item_block"><div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div><div class = "display_item_detail_name"><span>${item_name}</span></div></div>`);
           item_info_data = display_get_item_info(detail[i].items[j]);
           display_init_popover("item_icon",item_info_data);
           // console.log(item_info_data);
@@ -474,7 +515,7 @@
     return item_info;
   }
   function display_note_handler(note_id){
-    var default_note = "The author did not leave any note in this section";
+    var default_note = "";
     for (var i = 0; i < display_get_data_ojb.note.length; i++) {
       if (display_get_data_ojb.note[i].note_id == note_id) {
         if (display_get_data_ojb.note[i].note == "") {

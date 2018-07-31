@@ -9,17 +9,23 @@
   padding-top: 20;
 }
 .skill_info_checkbox{
-  overflow: auto;
+  /* overflow: auto; */
   margin-bottom: 20px;
 }
 .skill_selection_holder{
   overflow: auto;
 }
+.skill_countdown_place{
+  height: 135px;
+}
 /* input[type="checkbox" class = "skill_check_box"]{
   height:40px;
   width: 40px;
 } */
-
+.skill_input_note{
+  margin: auto;
+  width: 92%;
+}
 input[type="checkbox"]{
   height:30px;
   width: 30px;
@@ -68,6 +74,7 @@ ul.skill_list_div{
 }
 .skill_passive_css{
   font-size: 25px;
+  height: 50px;
 }
 .skill_list{
   list-style: none;

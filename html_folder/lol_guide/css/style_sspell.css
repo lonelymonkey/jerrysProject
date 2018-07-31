@@ -27,6 +27,8 @@
 .spell_input_note{
   font-size: 35px;
   border-radius: 20px;
+  margin: auto;
+  width: 92%;
 }
 .spell_span2{
   font-size: 20px;
@@ -122,7 +124,7 @@
 .spell_note_field{
   font-size: 35px;
   padding-bottom: 30px;
-  padding-left: 30px;
+  /* padding-left: 30px; */
 }
 .note_count_css{
   color: white;
