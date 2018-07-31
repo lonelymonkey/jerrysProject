@@ -128,7 +128,7 @@ ul.display_rune_ul{
 }
 .display_note_title{
   color: #d3aa16;
-  font-size: 30px;
+  font-size: 20px;
   margin-bottom: 20px;
   cursor: pointer;
   display: inline-block;
@@ -143,6 +143,8 @@ ul.display_rune_ul{
 .display_note_title:hover{
   color: black;
   background-color: white;
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .rune_content_holder{

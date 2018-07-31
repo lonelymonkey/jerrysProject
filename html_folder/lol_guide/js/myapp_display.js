@@ -32,7 +32,7 @@
                   </div>
                   <div class = "display_selected_champion_name">
                   </div>
-                  <div class = "display_sspell_holder display_border_bottom">
+                  <div class = "display_sspell_holder">
                     <div class = "display_section_title">Summoner Spell Set</div>
                     <div class = "display_sspell_whole_container">
                     </div>
