@@ -404,7 +404,6 @@
           <div class = "display_title_note_holder">
             <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_item_note"></div></div>
           </div>
-
         </div>
         `;
         $(".display_items_holder").append(item_structure);
@@ -416,20 +415,17 @@
       item_note_id = item.note_id;
       var item_name = "";
       var item_structure  = `
-      <div class = "item_set_container_css item_set_container_${0}">
-
+      <div class = "item_set_container_css item_set_container_${i}">
+        <div class = "item_set_title">${item_set_name}</div>
         <div class = "display_item_detail"></div>
         <div class = "display_title_note_holder">
-            <div class = "item_set_title">${item_set_name}</div>
-            <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_item_note"></div></div>
+          <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_item_note"></div></div>
         </div>
-
       </div>
       `;
       $(".display_items_holder").append(item_structure);
       note = display_note_handler(item_note_id);
       $(`.item_set_container_${0} .display_item_note`).html(note);
-
     }
     // $(".display_rune_holer").append(`<div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_rune_note"></div></div>`);
 
