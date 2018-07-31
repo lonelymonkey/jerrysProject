@@ -9,8 +9,17 @@ body{
   font-size: 50px;
   color: white;
   padding-bottom: 20px;
+  display: inline-block;
+}
+.main_page_logo_title{
+  display: inline-block;
+}
+.main_logo_container{
+  font-size: 50px;
+  color: white;
+  padding-bottom: 20px;
   margin: auto;
-  width: 50%;
+  width: 70%;
 }
 .layered-image {
   background: linear-gradient(to right, transparent, mistyrose),

@@ -13,7 +13,12 @@
   myApp.create_writing_frame = function (create){
     myApp.create_flag = create;
 
-    var writing_frame = ` <div class = "row create_main_function">
+    var writing_frame = `
+                          <div class = "main_logo_container">
+                            <div class = "main_logo"><a href="https://clipartxtras.com/download/fde1093db25b44bd77d9fa7d9fb3d2222e106bbf.html"><img src = "../assets/other/poro-3.png"></a></div>
+                            <div class = "main_page_logo_title"><span>Create Guides</span></div>
+                          </div>
+                          <div class = "row create_main_function">
                               <div class = "col-md-3 save_button">
                                 <button id = "save" onclick='myApp.send_build_to_ajax()'>save</button>
                               </div>

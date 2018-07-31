@@ -172,8 +172,9 @@ function save_config (cfg){
 myApp.load_exist_build = function (){
   console.log("i am loading exist build");
   var view_buile_title = `
-                          <div class = "main_logo">
-                            <div class = "main_logo"><a href="https://clipartxtras.com/download/fde1093db25b44bd77d9fa7d9fb3d2222e106bbf.html"><img src = "../assets/other/poro-2.png"></a></div>
+                          <div class = "main_logo_container">
+                            <div class = "main_logo"><a href="https://clipartxtras.com/download/fde1093db25b44bd77d9fa7d9fb3d2222e106bbf.html"><img src = "../assets/other/poro-3.png"></a></div>
+                            <div class = "main_page_logo_title"><span>Champion Guides</span></div>
                           </div>
                           <div class = "main_hint">
                               <h10>Click "Create" to stark building your guide</h10>

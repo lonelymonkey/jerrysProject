@@ -126,6 +126,10 @@
   padding-bottom: 30px;
   /* padding-left: 30px; */
 }
+.spell_note_field > div:first-child{
+  padding-left: 52px;
+  padding-bottom: 15px;
+}
 .note_count_css{
   color: white;
   font-size: 25px;

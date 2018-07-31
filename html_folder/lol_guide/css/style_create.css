@@ -108,7 +108,7 @@
 
 .field_selection{
   overflow: auto;
-  background-color: rgba(0,0,0,0.6);
+  /* background-color: rgba(0,0,0,0.6); */
 
 }
 #pool_and_selection{

@@ -72,6 +72,10 @@ ul.skill_list_div{
   padding-bottom: 30px;
   padding-left: 30px;
 }
+.skill_note_field > div:first-child{
+  padding-left: 52px;
+  padding-bottom: 15px;
+}
 .skill_passive_css{
   font-size: 25px;
   height: 50px;
