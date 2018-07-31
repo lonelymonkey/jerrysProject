@@ -175,7 +175,7 @@ myApp.load_exist_build = function (){
                           <div class = "main_logo">LOL-Guide</div>
                           <div class = "main_hint">
                               <h10>Click "Create" to stark building your guide</h10>
-                              <h10>Click "view" to view other people's guide</h10>
+                              <h10>Click builds below to view other people's guide</h10>
                           </div>
                           <div class = "row view_buile_title">
                             <div class = "col-md-3">Build Name</div>
