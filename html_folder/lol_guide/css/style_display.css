@@ -292,70 +292,60 @@ ul.display_rune_ul{
   height: 30px;
   width: 150px;
   background-color: #82b382;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_1{
   height: 30px;
   width: 200px;
   background-color: #309630;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_2{
   height: 30px;
   width: 250px;
   background-color: #309630;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_3{
   height: 30px;
   width: 300px;
   background-color: #cbcd3d;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_4{
   height: 30px;
   width: 350px;
   background-color: #ffe000;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_5{
   height: 30px;
   width: 400px;
   background-color: orange;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_6{
   height: 30px;
   width: 450px;
   background-color: #ff7600;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_7{
   height: 30px;
   width: 500px;
   background-color: #ff2400;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_8{
   height: 30px;
   width: 550px;
   background-color: red;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_threat_level_bar_9{
   height: 30px;
   width: 600px;
   background-color: red;
-  float: left;
   margin-top: 17px;
 }
 .display_vs_treat_level_section{
@@ -366,7 +356,6 @@ ul.display_rune_ul{
   width: 20%;
   color: white;
   font-size: 50px;
-  float: left;
 
 }
 .display_item_block{
