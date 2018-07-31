@@ -33,8 +33,9 @@
 }
 
 .rune_selection{
-  margin-top: 80px;
+  margin-top: 20px;
   overflow: auto;
+  min-height: 300px;
 }
 .rune_inactive{
   display: none;

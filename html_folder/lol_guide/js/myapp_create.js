@@ -26,7 +26,7 @@
                                 Build Name : <input class = "form-control create_build_name_input_area" type="text" id="build_name">
                               </div>
                               <div class = "col-md-3 create_select_champion_button">
-                                  <div class = "create_select_champion_title_holder">Champion : </div>
+                                  <div class = "create_select_champion_title_holder">Champion</div>
                                   <div id = "selected_champion">
                                     <button onclick = "myApp.create_select_champion()" class="create_select_champion btn btn-md" data-toggle="modal" data-target="#myModal">&#43;</button>
                                   </div>

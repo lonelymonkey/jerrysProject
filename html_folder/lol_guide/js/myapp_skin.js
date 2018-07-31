@@ -23,7 +23,7 @@
   }
   myApp.skin_writing_frame = function (){
         if (!myApp.skill_champion_decided_flag) {
-          $("#pool_and_selection").html("<div class = 'skill_skin_warning'>Please pick a chamion first</div>");
+          $("#pool_and_selection").html("<div class = 'skill_skin_warning'>Please pick a champion first</div>");
 
         }else {
           console.log("I have pick chamion,",myApp.save_build.champion_id);

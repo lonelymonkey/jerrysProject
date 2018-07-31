@@ -41,6 +41,9 @@
   background-color: rgba(109,115,156,0.6);
   border-radius: 25px;
   border-color: #77869a;
+  width: 80%;
+  margin: auto;
+
 
 }
 .modal-content{
@@ -74,6 +77,8 @@
 
 .writing_field{
   margin-top: 30px;
+  width: 85%;
+  margin: auto;
   /* overflow: auto; */
 }
 .field_tag{
@@ -108,16 +113,19 @@
 
 .field_selection{
   overflow: auto;
-  /* background-color: rgba(0,0,0,0.6); */
+  padding-top: 20px;
+  margin: auto;
+  width: 85%;
 
 }
 #pool_and_selection{
   background-color: rgba(0,0,0,1);
   margin-top: 20px;
   /* overflow: auto; */
-  border-radius: 10px;
+  border-radius: 50px;
   min-height: 400px;
   color: white;
+  margin-bottom: 40px;
 
 }
 .save_loading{

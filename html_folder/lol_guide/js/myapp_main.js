@@ -177,7 +177,7 @@ myApp.load_exist_build = function (){
                             <div class = "main_page_logo_title"><span>Champion Guides</span></div>
                           </div>
                           <div class = "main_hint">
-                              <h10>Click "Create" to stark building your guide</h10>
+                              <h10>Click "Create" to start building your guide</h10>
                               <h10>Click builds below to view other people's guide</h10>
                           </div>
                           <div class = "row view_buile_title">
@@ -210,10 +210,10 @@ myApp.load_exist_build = function (){
     }
     var temp = JSON.stringify(myApp.exist_builds[i]);
     build_set_frame = `<div class = "row build_set_frame" onclick="myApp.display_view_guide(${myApp.exist_builds[i].build_id})">
-                            <div  class ="col-md-3 main_build_css main_build_name_css">`+ myApp.exist_builds[i].build_name +`</div>
-                            <div  class ="col-md-3 main_champion_icon_css"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
-                            <div  class ="col-md-3 main_build_css main_champion_name_css"> ${current_champion_name}</div>
-                            <div  class ="col-md-3 main_build_css"> `+ myApp.exist_builds[i].update_time +` </div>
+                            <div  class ="grid grid-1 main_build_css main_build_name_css">`+ myApp.exist_builds[i].build_name +`</div>
+                            <div  class ="grid grid-2 main_champion_icon_css"> <img src="../assets/champion_icon/`+current_champion_id+`.png" alt="`+current_champion_name+`"></div>
+                            <div  class ="grid grid-3 main_build_css main_champion_name_css"> ${current_champion_name}</div>
+                            <div  class ="grid grid-4 main_build_css"> `+ myApp.exist_builds[i].update_time +` </div>
                         </div>`;
     // console.log(build_set_frame);
     $(id+' .content').append(build_set_frame);

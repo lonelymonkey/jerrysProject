@@ -110,7 +110,7 @@
                         </div>
     `;
     if (!myApp.skill_champion_decided_flag) {
-      $("#pool_and_selection").html("<div class = 'skill_skin_warning'>Please pick a chamion first</div>");
+      $("#pool_and_selection").html("<div class = 'skill_skin_warning'>Please pick a champion first</div>");
     }else {
       console.log("chamion has been selected, it is ready to built the frame");
       $("#pool_and_selection").html(skill_frame);

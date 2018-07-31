@@ -7,6 +7,10 @@ img.resize {
   /* background-color: black; */
   min-height: 600px;
 }
+.display_container{
+  margin: auto;
+  width: 90%;
+}
 .display_border_bottom{
   border-bottom: double 4px;
   border-bottom-color: white;
@@ -373,6 +377,7 @@ ul.display_rune_ul{
   display: inline-block;
   width: 70px;
   margin-top: 25px;
+  vertical-align: top;
 }
 .display_item_align{
   margin: auto;

@@ -91,7 +91,6 @@
                         <div class = "item_chosen">
                           <div class = "item_empty_icon_field"></div>
                         </div>
-
                         <div class = "item_notes-${set_number}">
                             <div class = "item_notes_title">
                                 Notes
@@ -183,7 +182,7 @@
 
   }
   function item_add_emtpy_icon () {
-    for (var i = 0; i < 24; i++) {
+    for (var i = 0; i < 28; i++) {
       $(".item_empty_icon_field").append(`<div class = "item_empty_container" id = "item_empty_container-${i}"><img class = "item_empty_icon" id = "item_empty_icon-${i}" src = "../assets/other/item_empty.png"></div>`);
     }
   }
@@ -191,7 +190,7 @@
     console.log("the select item id is " + item_id);
     console.log("myApp.save_build.item_detail_set",JSON.stringify(myApp.save_build.item_detail_set));
     console.log("item_which_set",item_which_set);
-    if (myApp.save_build.item_detail_set[item_which_set].items.length<24) {
+    if (myApp.save_build.item_detail_set[item_which_set].items.length<28) {
       myApp.save_build.item_detail_set[item_which_set].items.push(item_id);
     }
     console.log(myApp.save_build.item_detail_set);

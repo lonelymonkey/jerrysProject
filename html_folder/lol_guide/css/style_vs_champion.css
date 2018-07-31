@@ -18,7 +18,8 @@
 
 }
 .vs_title_holder{
-  overflow: auto;
+  /* overflow: auto; */
+  height: 100px;
 }
 .vs_champion_set_champion{
   padding-left: 41;

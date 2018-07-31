@@ -1,6 +1,9 @@
 .skill_skin_warning{
   font-size: 30;
-  color: white;
+  color: #d3aa16;
+  margin: auto;
+  width: 80%;
+
 }
 .skill_icon {
   width: 10%;
@@ -17,6 +20,9 @@
 }
 .skill_countdown_place{
   height: 135px;
+  margin: auto;
+  width: 85%;
+  padding-top: 10px;
 }
 /* input[type="checkbox" class = "skill_check_box"]{
   height:40px;
