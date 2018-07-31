@@ -415,7 +415,7 @@
       item_note_id = item.note_id;
       var item_name = "";
       var item_structure  = `
-      <div class = "item_set_container_css item_set_container_${i}">
+      <div class = "item_set_container_css item_set_container_0">
         <div class = "item_set_title">${item_set_name}</div>
         <div class = "display_item_detail"></div>
         <div class = "display_title_note_holder">
@@ -428,21 +428,38 @@
       $(`.item_set_container_${0} .display_item_note`).html(note);
     }
     // $(".display_rune_holer").append(`<div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_rune_note"></div></div>`);
-
-    for (var i = 0; i < detail.length; i++) {
-      for (var j = 0; j < detail[i].items.length; j++) {
+    console.log(detail);
+    if (detail.length > 1) {
+      for (var i = 0; i < detail.length; i++) {
+        for (var j = 0; j < detail[i].items.length; j++) {
+          for (var k = 0; k < myApp.items.length; k++) {
+            if (myApp.items[k].item_id == detail[i].items[j]) {
+              item_name = myApp.items[k].item_name;
+              break;
+            }
+          }
+          $(`.item_set_container_${i} .display_item_detail`).append(`<div class = "display_item_block"><div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div><div class = "display_item_detail_name">${item_name}</div></div>`);
+          item_info_data = display_get_item_info(detail[i].items[j]);
+          display_init_popover("item_icon",item_info_data);
+          // console.log(item_info_data);
+        }
+      }
+    }else {
+      console.log("only 1 item detail");
+      for (var j = 0; j < detail[0].items.length; j++) {
         for (var k = 0; k < myApp.items.length; k++) {
-          if (myApp.items[k].item_id == detail[i].items[j]) {
+          if (myApp.items[k].item_id == detail[0].items[j]) {
             item_name = myApp.items[k].item_name;
             break;
           }
         }
-        $(`.item_set_container_${i} .display_item_detail`).append(`<div class = "display_item_block"><div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div><div class = "display_item_detail_name">${item_name}</div></div>`);
-        item_info_data = display_get_item_info(detail[i].items[j]);
+        $(`.item_set_container_0 .display_item_detail`).append(`<div class = "display_item_block"><div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[0].items[j]}.png"></div><div class = "display_item_detail_name">${item_name}</div></div>`);
+        item_info_data = display_get_item_info(detail[0].items[j]);
         display_init_popover("item_icon",item_info_data);
         // console.log(item_info_data);
       }
     }
+
   }
   function display_get_item_info(item_id){
     var item_info = {id:0,name:"",description:""};
