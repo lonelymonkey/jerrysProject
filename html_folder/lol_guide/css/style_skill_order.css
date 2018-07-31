@@ -85,6 +85,10 @@ input:checked ~ .checkmark{
   color: black;
 
 }
+input:checked ~ .checkmark_display{
+  background: green;
+
+}
 .checkmark{
   text-align: center;
 

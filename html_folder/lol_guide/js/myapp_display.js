@@ -65,6 +65,10 @@
                     </div>
                     <div class = "display_items_holder">
                       <div class = "display_section_title">Item Build Path</div>
+                      <div class = "display_item_check_box">
+                        <span class = "item_show_name">Show items' name :</span>
+                        <label class="custom-checkbox"><input class="display_item_name" type="checkbox"><span class="checkmark checkmark_display">&nbsp;</span></label>
+                      </div>
                     </div>
                   </div>
                   <div class = "display_ability_container display_border_bottom">
@@ -105,11 +109,23 @@
       display_item_section (obj.item_set,obj.item_detail_set);
       display_ability_section(obj.skill_order_table,obj.build_guide.champion_id);
       display_vs_section(obj.against_champion);
+      dislay_bind_ui();
       $(".display_note_title").click(function (){
         // $(this).parent().children(".display_note_slide_children").slideToggle("slow");
         $(this).parent().children(".display_note_slide_children").toggle("slide");
 
       });
+  }
+  function dislay_bind_ui(){
+    $(`.display_item_name`).change(function(){
+      var status = $(`input[class = "display_item_name"]:checked`).length;
+      if (status == 1) {
+        $(".display_item_detail_name").show();
+      }else {
+        $(".display_item_detail_name").hide();
+
+      }
+    });
   }
   function display_vs_section(against_champion){
     var vs_level_container = {
@@ -117,7 +133,9 @@
     medium :[],
     hard :[]
     };
+    champion_name = "";
     note = "";
+
     console.log("against_champion.length",against_champion.length);
     $(".display_level_title").click(function (){
       console.log("I am clicked my child is ",$(this).children(".display_vs_content"));
@@ -165,6 +183,14 @@
 
       }
       for (var j = 0; j < vs_level_container[level[i]].length; j++) {
+        for (var k = 0; k < myApp.champions.length; k++) {
+
+          if (vs_level_container[level[i]][j].champion_id == myApp.champions[k].champion_id) {
+            console.log("champion_name is",champion_name);
+            champion_name = myApp.champions[k].champion_name;
+            break;
+          }
+        }
         var display_treat_level = Number(vs_level_container[level[i]][j].diffculty)+1;
 
         var vs_thread_ui_frame = `
@@ -173,14 +199,14 @@
               <img src = "../assets/champion_icon/${vs_level_container[level[i]][j].champion_id}.png">
             </div>
             <div class = "display_vs_treat_level_section">
-              <div class = "display_vs_treat_level">${display_treat_level}</div>
+              <div class = "display_vs_champion_name">${champion_name}</div>
               <div class = "display_vs_threat_level_bar_${vs_level_container[level[i]][j].diffculty}">
               </div>
             </div>
 
 
           </div>
-          <div class = "display_note_slide "><div class = "display_note_title">Note</div><div class = "display_note_slide_children display_note_block display_vs_note"></div></div>
+          <div class = "display_note_slide "><div class = "display_note_title display_note_title_thread">Note</div><div class = "display_note_slide_children display_note_block display_vs_note"></div></div>
 
         `;
         $(`.display_vs_${level[i]} .display_vs_content`).append(vs_thread_ui_frame);
@@ -388,6 +414,7 @@
     }else {
       item_set_name = item.set_name;
       item_note_id = item.note_id;
+      var item_name = "";
       var item_structure  = `
       <div class = "item_set_container_css item_set_container_${0}">
 
@@ -408,7 +435,13 @@
 
     for (var i = 0; i < detail.length; i++) {
       for (var j = 0; j < detail[i].items.length; j++) {
-        $(`.item_set_container_${i} .display_item_detail`).append(`<div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div>`);
+        for (var k = 0; k < myApp.items.length; k++) {
+          if (myApp.items[k].item_id == detail[i].items[j]) {
+            item_name = myApp.items[k].item_name;
+            break;
+          }
+        }
+        $(`.item_set_container_${i} .display_item_detail`).append(`<div class = "display_item_block"><div data-toggle = "popover" class = "display_item_detail_frame"><img  img src = "../assets/item_icon/${detail[i].items[j]}.png"></div><div class = "display_item_detail_name">${item_name}</div></div>`);
         item_info_data = display_get_item_info(detail[i].items[j]);
         display_init_popover("item_icon",item_info_data);
         // console.log(item_info_data);
@@ -428,7 +461,7 @@
     return item_info;
   }
   function display_note_handler(note_id){
-    var default_note = "The author does not leave any note in this section";
+    var default_note = "The author did not leave any note in this section";
     for (var i = 0; i < display_get_data_ojb.note.length; i++) {
       if (display_get_data_ojb.note[i].note_id == note_id) {
         if (display_get_data_ojb.note[i].note == "") {
