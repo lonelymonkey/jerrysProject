@@ -103,6 +103,10 @@ try {
         $response['errMsg'] = "Err : item set needs at least one item";
         $response['status'] = -2;
         break;
+      case '18':
+        $response['errMsg'] = "Err : Build needs 1 item set at least";
+        $response['status'] = -2;
+        break;
       default:
         $response['errMsg'] = "Something wrong with data you save, please try again";
         break;

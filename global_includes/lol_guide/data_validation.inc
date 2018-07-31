@@ -53,6 +53,8 @@ class data_validation
 
     if ($item_detail_set_count != $item_set_count) {
       throw new Exception(1);
+    }elseif ($item_detail_set_count == 0 || $item_set_count ==0) {
+      throw new Exception(18);
     }
     data_validation::vs_validation($data_to_db["against_champion"]);
     data_validation::skill_validation($data_to_db["skill_order_table"]);
