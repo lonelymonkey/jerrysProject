@@ -146,7 +146,11 @@
   }
   myApp.item_remove_set = function (set_lcation){
     var true_location = 0;
+    var diff = 0;
     true_location = local_count_array.indexOf(set_lcation);
+    diff = local_count_array.length - true_location;
+    console.log("local_count_array.length",local_count_array.length);
+    console.log("true_location",true_location);
     console.log("before looking for true location",myApp.save_build.item_set);
     // console.log("target set removed = ",set_lcation);
     myApp.save_build.item_detail_set.splice(true_location,1);
@@ -170,9 +174,18 @@
     // }else {
     //   myApp.item_detail_frame(local_set_number+1);
     //
-    // }
+    // }\
+    if (local_count_array.length == 0) {
       $(".item_choice").html("")
       $(".item_pool_and_choice").hide();
+    } else if (true_location == 0) {
+      myApp.item_detail_frame(local_count_array[0]);
+    }
+    else {
+      myApp.item_detail_frame(local_count_array[true_location-1]);
+
+    }
+
 
 
 
