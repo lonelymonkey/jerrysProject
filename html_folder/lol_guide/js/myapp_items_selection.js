@@ -38,9 +38,9 @@
 
 
   myApp.item_check_tab = function (){
-    console.log("local_set_number",local_set_number);
-    if (local_set_number > 0) {
-      myApp.item_detail_frame(0);
+    // console.log("local_set_number",local_set_number);
+    if (local_count_array.length > 0) {
+      myApp.item_detail_frame(local_count_array[0]);
     }
   }
   myApp.item_reset = function (){
@@ -224,10 +224,16 @@
   }
   myApp.check_exist_set = function(){
     console.log("check exist set");
+    var item_set_name;
     for (var i = 0; i < myApp.save_build.item_detail_set.length; i++) {
+      if (myApp.save_build.item_set[i].set_name == "") {
+        item_set_name = `Item set # ${i}`;
+      }else {
+        item_set_name = myApp.save_build.item_set[i].set_name;
+      }
       console.log(i);
-        $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${i})" class = "btn btn-md item_set_button_${i} item_tab_css">Item set # ${i}</button>`);
-        myApp.save_build.item_set[i].set_location = i;
+        $('.item_sets_tap').append(`<button onclick = "myApp.item_detail_frame(${local_count_array[i]})" class = "btn btn-md item_set_button_${local_count_array[i]} item_tab_css">${item_set_name}</button>`);
+        myApp.save_build.item_set[i].set_location = local_count_array[i];
     }
   };
   return myApp;
