@@ -21,13 +21,16 @@
   var largest_count = 0;
   var local_set_number = 0;
   var removed_set_id_array = [];
+  var local_count_array = [];
   item_note_string_count = 0;
   var bind_set_name_ui = function(set_number){
+    true_index = local_count_array.indexOf(set_number);
     $( "#item_set_name-"+set_number).keyup(function() {
       console.log("we are set # "+ set_number);
 
       console.log($("#item_set_name-"+set_number).val());
-      myApp.save_build.item_set[set_number].set_name = $("#item_set_name-"+set_number).val();
+      myApp.save_build.item_set[true_index].set_name = $("#item_set_name-"+set_number).val();
+      $('.item_set_button_'+set_number).html($("#item_set_name-"+set_number).val());
       console.log(myApp.save_build.item_set);
     });
   }
@@ -48,19 +51,10 @@
     myApp.create_flag = false;
   }
   myApp.item_add_set = function () {
-    console.log();
-    if (removed_set_id_array.length != 0) {
-      console.log(removed_set_id_array);
-      removed_set_id_array.sort(function(a,b){return a-b});
-      local_set_number = removed_set_id_array[0];
-      removed_set_id_array.splice(0,1);
-      console.log(removed_set_id_array);
-    }else {
-      largest_count = local_set_number;
-    }
+    local_count_array.push(local_set_number);
+
     $('.item_sets_tap').append(`<button onclick = "myApp.item_detail_frame(${local_set_number})" class = "btn btn-md item_set_button_${local_set_number} item_tab_css">Item set #${local_set_number}</button>`);
-    // console.log("item add set");
-    // console.log(JSON.stringify(myApp.save_build));
+
     myApp.save_build.item_set.push({
                                 item_set_id : 0,
                                 set_name : "",
@@ -74,16 +68,21 @@
                                     items : []
                                 });
     // console.log(myApp.save_build);
+
+    console.log("local_count_array",local_count_array);
+    console.log("local_set_number", local_set_number);
     myApp.item_detail_frame(local_set_number);
     local_set_number ++;
 
+
   }
   myApp.item_detail_frame = function (set_number){
+    console.log();
+    var backend_array_position = local_count_array.indexOf(set_number);
     console.log("test test test test tst");
     $(".item_choice").html("");
     $(".btn.btn-md").removeClass("item_active_button");
     $(`.item_set_button_${set_number}`).addClass("item_active_button");
-    var new_location = 0;
     var item_choice_frame = `
                         <div class = "item_set_name">
                             <div class = "item_title_holder">item set Name: </div> <input class = "item_set_name_css form-control" id = "item_set_name-${set_number}" type = "text" placeholder = "Enter set name...">
@@ -104,13 +103,9 @@
     $(".item_pool_and_choice").show();
     $(".item_choice").html(item_choice_frame);
     item_which_set = set_number;
-    for (var i = 0; i < myApp.save_build.item_set.length; i++) {
-      if (set_number == myApp.save_build.item_set[i].set_location) {
-        new_location = i;
-        $(`.item_notes-${i} textarea`).val(myApp.save_build.item_set[i].note);
-        break;
-      }
-    }
+    console.log("backend_array_position",backend_array_position);
+    $(`.item_notes-${set_number} textarea`).val(myApp.save_build.item_set[backend_array_position].note);
+
     $(".item_input_note").keyup(function(){
       console.log( $(this).parent().parent().attr("class"));
       var parent_class = $(this).parent().parent().attr("class");
@@ -138,28 +133,25 @@
       }
       console.log(myApp.save_build.item_set);
     });
-    bind_set_name_ui(new_location);
+    console.log("NEW LOCATION",set_number);
+    bind_set_name_ui(set_number);
     item_add_emtpy_icon();
-    // console.log("I am in item set # " + new_location);
+    // console.log("I am in item set # " + set_number);
     // console.log(myApp.save_build.item_set[0]);
-    // console.log("the item set name is " + myApp.save_build.item_set[new_location].set_name);
-    $("#item_set_name-"+set_number).val(myApp.save_build.item_set[new_location].set_name);
-    for (var i = 0; i < myApp.save_build.item_detail_set[new_location].items.length; i++) {
-      $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[new_location].items[i]+`.png">`);
+    // console.log("the item set name is " + myApp.save_build.item_set[set_number].set_name);
+    $("#item_set_name-"+set_number).val(myApp.save_build.item_set[backend_array_position].set_name);
+    for (var i = 0; i < myApp.save_build.item_detail_set[backend_array_position].items.length; i++) {
+      $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[backend_array_position].items[i]+`.png">`);
     }
   }
   myApp.item_remove_set = function (set_lcation){
     var true_location = 0;
+    true_location = local_count_array.indexOf(set_lcation);
     console.log("before looking for true location",myApp.save_build.item_set);
-    for (var i = 0; i < myApp.save_build.item_set.length; i++) {
-      console.log(myApp.save_build.item_set[i]);
-      if (myApp.save_build.item_set[i].set_location == set_lcation) {
-        true_location = i;
-        break;
-      }
-    }
     // console.log("target set removed = ",set_lcation);
     myApp.save_build.item_detail_set.splice(true_location,1);
+    local_count_array.splice(true_location,1);
+
     console.log(myApp.save_build.item_detail_set);
     if (myApp.save_build.build_id != 0) {
       myApp.save_build.item_set[true_location].remove = true;
@@ -172,7 +164,13 @@
     $(".item_set_button_"+set_lcation).remove();
     console.log("item_set",myApp.save_build.item_set);
     console.log("item_detail_set",myApp.save_build.item_detail_set);
-
+    // if (set_lcation > largest_count) {
+    //   myApp.item_detail_frame(local_set_number-1);
+    //
+    // }else {
+    //   myApp.item_detail_frame(local_set_number+1);
+    //
+    // }
       $(".item_choice").html("")
       $(".item_pool_and_choice").hide();
 
