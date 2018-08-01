@@ -202,22 +202,25 @@
     console.log("the select item id is " + item_id);
     console.log("myApp.save_build.item_detail_set",JSON.stringify(myApp.save_build.item_detail_set));
     console.log("item_which_set",item_which_set);
-    if (myApp.save_build.item_detail_set[item_which_set].items.length<28) {
-      myApp.save_build.item_detail_set[item_which_set].items.push(item_id);
+    var backend_array_position = local_count_array.indexOf(item_which_set);
+    if (myApp.save_build.item_detail_set[backend_array_position].items.length<28) {
+      myApp.save_build.item_detail_set[backend_array_position].items.push(item_id);
     }
     console.log(myApp.save_build.item_detail_set);
-    for (var i = 0; i < myApp.save_build.item_detail_set[item_which_set].items.length; i++) {
-      $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[item_which_set].items[i]+`.png">`);
+    for (var i = 0; i < myApp.save_build.item_detail_set[backend_array_position].items.length; i++) {
+      $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[backend_array_position].items[i]+`.png">`);
     }
   }
   myApp.item_remove_from_detail= function (item_be_removed){
-    console.log(myApp.save_build.item_detail_set[item_which_set].items);
-    myApp.save_build.item_detail_set[item_which_set].items.splice(item_be_removed,1);
-    console.log(myApp.save_build.item_detail_set[item_which_set].items);
-    for (var i = 0; i < myApp.save_build.item_detail_set[item_which_set].items.length; i++) {
-      $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[item_which_set].items[i]+`.png">`);
+    var backend_array_position = local_count_array.indexOf(item_which_set);
+
+    console.log(myApp.save_build.item_detail_set[backend_array_position].items);
+    myApp.save_build.item_detail_set[backend_array_position].items.splice(item_be_removed,1);
+    console.log(myApp.save_build.item_detail_set[backend_array_position].items);
+    for (var i = 0; i < myApp.save_build.item_detail_set[backend_array_position].items.length; i++) {
+      $("#item_empty_container-"+i).html(`<img onclick ="myApp.item_remove_from_detail(${i})" class = "item_empty_icon" src = "../assets/item_icon/`+myApp.save_build.item_detail_set[backend_array_position].items[i]+`.png">`);
     }
-    $("#item_empty_container-"+myApp.save_build.item_detail_set[item_which_set].items.length).html(`<img  class = "item_empty_icon" src = "../assets/other/item_empty.png">`);
+    $("#item_empty_container-"+myApp.save_build.item_detail_set[backend_array_position].items.length).html(`<img  class = "item_empty_icon" src = "../assets/other/item_empty.png">`);
   }
   myApp.check_exist_set = function(){
     console.log("check exist set");
