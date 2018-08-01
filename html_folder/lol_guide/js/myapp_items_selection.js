@@ -58,7 +58,7 @@
     }else {
       largest_count = local_set_number;
     }
-    $('.item_sets_tap').prepend(`<button onclick = "myApp.item_detail_frame(${local_set_number})" class = "btn btn-md item_set_button_${local_set_number} item_tab_css">Item set #${local_set_number}</button>`);
+    $('.item_sets_tap').append(`<button onclick = "myApp.item_detail_frame(${local_set_number})" class = "btn btn-md item_set_button_${local_set_number} item_tab_css">Item set #${local_set_number}</button>`);
     // console.log("item add set");
     // console.log(JSON.stringify(myApp.save_build));
     myApp.save_build.item_set.push({
@@ -74,6 +74,7 @@
                                     items : []
                                 });
     // console.log(myApp.save_build);
+    myApp.item_detail_frame(local_set_number);
     local_set_number ++;
 
   }
