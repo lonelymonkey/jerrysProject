@@ -400,3 +400,11 @@ ul.display_css_rune > li {
   min-height: 221px;
   padding-bottom: 46px;
 }
+.display_popover_detail > font {
+  font-size: unset;
+}
+
+font > a {
+  pointer-events: none;
+  cursor: default;
+}

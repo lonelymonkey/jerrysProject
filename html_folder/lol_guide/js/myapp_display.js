@@ -547,7 +547,7 @@
                               </div>
                               <div class="media-body sspell_popover_description">
                                   <h4 class="media-heading sspell_popover_name">`+popover_content.name+`</h4>
-                                  <div class = "sspell_popover_detail">`+popover_content.description+`</div>
+                                  <div class = "display_popover_detail sspell_popover_detail">`+popover_content.description+`</div>
                               </div>
                            </div>`;
     if (category == "item_icon") {
