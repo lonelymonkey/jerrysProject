@@ -19,7 +19,6 @@ if ($whole_set) {
   $color = $whole_set["color"];
   // insert set name into wheelset
   $randon_number = rand(0,100)*0.01;
-  echo $randon_number;
   $database->query('INSERT INTO wheelset (set_name, date_create)
   VALUES (:name,NOW())');
   $database->bind(':name',$setname);
@@ -40,7 +39,8 @@ if ($whole_set) {
   $winner_entry = decide_output($randon_number,$distribution);
   // //var_dump($slice_name);
   insert_into_wheelsetresult($desire_setID["set_id"], $winner_entry, $distribution[$winner_entry], $color[$winner_entry]);
-
+  echo $randon_number;
+  
   //$database->query('SELECT * FROM Wheelset where ');
   //$database->execute();
   //$database->query("INSERT INTO probabilitySlice (setId, name, distribution,colorCode)
