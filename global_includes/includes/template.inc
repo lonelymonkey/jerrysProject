@@ -112,13 +112,13 @@ class myTemplate {
         </div>
           <div class = "left">
             <ul class = "menu">
-              <li '.$active1.'><a class = "menutab" href ="/php_surfv2/index.php"> HOME </a></li>
-              <li '.$active2.'><a class = "menutab" href ="/php_surfv2/surf_base.php"> SURF BASE </a></li>
-              <li '.$active3.'><a class = "menutab" href ="/php_surfv2/news_blog.php"> NEWS & BLOG </a></li>
-              <li '.$active4.'><a class = "menutab" href ="/php_surfv2/about.php"> ABOUT </a></li>
-              <li '.$active5.'><a class = "menutab" href ="/php_surfv2/contact.php"> CONTACT </a></li>
-              <li '.$active6.'><a class = "menutab" href ="/php_surfv2/experiences_sharing.php"> Experience Sharing</a></li>
-              <li '.$active7.'><a class = "menutab" href ="/php_surfv2/user_blog.php"> Write Your Blogs</a></li>
+              <li '.$active1.'><a class = "menutab" href ="/html_folder/php_surfv2/index.php"> HOME </a></li>
+              <li '.$active2.'><a class = "menutab" href ="/html_folder/php_surfv2/surf_base.php"> SURF BASE </a></li>
+              <li '.$active3.'><a class = "menutab" href ="/html_folder/php_surfv2/news_blog.php"> NEWS & BLOG </a></li>
+              <li '.$active4.'><a class = "menutab" href ="/html_folder/php_surfv2/about.php"> ABOUT </a></li>
+              <li '.$active5.'><a class = "menutab" href ="/html_folder/php_surfv2/contact.php"> CONTACT </a></li>
+              <li '.$active6.'><a class = "menutab" href ="/html_folder/php_surfv2/experiences_sharing.php"> Experience Sharing</a></li>
+              <li '.$active7.'><a class = "menutab" href ="/html_folder/php_surfv2/user_blog.php"> Write Your Blogs</a></li>
             </ul>
           </div>
           '.$right.'
