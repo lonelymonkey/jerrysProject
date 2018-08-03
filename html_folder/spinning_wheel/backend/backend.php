@@ -63,7 +63,7 @@ else {
 
 }
 function insert_into_wheelsetresult ($setId, $winner_entry, $sample, $color){
-  // global $database;
+  global $database;
   $database->query('INSERT INTO wheelsetresult (set_id, winner, distribution, colorCode)
   VALUES (:set_id,:winner,:distribution,:colorCode)');
   $database->bind(':set_id',$setId)->bind(':winner',$winner_entry)->bind(':distribution',$sample)->bind(':colorCode',$color);
