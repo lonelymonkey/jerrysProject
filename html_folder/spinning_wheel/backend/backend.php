@@ -93,17 +93,15 @@ function decide_output($winner_number,$distribution){
  return $target;
 }
 function insert_into_probabilityslice($setId, $name, $sample, $color) {
-  echo "b4 insert query\n";
   global $database;
-  $database->query('INSERT INTO probabilitySlice (set_id, name, distribution, colorCode)
+  $database->query('INSERT INTO probabilityslice (set_id, name, distribution, colorCode)
   VALUES (:set_id,:name,:distribution,:colorCode)');
-  echo "after insert query\n";
+
 
   $database->bind(':set_id',$setId)->bind(':name',$name)->bind(':distribution',$sample)->bind(':colorCode',$color);
-  echo "after bind query\n";
+
 
   $database->execute();
-  echo "after execute query\n";
 
 }
 
