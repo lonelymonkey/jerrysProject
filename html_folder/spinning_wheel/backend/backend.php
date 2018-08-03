@@ -23,11 +23,11 @@ if ($whole_set) {
   VALUES (:name,NOW())');
   $database->bind(':name',$setname);
   $database->execute();
-  echo "insert wheel set is fine \n";
+  // echo "insert wheel set is fine \n";
   $database->query('SELECT set_id FROM wheelset where set_name = :setname');
   $database->bind(':setname',$setname);
   //$database->query('SELECT * FROM user_blog where id = '.$DataId.'');
-  echo "select from wheel set is fine \n";
+  // echo "select from wheel set is fine \n";
 
   $set_id_from_DB = $database->resultset();
   // var_dump($set_id_from_DB);
@@ -38,7 +38,7 @@ if ($whole_set) {
   for ($i=0; $i < count($whole_set["id"]); $i++) {
     insert_into_probabilityslice($desire_setID["set_id"], $slice_name[$i],$distribution[$i],$color[$i]);
   }
-  echo "insert_into_probabilityslice is fine \n";
+  // echo "insert_into_probabilityslice is fine \n";
 
   $winner_entry = decide_output($randon_number,$distribution);
   // //var_dump($slice_name);
@@ -63,7 +63,7 @@ else {
 
 }
 function insert_into_wheelsetresult ($setId, $winner_entry, $sample, $color){
-  global $database;
+  // global $database;
   $database->query('INSERT INTO wheelsetresult (set_id, winner, distribution, colorCode)
   VALUES (:set_id,:winner,:distribution,:colorCode)');
   $database->bind(':set_id',$setId)->bind(':winner',$winner_entry)->bind(':distribution',$sample)->bind(':colorCode',$color);
@@ -93,7 +93,7 @@ function decide_output($winner_number,$distribution){
  return $target;
 }
 function insert_into_probabilityslice($setId, $name, $sample, $color) {
-  global $database;
+  // global $database;
   $database->query('INSERT INTO probabilitySlice (set_id, name, distribution, colorCode)
   VALUES (:set_id,:name,:distribution,:colorCode)');
   $database->bind(':set_id',$setId)->bind(':name',$name)->bind(':distribution',$sample)->bind(':colorCode',$color);
