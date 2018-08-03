@@ -1,6 +1,7 @@
 <?php
 
-include '../includes/global_v2.inc';
+include '../../global_includes/includes/global_v2.inc';
+
 
 $content  ='<div class = "right">
 							<div class = "home_first">

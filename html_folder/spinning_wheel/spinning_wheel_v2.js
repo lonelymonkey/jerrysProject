@@ -380,7 +380,7 @@ function rotation(){
     $.getScript("JQuery/jQueryRotate.js", function(){
       $('#can').rotate(model.data.angle);
       $('#start').click(function(){
-      // send_data_to_php();
+      send_data_to_php();
       var rotation = setInterval(function(){
         var stop = 360*49+270-8.455;
         model.data.velocity = -(1.167983132986*0.000001)*(model.data.angle*model.data.angle)+(0.0207325)*(model.data.angle)+5;
@@ -427,7 +427,7 @@ spinning_wheel.load = function(){
     check_hash();
     bindbasicUI();
     rotation();
-    get_data_from_php();
+    // get_data_from_php();
   }
 return spinning_wheel;
 }))

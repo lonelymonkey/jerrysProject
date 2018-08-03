@@ -20,7 +20,7 @@ if ($whole_set) {
   // insert set name into wheelset
   $randon_number = rand(0,100)*0.01;
   echo $randon_number;
-  $database->query('INSERT INTO Wheelset (name, createdDate)
+  $database->query('INSERT INTO wheelset (name, createdDate)
   VALUES (:name,NOW())');
   $database->bind(':name',$setname);
   $database->execute();

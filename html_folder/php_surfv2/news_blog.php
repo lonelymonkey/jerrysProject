@@ -1,6 +1,7 @@
 <?php
 
-include '../includes/global_v2.inc';
+include '../../global_includes/includes/global_v2.inc';
+
 
 $first["name"] = $Second["name"] = $Third["name"] = "No one leave the message";
 $first["msg"]=  $Second["msg"] = $Third["msg"] ="No comment";

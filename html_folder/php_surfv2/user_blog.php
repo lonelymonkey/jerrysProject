@@ -1,7 +1,8 @@
 <?php
 
 
-include '../includes/global_v2.inc';
+include '../../global_includes/includes/global_v2.inc';
+
 $nameErr = $emailErr = $commentErr ="";
 $name = $email = $comment = $rate = $gender =  "";
 $ValidandStore = new function_surf();
