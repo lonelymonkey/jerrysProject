@@ -23,24 +23,28 @@ if ($whole_set) {
   VALUES (:name,NOW())');
   $database->bind(':name',$setname);
   $database->execute();
-  // if we have the same name, we make sure we want the id which is the largest
+  echo "insert wheel set is fine \n";
   $database->query('SELECT set_id FROM wheelset where set_name = :setname');
   $database->bind(':setname',$setname);
   //$database->query('SELECT * FROM user_blog where id = '.$DataId.'');
+  echo "select from wheel set is fine \n";
+
   $set_id_from_DB = $database->resultset();
   // var_dump($set_id_from_DB);
 
   $desire_setID = $set_id_from_DB[count($set_id_from_DB)-1];
   // var_dump($desire_setID["setId"]);
+
   for ($i=0; $i < count($whole_set["id"]); $i++) {
     insert_into_probabilityslice($desire_setID["set_id"], $slice_name[$i],$distribution[$i],$color[$i]);
   }
+  echo "insert_into_probabilityslice is fine \n";
 
   $winner_entry = decide_output($randon_number,$distribution);
   // //var_dump($slice_name);
   insert_into_wheelsetresult($desire_setID["set_id"], $winner_entry, $distribution[$winner_entry], $color[$winner_entry]);
   echo $randon_number;
-  
+
   //$database->query('SELECT * FROM Wheelset where ');
   //$database->execute();
   //$database->query("INSERT INTO probabilitySlice (setId, name, distribution,colorCode)
@@ -56,8 +60,7 @@ if ($whole_set) {
 else {
   #rest of time, php will keep uploading the top 5 set to the front end
   #We have load the data from database and package them as json format, not we send our json to front end
-  $dataset = ["Jerry"=>"best","bill"=>"hehe"];
-  var_dump($dataset);
+
 }
 function insert_into_wheelsetresult ($setId, $winner_entry, $sample, $color){
   global $database;
