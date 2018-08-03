@@ -93,7 +93,7 @@ function decide_output($winner_number,$distribution){
  return $target;
 }
 function insert_into_probabilityslice($setId, $name, $sample, $color) {
-  // global $database;
+  global $database;
   $database->query('INSERT INTO probabilitySlice (set_id, name, distribution, colorCode)
   VALUES (:set_id,:name,:distribution,:colorCode)');
   $database->bind(':set_id',$setId)->bind(':name',$name)->bind(':distribution',$sample)->bind(':colorCode',$color);
