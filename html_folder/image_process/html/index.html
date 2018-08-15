@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>image process</title>
+    <link rel="shortcut icon" type="image/png" href="http://example.com/favicon.png"/>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous">
+    </script>
+    <script src="../js/myApp_ajax.js"></script>
+    <script src="../js/myApp_main.js"></script>
+  </head>
+  <body>
+    <div id = "image_app">
+      <input id="image_field" type="file" name="image" />
+      <button id="upload" onclick = "myApp.upload()">Upload</button>
+    </div>
+    <div id = "modal_field"></div>
+</div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function(){
+    myApp.load(
+      {
+        id : "image_app",
+        ajax_url : "../ajax/data.php"
+      }
+    );
+  });
+
+</script>
