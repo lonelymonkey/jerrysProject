@@ -29,7 +29,7 @@ class clean_files
         }
       }
     }
-    var_dump($result_set);
+    // var_dump($result_set);
   }
   private function get_all_id (){
     $this->database->query('SELECT * from image_overview');

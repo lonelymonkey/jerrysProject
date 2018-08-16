@@ -291,7 +291,6 @@ myApp.load = function(cfg){
   save_config(cfg);
   build_frame();
   myApp_ajax.load();
-  // myApp.sspell_load();
 
   }
   return myApp;

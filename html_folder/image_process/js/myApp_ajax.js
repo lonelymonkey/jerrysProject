@@ -13,7 +13,7 @@
 
   }
   myApp_ajax.file_name = "";
-  myApp_ajax.effect = function(buildString,callback) {
+  myApp_ajax.effect = function(buildString) {
       // var file_name = "test.jpg";
       buildString = JSON.stringify(myApp_ajax.file_name);
       console.log(buildString);
@@ -24,7 +24,7 @@
         data : { function :  myApp.effect, data : buildString },
         success : function(response) {
           console.log(response);
-          $(`#image_app`).html('<img src="' + response.data+ '" />');
+          $(`#content_holder`).html('<img src="' + response.data+ '" />');
         }
       });
     }
@@ -45,7 +45,9 @@
         success: function(php_script_response){
             console.log(php_script_response); // display response from the PHP script, if any
             myApp_ajax.file_name = php_script_response.file_name;
-            myApp_ajax.effect();
+            myApp.process_ui();
+
+            // myApp_ajax.effect();
         }
      });
   }
