@@ -10,12 +10,16 @@
   myApp.file_to_php;
   myApp.effect = "contrast";
   myApp.target;
+  myApp.effect_list = [];
   function save_config (cfg){
     console.log("container id is "+cfg.id);
     id = "#" + cfg.id;
     myApp.config.id = "#" + cfg.id;
   }
-
+  myApp.home_page = function (){
+    myApp.build_main_page();
+    bind_ui();
+  }
   myApp.upload = function (){
     console.log("I will upload file");
     console.log($("#imgInp").prop("files"));
@@ -64,14 +68,14 @@
         <div id = "content_holder">
           <div class = "main_input_preview" >
             <div class = "main_input_container">
-              <input class = "form-control" type='file' id="imgInp" />
+              <input class = "form-control process_form_control" type='file' id="imgInp" />
             </div>
             <div class = "main_image_preview">
                 <div class = "main_preview_title">Preview</div>
                 <div class = "main_preview_img_container"></div>
             </div>
             <div class = "main_upload">
-              <button class = "form-control" id="upload" onclick = "myApp.upload()">Upload</button>
+              <button class = "form-control process_form_control" id="upload" onclick = "myApp.upload()">Upload</button>
             </div>
           </div>
         </div>

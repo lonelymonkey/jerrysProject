@@ -13,7 +13,7 @@
 
   }
   myApp_ajax.file_name = "";
-  myApp_ajax.effect = function(buildString) {
+  myApp_ajax.effect = function(effect) {
       // var file_name = "test.jpg";
       buildString = JSON.stringify(myApp_ajax.file_name);
       console.log(buildString);
@@ -21,13 +21,28 @@
         method : 'POST',
         dataType : 'json',
         url : config.apiUrl,
-        data : { function :  myApp.effect, data : buildString },
+        data : { function : effect, data : buildString },
         success : function(response) {
           console.log(response);
-          $(`#content_holder`).html('<img src="' + response.data+ '" />');
+          // $(`.process_preview_img_container`).html('<img src="' + response.data+ '" />');
+          $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${response.data}" alt="your image" />`);
         }
       });
     }
+  myApp_ajax.all_effect = function(){
+    buildString = JSON.stringify(myApp_ajax.file_name);
+    $.ajax({
+      method : 'POST',
+      dataType : 'json',
+      url : config.apiUrl,
+      data : { function :  "preview_effect", data : buildString },
+      success : function(response) {
+        console.log(response);
+        var effect_list = Object.keys(response.data);
+        myApp.process_preview_display(response.data,effect_list);
+      }
+    });
+  }
   myApp_ajax.send_data_to_php = function (){
     // buildString = JSON.stringify(myApp.file_to_php);
     // console.log(myApp.file_to_php);
@@ -46,8 +61,9 @@
             console.log(php_script_response); // display response from the PHP script, if any
             myApp_ajax.file_name = php_script_response.file_name;
             myApp.process_ui();
-
+            myApp_ajax.all_effect();
             // myApp_ajax.effect();
+
         }
      });
   }
