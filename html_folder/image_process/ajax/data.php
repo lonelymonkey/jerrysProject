@@ -38,10 +38,10 @@ try {
             $dir_process->clean_dir();
             $name = $dir_process->store_record($_FILES["file"]["type"]);
             if ($_FILES["file"]["type"] == "image/png") {
-              move_uploaded_file($_FILES['file']['tmp_name'], '../uploads/' . $name .".png");
+              move_uploaded_file($_FILES['file']['tmp_name'], file_path. $name .".png");
               $response["file_name"] = $name .".png";
             }elseif ($_FILES["file"]["type"] == "image/jpeg") {
-              move_uploaded_file($_FILES['file']['tmp_name'], '../uploads/' . $name .".jpeg");
+              move_uploaded_file($_FILES['file']['tmp_name'], file_path. $name .".jpeg");
               $response["file_name"] = $name .".jpeg";
             }
 
