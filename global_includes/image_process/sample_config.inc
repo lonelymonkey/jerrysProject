@@ -9,6 +9,7 @@ defined('DB_NAME') or define("DB_NAME", "image_process");
 
 defined('INCLUDE_PATH') or define('INCLUDE_PATH', 'C:/xampp/htdocs/personal_project/global_includes/image_process');
 defined('file_path') or define('file_path', 'C:/xampp/htdocs/personal_project/html_folder/image_process/uploads/');
+defined('public_path') or define('public_path', '/image_process/uploads/');
 
 
 // error_reporting(0);

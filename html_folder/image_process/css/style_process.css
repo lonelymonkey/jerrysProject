@@ -1,9 +1,10 @@
 .process_preview_img_container{
   margin: auto;
-  max-width: 400px;
+  max-width: 95%;
   margin: auto;
   display: block;
   background-color: transparent;
+  text-align: center;
 }
 .process_preview_title{
   font-size: 35px;
@@ -12,7 +13,7 @@
 }
 .process_image_preview{
   margin: auto;
-  width: 400px;
+  width: 95%;
 }
 .back_next_container{
   width: 50%;
