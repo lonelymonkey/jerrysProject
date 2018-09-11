@@ -6,12 +6,7 @@
     apiUrl : '../ajax/data.php',
   };
 
-  var static_data = {
-    champions : [],
-    spells : [],
-    items : [],
 
-  }
   myApp_ajax.original_location = "";
   myApp_ajax.file_name = "";
   myApp_ajax.effect = function(effect) {
@@ -30,7 +25,7 @@
         }
       });
     }
-  myApp_ajax.all_effect = function(){
+  myApp_ajax.all_effect = function(file_name){
     buildString = JSON.stringify(myApp_ajax.file_name);
     $.ajax({
       method : 'POST',
@@ -38,8 +33,16 @@
       url : config.apiUrl,
       data : { function :  "preview_effect", data : buildString },
       success : function(response) {
-        console.log(response);
-        var effect_list = Object.keys(response.data);
+        setTimeout(function(){
+          console.log(response);
+          var effect_list = Object.keys(response.data);
+          myApp.effect_data.small_image = response.data;
+          myApp.effect_data.feature_name = effect_list;
+          $('.loading_layer').hide();
+          myApp.process_ui(file_name);
+
+        }, 1500);
+
         // myApp.process_preview_display(response.data,effect_list);
       }
     });
@@ -61,12 +64,10 @@
         success: function(php_script_response){
             console.log(php_script_response); // display response from the PHP script, if any
             myApp_ajax.file_name = php_script_response.file_name;
-            setTimeout(function(){
-              $('.loading_layer').hide();
-              myApp.process_ui(php_script_response.file_name);
-              console.log("go to all effect");
-              myApp_ajax.all_effect();
-            }, 1500);
+
+
+            console.log("go to all effect");
+            myApp_ajax.all_effect(php_script_response.file_name);
 
             // myApp_ajax.effect();
 

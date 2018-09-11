@@ -6,6 +6,7 @@
   myApp.config = {
                   id : ""
   };
+  myApp.effect_data = {};
   var select_flag = false;
   myApp.file_to_php;
   myApp.effect = "contrast";
@@ -63,8 +64,20 @@
           // $(`.main_preview_img_container`).css('background-color',"white");
         }
     });
-  }
+    $(`.effect_list_container`).click(function (){
+      var select_feature = $(this).attr('id');
+      console.log($(this).attr('id'));
+      console.log("effect_data",myApp.effect_data.small_image[select_feature]);
+      $(".effect_list_option_selection").toggle( "slide" );
+      // $('.effect_list_option_selection').show();
+      $('.effect_list_option').hide();
 
+    });
+  }
+  myApp.show_parent_list = function (){
+    $('.effect_list_option_selection').hide();
+    $('.effect_list_option').show();
+  }
   myApp.select_photo_page = function (){
     var frame = `
 
@@ -125,7 +138,10 @@
             </nav>
             <div id = "content_holder">
               <div class = "effect_list">
-                  <div class = "effect_list_option">content shoudl be block</div>
+                  <div class = "effect_list_option"></div>
+                  <div class = "effect_list_option_selection">
+                      <button onclick = "myApp.show_parent_list()">Back</button>
+                  </div>
                   <div class = "prohibed_layer"></div>
               </div>
               <div class = "main_photo_container">
@@ -147,22 +163,23 @@
     `;
     $(`#image_app`).html(frame);
     build_option_field();
+
   }
   function build_option_field (){
     var frame = `
-    <div class = "effect_list_container">
-      <div class = "effect_list_option_icon">
+    <div class = "effect_list_container" id = "filter">
+      <div class = "effect_list_option_icon" >
         <img class = "effect_list_option_icon_image" src = "../asset/filter.png">
       </div>
       <div class = "effect_list_option_title">Filter</div>
     </div>
-    <div class = "effect_list_container">
+    <div class = "effect_list_container" id = "paint">
       <div class = "effect_list_option_icon">
         <img class = "effect_list_option_icon_image" src = "../asset/paint.jpeg">
       </div>
       <div class = "effect_list_option_title">Paint</div>
     </div>
-    <div class = "effect_list_container">
+    <div class = "effect_list_container" id = "sketch">
       <div class = "effect_list_option_icon">
         <img class = "effect_list_option_icon_image" src = "../asset/sketch.jpg">
       </div>

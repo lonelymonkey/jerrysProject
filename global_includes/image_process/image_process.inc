@@ -122,7 +122,7 @@ include ("JerryDatabase.class.inc");
         list($width, $height) = getimagesize($path);
         $newwidth = $width * $percent;
         $newheight = $height * $percent;
-        $thumb = imagecreatetruecolor($newwidth, $newheight);
+        $thumb = imagecreatetruecolor(175, 140);
         $image = $this->saperate_type($path);
         imagecopyresized($thumb, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
         return $thumb;
