@@ -125,3 +125,12 @@
   margin: auto;
   width: 75%;
 }
+.process_image_loading{
+  background-color: RGBA(189,224,253,0.3);
+  height: inherit;
+  width: inherit;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: none;
+}

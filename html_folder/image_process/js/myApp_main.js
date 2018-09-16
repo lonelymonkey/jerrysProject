@@ -20,7 +20,9 @@
   myApp.home_page = function (){
 
     myApp.select_photo_page();
-    bind_ui();
+    bind_select_file_ui();
+    $(".effect_list_option").show();
+    $('.effect_list_option_selection').hide();
   }
   myApp.upload = function (){
     console.log("I will upload file");
@@ -53,7 +55,7 @@
 
     }
 }
-  function bind_ui (){
+  function bind_select_file_ui (){
     $("#main_input_file").change(function(){
         $(`.main_preview_img_container`).html(`<img id="main_preview_image_field" src="#" alt="your image" />`);
         $(`.main_preview_img_container`).css('background-color',"transparent");
@@ -64,19 +66,36 @@
           // $(`.main_preview_img_container`).css('background-color',"white");
         }
     });
-    $(`.effect_list_container`).click(function (){
-      var select_feature = $(this).attr('id');
-      console.log($(this).attr('id'));
-      console.log("effect_data",myApp.effect_data.small_image[select_feature]);
-      $(".effect_list_option_selection").toggle( "slide" );
-      // $('.effect_list_option_selection').show();
-      $('.effect_list_option').hide();
 
+  }
+  function bind_feature_ui (){
+    $(`.effect_list_container`).click(function (){
+      var select_feature_id = $(this).attr('id');
+      var frame = '';
+      var select_feature = Object.keys(myApp.effect_data.small_image[select_feature_id]);
+      for (var i = 0; i < select_feature.length; i++) {
+        console.log("select img data",myApp.effect_data.small_image[select_feature_id][select_feature[i]]);
+        frame = frame + `<div class = "effect_list_container" onclick = "myApp_ajax.effect('${select_feature[i]}')" id = "${select_feature[i]}">
+                          <div class = "effect_list_option_icon" >
+                            <img class = "effect_list_option_icon_image" src = "${myApp.effect_data.small_image[select_feature_id][select_feature[i]]}">
+                          </div>
+                          <div class = "effect_list_option_title">${select_feature[i]}</div>
+                        </div>`;
+      }
+      $('.effect_list_options_container').html(frame);
+      // $(`.process_preview_img_container`).html('<img src="' + response.data+ '" />');
+
+      console.log($(this).attr('id'));
+      console.log("effect_data",myApp.effect_data.small_image[select_feature_id]);
+      $('.main_feature_title').html(select_feature_id);
+      $(".effect_list_option").hide("slide", {direction: "left"}, "fast");
+      $('.effect_list_option_selection').show("slide", {direction: "right"}, "fast");
     });
   }
   myApp.show_parent_list = function (){
-    $('.effect_list_option_selection').hide();
-    $('.effect_list_option').show();
+    $(".effect_list_option").show("slide", {direction: "left"}, "fast");
+    $('.effect_list_option_selection').hide("slide", {direction: "right"}, "fast");
+
   }
   myApp.select_photo_page = function (){
     var frame = `
@@ -140,7 +159,14 @@
               <div class = "effect_list">
                   <div class = "effect_list_option"></div>
                   <div class = "effect_list_option_selection">
-                      <button onclick = "myApp.show_parent_list()">Back</button>
+                      <div class = "main_title_and_goback">
+                        <button onclick = "myApp.show_parent_list()" id = "goback_to_parent_list">Back</button>
+                        <label for = "goback_to_parent_list" class = "">
+                          <div class = "go_back_pointer"><span class ='arrow_container'>&#9664;</span></div>
+                          <div class = "main_feature_title"></div>
+                        </label>
+                      </div>
+                      <div class = "effect_list_options_container"></div>
                   </div>
                   <div class = "prohibed_layer"></div>
               </div>
@@ -193,7 +219,8 @@
     save_config (cfg);
     myApp_ajax.load();
     myApp.build_main_page();
-    bind_ui();
+    bind_select_file_ui();
+    bind_feature_ui();
   }
   return myApp;
 

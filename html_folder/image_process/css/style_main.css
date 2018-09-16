@@ -93,7 +93,7 @@ body:after {
   left :0;
   width: inherit;
   height: inherit;
-  background-image: url("../asset/cover.png");
+  background-image: url("../asset/cover.jpg");
   z-index: 2;
   opacity : 0.7;
 
@@ -131,7 +131,7 @@ body:after {
   width: 79%;
   height: 100%;
   float: right;
-  background-image: url('../asset/background.png');
+  background-image: url('../asset/background.jpg');
 }
 .main_layout{
   position: relative;
@@ -143,14 +143,21 @@ body:after {
 }
 .effect_list_option_selection{
   display: none;
-  width: 100%;
-  height: 100%;
-  background: #ccc;
+  width: inherit;
+  height: inherit;
+  float: right;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: auto;
+}
+.effect_list_options_container{
+  overflow: auto;
 }
 .effect_list_container{
   width: 80%;
   margin: auto;
-  margin-top: 30px;
+  margin-bottom: 30px;
   cursor: pointer;
 }
 .effect_list_option_icon{
@@ -159,6 +166,9 @@ body:after {
 .effect_list_option_title{
   text-align: center;
   background-color: #314780;
+}
+.effect_list_option{
+  margin-top: 30px;
 }
 #content_holder{
   position: relative;
@@ -184,4 +194,40 @@ body:after {
 .main_button_container{
   margin:auto;
   width: 50%;
+}
+.main_feature_title{
+  display: inline-block;
+}
+.main_title_and_goback{
+  width: 80%;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,.4), inset 0 1px 2px rgba(31,23,31,.4);
+  background-color: #173569;
+
+}
+.go_back_pointer{
+  display: inline-block;
+  font-size: 20px;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,.4), inset 0 1px 2px rgba(31,23,31,.4);
+  cursor: inherit;
+  background-color: #5692d8;
+
+}
+#goback_to_parent_list{
+  display: none;
+  margin: 0px;
+}
+.main_title_and_goback > label {
+  margin: 0px;
+  cursor: pointer;
+
+}
+.arrow_container{
+  position: relative;
+  top: 2px;
 }

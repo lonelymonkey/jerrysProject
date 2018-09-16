@@ -1,7 +1,18 @@
 <?php
+use Jaguar\Canvas,
+        Jaguar\CanvasInterface,
+        Jaguar\Action\AbstractAction,
+        Jaguar\Action\EdgeDetection,
+        Jaguar\Action\Color\Negate,
+        Jaguar\Action\Color\Grayscale,
+        Jaguar\Dimension,
+        Jaguar\Color\RGBColor,
+        Jaguar\Transformation;
+require_once 'effect_lib.inc';
+
 if (!class_exists('createimage')) {
 // include ("db_helper.inc");
-include ("JerryDatabase.class.inc");
+require_once ("JerryDatabase.class.inc");
 
 // require_once "data_validation.inc";
 
@@ -11,8 +22,9 @@ include ("JerryDatabase.class.inc");
     private $type = "";
     public $small_image = [];
     private $size_flag = false;
-    private $file_type;
+    public $file_type;
     private $db;
+    // public $effect_applied = ["id"=>'','url'=>'',"type"=>''];
     public function __construct() {
       $this->db = new Database();
     }
@@ -49,27 +61,36 @@ include ("JerryDatabase.class.inc");
     }
     public function preview_effect($file_name){
       $this->size_flag = true;
-      $small_image["filter"]["original"] = $this->original ($file_name);
       $small_image["filter"]["scale_gray"] = $this->scale_gray ($file_name);
       $small_image["filter"]["smooth"] = $this->smooth ($file_name);
       $small_image["filter"]["sharp"] = $this->sharp ($file_name);
-      $small_image["filter"]["pixelate"] = $this->original ($file_name);
-      $small_image["filter"]["brightness"] = $this->original ($file_name);
-      $small_image["filter"]["scale_green"] = $this->original ($file_name);
-      $small_image["filter"]["scale_blue"] = $this->original ($file_name);
-      $small_image["filter"]["dawn"] = $this->original ($file_name);
-      $small_image["filter"]["sepia"] = $this->original ($file_name);
-      $small_image["filter"]["negative_smoke"] = $this->original ($file_name);
-      $small_image["filter"]["magic_pad"] = $this->original ($file_name);
+      $small_image["filter"]["pixelate"] = $this->pixelate ($file_name);
+      $small_image["filter"]["brightness"] = $this->brightness ($file_name);
+      $small_image["filter"]["scale_green"] = $this->scale_green ($file_name);
+      $small_image["filter"]["scale_blue"] = $this->scale_blue ($file_name);
+      $small_image["filter"]["dawn"] = $this->dawn ($file_name);
+      $small_image["filter"]["sepia"] = $this->sepia ($file_name);
+      $small_image["filter"]["negative_smoke"] = $this->negative_smoke ($file_name);
+      $small_image["filter"]["magic_pad"] = $this->magic_pad ($file_name);
+      $small_image["filter"]["fantasy"] = $this->fantasy ($file_name);
 
 
 
 
+
+
+      $small_image["paint"]["cartoon"] = $this->cartoon ($file_name);
       $small_image["paint"]["contrast"] = $this->contrast ($file_name);
 
       $small_image["sketch"]["sketch"] = $this->sketch ($file_name);
       $small_image["sketch"]["pencil"] = $this->pencil ($file_name);
+      $small_image["sketch"]["pencil2"] = $this->pencil2 ($file_name);
+      $small_image["sketch"]["pencil3"] = $this->pencil3 ($file_name);
+
+
       $small_image["sketch"]["coal_draw"] = $this->coal_draw ($file_name);
+      // $small_image["sketch"]["pencil_gray"] = $this->pencil_gray ($file_name);
+
 
       $this->size_flag = false;
 
@@ -116,13 +137,13 @@ include ("JerryDatabase.class.inc");
     private function get_image ($file_name){
       $path = file_path.$file_name;
       // echo $path;
-      $percent = 0.2;
+      $percent = 0.4;
 
       if ($this->size_flag) {
         list($width, $height) = getimagesize($path);
         $newwidth = $width * $percent;
         $newheight = $height * $percent;
-        $thumb = imagecreatetruecolor(175, 140);
+        $thumb = imagecreatetruecolor($newwidth, $newheight);
         $image = $this->saperate_type($path);
         imagecopyresized($thumb, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
         return $thumb;
@@ -131,28 +152,151 @@ include ("JerryDatabase.class.inc");
         return $image;
       }
     }
-    public function pencil ($file_name){
-
+    public function cartoon ($file_name){
       $image = $this->get_image($file_name);
 
-      // var_dump($image);
-      // echo "smooth";
-      imagefilter($image,IMG_FILTER_GRAYSCALE);
-      imagefilter($image, IMG_FILTER_NEGATE);
-      imagefilter($image, IMG_FILTER_EDGEDETECT);
-      imagefilter($image, IMG_FILTER_NEGATE);
-      imagefilter($image, IMG_FILTER_GAUSSIAN_BLUR);
-      $new_img_name = $this->effect_img_store($file_name);
+        // $canvas->save('rename.jpeg');
       if ($this->size_flag) {
         ob_start(); // Let's start output buffering.
-          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->apply(new paint_enhance())
+                          ->getCanvas()
+                          ->show();
           $contents = ob_get_contents(); //Instead, output above is saved to $contents
         ob_end_clean(); //End the output buffer.
         $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
         return $base64;
       }else {
-        $this->store_photo_with_effect($new_img_name,$image);
-        return $new_img_name;
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new paint_enhance())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
+    }
+    public function fantasy ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->apply(new Dreamy_effect())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new Dreamy_effect())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
+    }
+    public function pencil2 ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->apply(new pencil_gray())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new pencil_gray())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
+    }
+    public function pencil3 ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->apply(new color_sketch())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new color_sketch())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
+    }
+    public function pencil ($file_name){
+
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->apply(new PencilAction())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new PencilAction())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
       }
 
 
@@ -166,12 +310,21 @@ include ("JerryDatabase.class.inc");
       imagefilter($image,IMG_FILTER_GRAYSCALE);
       imagefilter($image,IMG_FILTER_BRIGHTNESS,-30);
       imagefilter($image,IMG_FILTER_COLORIZE, 90, 55, 30);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
     }
     public function master_sketch($file_name){
       // $path = file_path.$file_name;
@@ -181,12 +334,22 @@ include ("JerryDatabase.class.inc");
 
       imagefilter($image, IMG_FILTER_GRAYSCALE);
       imagefilter($image, IMG_FILTER_CONTRAST, -70);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
     }
     public function sketch($file_name){
       // $path = file_path.$file_name;
@@ -196,12 +359,22 @@ include ("JerryDatabase.class.inc");
 
       imagefilter($image, IMG_FILTER_GRAYSCALE);
       imagefilter($image, IMG_FILTER_MEAN_REMOVAL);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
     }
     public function magic_pad($file_name){
       // $path = file_path.$file_name;
@@ -212,13 +385,22 @@ include ("JerryDatabase.class.inc");
       imagefilter($image, IMG_FILTER_NEGATE);
       imagefilter($image, IMG_FILTER_MEAN_REMOVAL);
       imagefilter($image,IMG_FILTER_COLORIZE, 90, 55, 30);
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
 
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
     }
     public function negative_smoke($file_name){
       // $path = file_path.$file_name;
@@ -229,12 +411,22 @@ include ("JerryDatabase.class.inc");
       imagefilter($image, IMG_FILTER_NEGATE);
       imagefilter($image,IMG_FILTER_GRAYSCALE);
       imagefilter($image, IMG_FILTER_MEAN_REMOVAL);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
     }
     public function scale_gray ($file_name){
 
@@ -244,12 +436,22 @@ include ("JerryDatabase.class.inc");
 
 
       imagefilter($image, IMG_FILTER_GRAYSCALE);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function coal_draw ($file_name){
@@ -259,13 +461,22 @@ include ("JerryDatabase.class.inc");
       $image = $this->get_image($file_name);
 
       imagefilter($image, IMG_FILTER_SMOOTH, -8);
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
 
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function scale_green ($file_name){
@@ -276,12 +487,22 @@ include ("JerryDatabase.class.inc");
 
 
       imagefilter($image, IMG_FILTER_COLORIZE,0, 255, 0);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function scale_blue ($file_name){
@@ -292,12 +513,22 @@ include ("JerryDatabase.class.inc");
 
 
       imagefilter($image, IMG_FILTER_COLORIZE,0, 0, 255);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function dawn ($file_name){
@@ -308,12 +539,22 @@ include ("JerryDatabase.class.inc");
 
 
       imagefilter($image, IMG_FILTER_COLORIZE,213, 123, 200);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function brightness ($file_name){
@@ -322,12 +563,22 @@ include ("JerryDatabase.class.inc");
       // var_dump($image);
 
       imagefilter($image, IMG_FILTER_BRIGHTNESS, 100);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function contrast ($file_name){
@@ -337,12 +588,22 @@ include ("JerryDatabase.class.inc");
       // var_dump($image);
 
       imagefilter($image, IMG_FILTER_CONTRAST, -70);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function smooth ($file_name,$level = 1){
@@ -353,12 +614,22 @@ include ("JerryDatabase.class.inc");
       // echo "smooth";
 
       imagefilter($image, IMG_FILTER_SMOOTH, $level);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function sharp ($file_name){
@@ -369,12 +640,22 @@ include ("JerryDatabase.class.inc");
       // echo "smooth";
 
       imagefilter($image, IMG_FILTER_SMOOTH, -9);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function blur ($file_name){
@@ -385,12 +666,22 @@ include ("JerryDatabase.class.inc");
       // echo "smooth";
 
       imagefilter($image, IMG_FILTER_GAUSSIAN_BLUR);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
 
     }
     public function pixelate ($file_name){
@@ -401,25 +692,39 @@ include ("JerryDatabase.class.inc");
       // echo "smooth";
 
       imagefilter($image, IMG_FILTER_PIXELATE, 10, true);
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
 
+        $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        return $effect_applied;
+      }
     }
     public function original ($file_name){
 
       $image = $this->get_image($file_name);
-
-
-      ob_start(); // Let's start output buffering.
-        imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-        $contents = ob_get_contents(); //Instead, output above is saved to $contents
-      ob_end_clean(); //End the output buffer.
-      $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-      return $base64;
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        
+        $this->store_photo_with_effect($new_img_name,$image);
+        return $new_img_name;
+      }
 
       //  the part below is working
       // $type = pathinfo($path, PATHINFO_EXTENSION);

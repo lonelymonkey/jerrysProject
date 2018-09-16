@@ -28,6 +28,9 @@ class clean_files
               // echo "file number is ".$result_set[$i]["image_id"];
 
               unlink(file_path.$result_set[$i]["image_id"].".".$result_set[$i]["image_type"]);
+              $this->clean_sub_files($result_set[$i]["image_id"],$result_set[$i]["image_type"]);
+              // $this->clean_sub_files(386,$result_set[$i]["image_type"]);
+
           }
         }
       }
@@ -35,6 +38,27 @@ class clean_files
     // var_dump($result_set);
   }
 }
+  private function clean_sub_files ($image_id,$file_type){
+    $this->database->query('SELECT effect_photo_id ,create_time from image_effect where original_photo_id = :original_photo_id')
+                   ->bind(':original_photo_id',0);
+    $result_set = $this->database->resultset();
+
+    for ($i=0; $i < sizeof($result_set); $i++) {
+      // var_dump($result_set[$i]);
+      $now = strtotime("now");
+      $record_time = strtotime($result_set[$i]['create_time']);
+      if ($now - $record_time > $this->two_hr_time_stamp) {
+        if (file_exists(file_path.$result_set[$i]["effect_photo_id"].".".$file_type)) {
+          // echo "the sting is correct \n";
+          // echo "file number is ".$result_set[$i]["image_id"];
+
+          unlink(file_path.$result_set[$i]["effect_photo_id"].".".$file_type);
+          // $this->clean_sub_files($result_set[$i]["image_id"],$result_set[$i]["image_type"]);
+
+        }
+      }
+    }
+  }
   private function get_all_id (){
     $this->database->query('SELECT * from image_overview');
     return $this->database->resultset();

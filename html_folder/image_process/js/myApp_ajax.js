@@ -12,7 +12,7 @@
   myApp_ajax.effect = function(effect) {
       // var file_name = "test.jpg";
       buildString = JSON.stringify(myApp_ajax.file_name);
-      console.log(buildString);
+      console.log(effect);
       $.ajax({
         method : 'POST',
         dataType : 'json',
@@ -21,7 +21,10 @@
         success : function(response) {
           console.log(response);
           // $(`.process_preview_img_container`).html('<img src="' + response.data+ '" />');
-          $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${myApp_ajax.original_location}" alt="your sdfsdfimage" />`);
+          // $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${myApp_ajax.original_location}" alt="your sdfsdfimage" />`);
+          $('.process_preview_img_container').html(`<img id = "main_preview_image_field" src = "../uploads/${response.data.id}.${response.data.type}">`);
+          console.log("finish update");
+          $('.process_image_loading').hide();
         }
       });
     }
@@ -53,6 +56,12 @@
     var form_data = new FormData();
     form_data.append('file', myApp.file_to_php);
     $('.loading_layer').show();
+    //// COMBAK:
+    // this is testing purpose;
+    // myApp_ajax.file_name = 'test_purpose.jpeg';
+    // myApp_ajax.all_effect(myApp_ajax.file_name);
+
+    // uncomment this after everything is done;
     $.ajax({
         url: config.apiUrl, // point to server-side PHP script
         dataType: 'json',  // what to expect back from the PHP script, if anything

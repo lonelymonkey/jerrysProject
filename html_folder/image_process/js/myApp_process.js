@@ -20,13 +20,15 @@
         <div class = "process_image_preview">
             <div class = "process_preview_img_container"></div>
         </div>
+        <div class = "process_image_loading">
+            <img src = "../asset/loading.gif">
+        </div>
       </div>
     </div>
     `;
     $(`.main_photo_container`).html(process_frame);
     $('.prohibed_layer').hide();
     $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="../uploads/${name}" alt="your image" />`);
-
   }
   myApp.process_preview_display = function (response,list){
     console.log("effect list ",list);
@@ -66,6 +68,7 @@
 
   }
   myApp.proess_select_effect = function (effect_name){
+    $('.process_image_loading').show();
     $('.process_scroll_bar').hide();
     switch (effect_name) {
       case "smooth":
