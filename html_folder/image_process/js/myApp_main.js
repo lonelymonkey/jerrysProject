@@ -181,7 +181,6 @@
                         <label for = "main_input_file" class = "layout_icon">
                             <img class = "upload_icon" src = "../asset/upload_icon.png">
                         </label>
-                        <div class = "layout_icon"></div>
                     </div>
                 </div>
               </div>

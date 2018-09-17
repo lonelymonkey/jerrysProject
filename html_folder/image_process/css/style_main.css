@@ -186,6 +186,7 @@ body:after {
 .layout_icon_place_holder{
   margin: auto;
   width: 410px;
+  text-align: center;
 }
 .main_upload{
   padding-bottom: 40px;
