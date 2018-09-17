@@ -24,11 +24,15 @@
           // $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${myApp_ajax.original_location}" alt="your sdfsdfimage" />`);
           $('.process_preview_img_container').html(`<img id = "main_preview_image_field" src = "../uploads/${response.data.id}.${response.data.type}">`);
           console.log("finish update");
-          $('.process_image_loading').hide();
+          $(`#process_download_img`).attr('href',response.data.url);
+          myApp.process_view_previous_effect(response.data.url);
+          $('.process_img_loading_layer').hide();
+          $('.prohibed_layer').hide();
+
         }
       });
     }
-  myApp_ajax.all_effect = function(file_name){
+  myApp_ajax.all_effect = function(file_name,url){
     buildString = JSON.stringify(myApp_ajax.file_name);
     $.ajax({
       method : 'POST',
@@ -43,7 +47,7 @@
           myApp.effect_data.feature_name = effect_list;
           $('.loading_layer').hide();
           myApp.process_ui(file_name);
-
+          $(`#process_download_img`).attr('href',url);
         }, 1500);
 
         // myApp.process_preview_display(response.data,effect_list);
@@ -56,10 +60,11 @@
     var form_data = new FormData();
     form_data.append('file', myApp.file_to_php);
     $('.loading_layer').show();
-    //// COMBAK:
+    // COMBAK:
     // this is testing purpose;
     // myApp_ajax.file_name = 'test_purpose.jpeg';
     // myApp_ajax.all_effect(myApp_ajax.file_name);
+    // COMBAK:
 
     // uncomment this after everything is done;
     $.ajax({
@@ -76,7 +81,7 @@
 
 
             console.log("go to all effect");
-            myApp_ajax.all_effect(php_script_response.file_name);
+            myApp_ajax.all_effect(php_script_response.file_name,php_script_response.url);
 
             // myApp_ajax.effect();
 

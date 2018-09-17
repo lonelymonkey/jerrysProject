@@ -75,7 +75,7 @@
       var select_feature = Object.keys(myApp.effect_data.small_image[select_feature_id]);
       for (var i = 0; i < select_feature.length; i++) {
         console.log("select img data",myApp.effect_data.small_image[select_feature_id][select_feature[i]]);
-        frame = frame + `<div class = "effect_list_container" onclick = "myApp_ajax.effect('${select_feature[i]}')" id = "${select_feature[i]}">
+        frame = frame + `<div class = "effect_list_container" onclick = "myApp.proess_select_effect('${select_feature[i]}')" id = "${select_feature[i]}">
                           <div class = "effect_list_option_icon" >
                             <img class = "effect_list_option_icon_image" src = "${myApp.effect_data.small_image[select_feature_id][select_feature[i]]}">
                           </div>

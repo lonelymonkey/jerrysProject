@@ -172,11 +172,11 @@ body:after {
 }
 #content_holder{
   position: relative;
-  top: 100px;
+  top: 90px;
   border-style: groove;
   border-radius: 1px;
   border-color: #d5cbcb;
-  height: 85%;
+  height: 87%;
   max-width: 90%;
   background-color: #c8cacd;
   min-width: 1080px;

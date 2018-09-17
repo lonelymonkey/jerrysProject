@@ -73,6 +73,8 @@ require_once ("JerryDatabase.class.inc");
       $small_image["filter"]["negative_smoke"] = $this->negative_smoke ($file_name);
       $small_image["filter"]["magic_pad"] = $this->magic_pad ($file_name);
       $small_image["filter"]["fantasy"] = $this->fantasy ($file_name);
+      $small_image["filter"]["scratch"] = $this->scratch ($file_name);
+
 
 
 
@@ -84,10 +86,6 @@ require_once ("JerryDatabase.class.inc");
 
       $small_image["sketch"]["sketch"] = $this->sketch ($file_name);
       $small_image["sketch"]["pencil"] = $this->pencil ($file_name);
-      $small_image["sketch"]["pencil2"] = $this->pencil2 ($file_name);
-      $small_image["sketch"]["pencil3"] = $this->pencil3 ($file_name);
-
-
       $small_image["sketch"]["coal_draw"] = $this->coal_draw ($file_name);
       // $small_image["sketch"]["pencil_gray"] = $this->pencil_gray ($file_name);
 
@@ -178,7 +176,7 @@ require_once ("JerryDatabase.class.inc");
         // $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -207,11 +205,41 @@ require_once ("JerryDatabase.class.inc");
         // $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+
         return $effect_applied;
       }
     }
-    public function pencil2 ($file_name){
+    public function scratch ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->apply(new scratch_effect())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new scratch_effect())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
+    public function coal_draw ($file_name){
       $image = $this->get_image($file_name);
 
         // $canvas->save('rename.jpeg');
@@ -236,7 +264,7 @@ require_once ("JerryDatabase.class.inc");
         // $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -265,7 +293,7 @@ require_once ("JerryDatabase.class.inc");
         // $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -295,7 +323,7 @@ require_once ("JerryDatabase.class.inc");
         // $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -322,7 +350,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -347,7 +375,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -372,7 +400,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -398,7 +426,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -424,7 +452,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -449,32 +477,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
-        return $effect_applied;
-      }
-
-    }
-    public function coal_draw ($file_name){
-
-      // $path = file_path.$file_name;
-      // echo $path;
-      $image = $this->get_image($file_name);
-
-      imagefilter($image, IMG_FILTER_SMOOTH, -8);
-      if ($this->size_flag) {
-        ob_start(); // Let's start output buffering.
-          imagejpeg($image); //This will normally output the image, but because of ob_start(), it won't.
-          $contents = ob_get_contents(); //Instead, output above is saved to $contents
-        ob_end_clean(); //End the output buffer.
-        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
-        return $base64;
-      }else {
-        $new_img_name = $this->effect_img_store($file_name);
-
-        $this->store_photo_with_effect($new_img_name,$image);
-        $effect_applied['id'] = $new_img_name;
-        $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -500,7 +503,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -526,7 +529,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -552,7 +555,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -576,7 +579,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -601,7 +604,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -627,7 +630,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -653,7 +656,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -679,7 +682,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
 
@@ -705,7 +708,7 @@ require_once ("JerryDatabase.class.inc");
         $this->store_photo_with_effect($new_img_name,$image);
         $effect_applied['id'] = $new_img_name;
         $effect_applied['type'] = $this->type;
-        $effect_applied["url"] = $_SERVER['SERVER_NAME'].public_path.$file_name;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
         return $effect_applied;
       }
     }
@@ -721,7 +724,7 @@ require_once ("JerryDatabase.class.inc");
         return $base64;
       }else {
         $new_img_name = $this->effect_img_store($file_name);
-        
+
         $this->store_photo_with_effect($new_img_name,$image);
         return $new_img_name;
       }

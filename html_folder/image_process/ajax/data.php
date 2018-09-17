@@ -40,11 +40,11 @@ try {
             if ($_FILES["file"]["type"] == "image/png") {
               move_uploaded_file($_FILES['file']['tmp_name'], file_path. $name .".png");
               $response["file_name"] = $name .".png";
-              $response["url"] = $_SERVER['SERVER_NAME'].public_path.$name .".png";
+              $response["url"] = public_path.$name .".png";
             }elseif ($_FILES["file"]["type"] == "image/jpeg") {
               move_uploaded_file($_FILES['file']['tmp_name'], file_path. $name .".jpeg");
               $response["file_name"] = $name .".jpeg";
-              $response["url"] = $_SERVER['SERVER_NAME'].public_path.$name .".jpeg";
+              $response["url"] = public_path.$name .".jpeg";
 
             }
 
