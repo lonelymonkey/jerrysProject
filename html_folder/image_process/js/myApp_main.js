@@ -195,13 +195,13 @@
     var frame = `
     <div class = "effect_list_container" id = "filter">
       <div class = "effect_list_option_icon" >
-        <img class = "effect_list_option_icon_image" src = "../asset/filter.png">
+        <img class = "effect_list_option_icon_image" src = "../asset/filter.jpg">
       </div>
       <div class = "effect_list_option_title">Filter</div>
     </div>
     <div class = "effect_list_container" id = "paint">
       <div class = "effect_list_option_icon">
-        <img class = "effect_list_option_icon_image" src = "../asset/paint.jpeg">
+        <img class = "effect_list_option_icon_image" src = "../asset/paint.jpg">
       </div>
       <div class = "effect_list_option_title">Paint</div>
     </div>
