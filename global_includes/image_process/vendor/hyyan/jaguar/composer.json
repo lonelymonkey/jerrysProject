@@ -1,0 +1,33 @@
+{
+    "name": "hyyan/jaguar",
+    "description": "PHP 5.3 Graphic Library For Super Fast Image Manipulation And Drawing Using The Gd Library.",
+    "keywords": [
+        "image manipulation",
+        "image processing",
+        "drawing",
+        "graphics",
+        "gd",
+        "gd2",
+        "image filters",
+        "charts drawing",
+        "web2.0 image filters"
+    ],
+    "homepage": "http://jaguar.readthedocs.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hyyan Abo Fakher",
+            "email": "tiribthea4hyyan@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.2",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Jaguar": "src/"
+        }
+    }
+}
