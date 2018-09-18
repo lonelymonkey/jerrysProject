@@ -110,6 +110,33 @@
         }
      });
   }
+  myApp_ajax.upload_from_url = function (url){
+    $('.loading_layer').show();
+    
+    // var test_url = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?cs=srgb&dl=beauty-bloom-blue-67636.jpg&fm=jpg"
+    url_to_send = JSON.stringify(url);
+     $.ajax({
+       method : 'GET',
+       dataType : 'json',
+       url : config.apiUrl,
+       data : { function : "get_img_online", data : url_to_send},
+       success : function(response) {
+         console.log(response);
+         if (response.status < 0) {
+           console.log("file type is wrong");
+           $('.loading_layer').hide();
+           alert(response.errMsg);
+         }else {
+           myApp_ajax.file_name = response.file_name;
+
+
+           console.log("go to all effect");
+           myApp_ajax.all_effect(response.file_name,response.url);
+         }
+
+       }
+     });
+  }
   myApp_ajax.load = function(){
     console.log("ajax load");
     // testing effect and ajax

@@ -4,6 +4,7 @@ include "../../../global_includes/image_process/image_process.inc";
 include '../../../global_includes/image_process/config.inc';
 // include INCLUDE_PATH . '/db_helper.inc';
 include INCLUDE_PATH . '/clean_files.inc';
+include INCLUDE_PATH . '/get_img_from_url.inc';
 
 //include '../includes/import.inc';
 
@@ -13,7 +14,7 @@ $response = array(
 );
 try {
     //r1Exception::requireLogin();
-    // var_dump($_FILES);
+    // var_dump($_GET['function']);
 
     if (!empty($_POST['function'])) {
       $service = new createimage();
@@ -24,18 +25,29 @@ try {
 
       $response['data'] = $service->{$_POST['function']}($data);
     } else if (!empty($_GET['function'])) {
-      // $service = new dataServiceRead();
-      // $data = array();
-      // if (!empty($_GET['data'])) $data = json_decode($_GET['data'],true);
-      // $response['data'] = $service->{$_GET['function']}($data);
+      $service = new get_img_from_url();
+
+      $data = array();
+      if (!empty($_GET['data'])) {
+        $data = json_decode($_GET['data'],true);
+
+      }
+      // var_dump($data);
+      $response["file_name"] = $service->{$_GET['function']}($data);
+      $response["url"] = public_path.$response["file_name"];
     } elseif (!empty($_FILES)) {
         // var_dump($_FILES["file"]["type"]);
         if ( 0 < $_FILES['file']['error'] ) {
-            echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+          throw new Exception(1);
+
         }elseif ($_FILES["file"]["type"] != "image/png" && $_FILES["file"]["type"] != "image/jpg" && $_FILES["file"]["type"] != "image/jpeg" ) {
           throw new Exception(0);
+        }elseif ($_FILES["file"]["size"] > 2200000 ) {
+          throw new Exception(1);
         }
         else {
+          // var_dump($_FILES);
+
             $dir_process = new clean_files();
             $dir_process->clean_dir();
             $name = $dir_process->store_record($_FILES["file"]["type"]);
@@ -61,6 +73,10 @@ try {
     switch ($e->getMessage()) {
       case '0':
         $response['errMsg'] = "The app does not support this type of file. Please update Jpeg, Jpg, or png";
+        $response['status'] = -2;
+        break;
+      case '1':
+        $response['errMsg'] = "The file size may be too big, Please choose a differnt file";
         $response['status'] = -2;
         break;
       default:

@@ -87,6 +87,46 @@
           // $(`.main_preview_img_container`).css('background-color',"white");
         }
     });
+    $('#upload_from_url').click(function(){
+      var view = `
+      <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <span>Upload Image from URL</span>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body" >
+                  <input class = "form-control" id = "image_url">
+                  <button class = "form-control" id = "submit_url_to_backend">Upload</button>
+              </div>
+            </div>
+
+          </div>
+        </div>`;
+        $("#modal_field").html(view);
+        $('#submit_url_to_backend').click(function(){
+          console.log("testing button");
+          var url_content = $('#image_url').val();
+          console.log(url_content);
+          if (url_content == "") {
+            console.log("the url is empty");
+            $('#image_url').css('border-color','red');
+            $('#image_url').css('border-style','solid');
+          }else {
+            myApp_ajax.upload_from_url(url_content);
+            $('#modal_field').modal('hide');
+            $('.modal').modal('hide');
+            $('.modal-backdrop').modal('hide');
+          }
+
+        });
+      // var url = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
+      // myApp_ajax.upload_from_url(url);
+    });
 
   }
   function bind_feature_ui (){
@@ -131,7 +171,9 @@
                         <label for = "main_input_file" class = "layout_icon">
                             <img class = "upload_icon" src = "../asset/upload_icon.png">
                         </label>
-                        <div class = "layout_icon"></div>
+                        <div class = "layout_icon" id = "upload_from_url">
+                            <span class = "main_url_title">URL</span>
+                        </div>
                     </div>
                 </div>
 
@@ -202,6 +244,9 @@
                         <label for = "main_input_file" class = "layout_icon">
                             <img class = "upload_icon" src = "../asset/upload_icon.png">
                         </label>
+                        <div class = "layout_icon" id = "upload_from_url" data-toggle="modal" data-target="#myModal" >
+                            <span class = "main_url_title">URL</span>
+                        </div>
                     </div>
                 </div>
               </div>

@@ -9,7 +9,7 @@ use Jaguar\Canvas,
         Jaguar\Color\RGBColor,
         Jaguar\Transformation;
 require_once 'effect_lib.inc';
-
+ini_set('memory_limit', '256M');
 if (!class_exists('createimage')) {
 // include ("db_helper.inc");
 require_once ("JerryDatabase.class.inc");
@@ -74,16 +74,16 @@ require_once ("JerryDatabase.class.inc");
       $small_image["filter"]["magic_pad"] = $this->magic_pad ($file_name);
       $small_image["filter"]["fantasy"] = $this->fantasy ($file_name);
       $small_image["filter"]["scratch"] = $this->scratch ($file_name);
-
-
-
-
-
-
-
+      //
+      //
+      //
+      //
+      //
+      //
+      //
       $small_image["paint"]["cartoon"] = $this->cartoon ($file_name);
       $small_image["paint"]["contrast"] = $this->contrast ($file_name);
-
+      //
       $small_image["sketch"]["sketch"] = $this->sketch ($file_name);
       $small_image["sketch"]["pencil"] = $this->pencil ($file_name);
       $small_image["sketch"]["coal_draw"] = $this->coal_draw ($file_name);
@@ -170,7 +170,8 @@ require_once ("JerryDatabase.class.inc");
 
         $canvas = new Canvas(file_path.$file_name);
         $transformation = new Transformation($canvas);
-        $image = $transformation->apply(new paint_enhance())
+        $image = $transformation->resize(new Dimension(176,140))
+                        ->apply(new paint_enhance())
                         ->getCanvas()
                         ->save(file_path.$new_img_name.'.'.$this->type);
         // $this->store_photo_with_effect($new_img_name,$image);
@@ -188,7 +189,8 @@ require_once ("JerryDatabase.class.inc");
         ob_start(); // Let's start output buffering.
           $canvas = new Canvas(file_path.$file_name);
           $transformation = new Transformation($canvas);
-          $transformation->apply(new Dreamy_effect())
+          $transformation ->resize(new Dimension(176,140))
+                          ->apply(new Dreamy_effect())
                           ->getCanvas()
                           ->show();
           $contents = ob_get_contents(); //Instead, output above is saved to $contents
@@ -218,7 +220,8 @@ require_once ("JerryDatabase.class.inc");
         ob_start(); // Let's start output buffering.
           $canvas = new Canvas(file_path.$file_name);
           $transformation = new Transformation($canvas);
-          $transformation->apply(new scratch_effect())
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new scratch_effect())
                           ->getCanvas()
                           ->show();
           $contents = ob_get_contents(); //Instead, output above is saved to $contents
@@ -247,7 +250,8 @@ require_once ("JerryDatabase.class.inc");
         ob_start(); // Let's start output buffering.
           $canvas = new Canvas(file_path.$file_name);
           $transformation = new Transformation($canvas);
-          $transformation->apply(new pencil_gray())
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new pencil_gray())
                           ->getCanvas()
                           ->show();
           $contents = ob_get_contents(); //Instead, output above is saved to $contents
@@ -306,7 +310,8 @@ require_once ("JerryDatabase.class.inc");
         ob_start(); // Let's start output buffering.
           $canvas = new Canvas(file_path.$file_name);
           $transformation = new Transformation($canvas);
-          $transformation->apply(new PencilAction())
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new PencilAction())
                           ->getCanvas()
                           ->show();
           $contents = ob_get_contents(); //Instead, output above is saved to $contents
