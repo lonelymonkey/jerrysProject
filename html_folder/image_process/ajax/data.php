@@ -29,9 +29,11 @@ try {
       // if (!empty($_GET['data'])) $data = json_decode($_GET['data'],true);
       // $response['data'] = $service->{$_GET['function']}($data);
     } elseif (!empty($_FILES)) {
-        // var_dump($_FILES);
+        // var_dump($_FILES["file"]["type"]);
         if ( 0 < $_FILES['file']['error'] ) {
             echo 'Error: ' . $_FILES['file']['error'] . '<br>';
+        }elseif ($_FILES["file"]["type"] != "image/png" && $_FILES["file"]["type"] != "image/jpg" && $_FILES["file"]["type"] != "image/jpeg" ) {
+          throw new Exception(0);
         }
         else {
             $dir_process = new clean_files();
@@ -58,7 +60,7 @@ try {
     }
     switch ($e->getMessage()) {
       case '0':
-        $response['errMsg'] = "Err : some tables are blank";
+        $response['errMsg'] = "The app does not support this type of file. Please update Jpeg, Jpg, or png";
         $response['status'] = -2;
         break;
       default:

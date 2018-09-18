@@ -6,6 +6,27 @@
   myApp.config = {
                   id : ""
   };
+  var dic = {
+    scale_gray : "Scale Gray",
+    smooth     : "Smooth",
+    sharp      : "Sharp",
+    pixelate   : "Pixelate",
+    brightness : "Brightness",
+    scale_green: "Scale Green",
+    scale_blue: "Scale Blue",
+    dawn        : "Dawn",
+    sepia       : 'Sepia',
+    negative_smoke : "Negative Smoke",
+    magic_pad : "Magic Pad",
+    fantasy : "Fantasy",
+    scratch : "Scratch",
+    cartoon : "Cartoon",
+    contrast : "Paint",
+    sketch : "Sketch",
+    pencil : "Pencil",
+    coal_draw :"Coal Draw"
+
+  }
   myApp.effect_data = {};
   var select_flag = false;
   myApp.file_to_php;
@@ -79,7 +100,7 @@
                           <div class = "effect_list_option_icon" >
                             <img class = "effect_list_option_icon_image" src = "${myApp.effect_data.small_image[select_feature_id][select_feature[i]]}">
                           </div>
-                          <div class = "effect_list_option_title">${select_feature[i]}</div>
+                          <div class = "effect_list_option_title">${dic[select_feature[i]]}</div>
                         </div>`;
       }
       $('.effect_list_options_container').html(frame);

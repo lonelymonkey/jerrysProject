@@ -76,12 +76,20 @@
         data: form_data,
         type: 'post',
         success: function(php_script_response){
+
             console.log(php_script_response); // display response from the PHP script, if any
-            myApp_ajax.file_name = php_script_response.file_name;
+            if (php_script_response.status < 0) {
+              console.log("file type is wrong");
+              $('.loading_layer').hide();
+              alert(php_script_response.errMsg);
+            }else {
+              myApp_ajax.file_name = php_script_response.file_name;
 
 
-            console.log("go to all effect");
-            myApp_ajax.all_effect(php_script_response.file_name,php_script_response.url);
+              console.log("go to all effect");
+              myApp_ajax.all_effect(php_script_response.file_name,php_script_response.url);
+            }
+
 
             // myApp_ajax.effect();
 
