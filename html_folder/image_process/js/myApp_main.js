@@ -101,8 +101,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body" >
-                  <input class = "form-control" id = "image_url">
-                  <button class = "form-control" id = "submit_url_to_backend">Upload</button>
+                  <input class = "form-control url_style" id = "image_url">
+                  <button class = "form-control url_upload_style" id = "submit_url_to_backend"><i class="fa fa-upload upload_symbol"></i><span>Upload</span></button>
               </div>
             </div>
 

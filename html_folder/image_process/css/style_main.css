@@ -154,6 +154,18 @@ body:after {
 .effect_list_options_container{
   overflow: auto;
 }
+.url_style{
+  margin-bottom: 15px;
+
+}
+.url_upload_style{
+  margin: auto;
+  width: 35%;
+}
+.upload_symbol {
+    font-size: 23px;
+    margin-right: 12px;
+}
 .effect_list_container{
   width: 225px;
   margin: auto;
