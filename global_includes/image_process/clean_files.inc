@@ -7,7 +7,7 @@ class clean_files
 {
   private $database;
   private $db_helper;
-  private $two_hr_time_stamp = 36;
+  private $two_hr_time_stamp = 3600;
   function __construct()
   {
     $this->database = new Database();
