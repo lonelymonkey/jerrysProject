@@ -155,7 +155,7 @@ body:after {
   overflow: auto;
 }
 .effect_list_container{
-  width: 80%;
+  width: 225px;
   margin: auto;
   margin-bottom: 30px;
   cursor: pointer;
@@ -176,7 +176,7 @@ body:after {
   border-style: groove;
   border-radius: 1px;
   border-color: #d5cbcb;
-  height: 87%;
+  height: 650px;
   max-width: 90%;
   background-color: #c8cacd;
   min-width: 1080px;

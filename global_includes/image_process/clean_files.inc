@@ -7,7 +7,7 @@ class clean_files
 {
   private $database;
   private $db_helper;
-  private $two_hr_time_stamp = 3600;
+  private $two_hr_time_stamp = 36;
   function __construct()
   {
     $this->database = new Database();
@@ -32,6 +32,8 @@ class clean_files
               // $this->clean_sub_files(386,$result_set[$i]["image_type"]);
 
           }
+          $this->clean_sub_files($result_set[$i]["image_id"],$result_set[$i]["image_type"]);
+
         }
       }
     }
@@ -40,7 +42,7 @@ class clean_files
 }
   private function clean_sub_files ($image_id,$file_type){
     $this->database->query('SELECT effect_photo_id ,create_time from image_effect where original_photo_id = :original_photo_id')
-                   ->bind(':original_photo_id',0);
+                   ->bind(':original_photo_id',$image_id);
     $result_set = $this->database->resultset();
 
     for ($i=0; $i < sizeof($result_set); $i++) {

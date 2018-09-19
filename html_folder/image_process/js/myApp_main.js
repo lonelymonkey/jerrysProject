@@ -24,7 +24,8 @@
     contrast : "Paint",
     sketch : "Sketch",
     pencil : "Pencil",
-    coal_draw :"Coal Draw"
+    coal_draw :"Coal Draw",
+    old_school : "Old School"
 
   }
   myApp.effect_data = {};
@@ -41,7 +42,6 @@
   myApp.home_page = function (){
 
     myApp.select_photo_page();
-    bind_select_file_ui();
     $(".effect_list_option").show();
     $('.effect_list_option_selection').hide();
   }
@@ -88,6 +88,7 @@
         }
     });
     $('#upload_from_url').click(function(){
+      console.log("test url modal button");
       var view = `
       <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
@@ -116,6 +117,8 @@
             console.log("the url is empty");
             $('#image_url').css('border-color','red');
             $('#image_url').css('border-style','solid');
+          }else if (url_content.length > 1900) {
+            alert("The Length of URL is too large");
           }else {
             myApp_ajax.upload_from_url(url_content);
             $('#modal_field').modal('hide');
@@ -171,7 +174,7 @@
                         <label for = "main_input_file" class = "layout_icon">
                             <img class = "upload_icon" src = "../asset/upload_icon.png">
                         </label>
-                        <div class = "layout_icon" id = "upload_from_url">
+                        <div class = "layout_icon" id = "upload_from_url" data-toggle="modal" data-target="#myModal">
                             <span class = "main_url_title">URL</span>
                         </div>
                     </div>
@@ -179,6 +182,8 @@
 
     `;
     $(`.main_photo_container`).html(frame);
+    bind_select_file_ui();
+
     $('.prohibed_layer').show();
 
   }

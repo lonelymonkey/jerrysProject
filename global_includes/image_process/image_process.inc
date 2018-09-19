@@ -74,6 +74,8 @@ require_once ("JerryDatabase.class.inc");
       $small_image["filter"]["magic_pad"] = $this->magic_pad ($file_name);
       $small_image["filter"]["fantasy"] = $this->fantasy ($file_name);
       $small_image["filter"]["scratch"] = $this->scratch ($file_name);
+      $small_image["filter"]["old_school"] = $this->old_school ($file_name);
+
       //
       //
       //
@@ -150,7 +152,7 @@ require_once ("JerryDatabase.class.inc");
         return $image;
       }
     }
-    public function cartoon ($file_name){
+    public function old_school ($file_name){
       $image = $this->get_image($file_name);
 
         // $canvas->save('rename.jpeg');
@@ -158,7 +160,9 @@ require_once ("JerryDatabase.class.inc");
         ob_start(); // Let's start output buffering.
           $canvas = new Canvas(file_path.$file_name);
           $transformation = new Transformation($canvas);
-          $transformation->apply(new paint_enhance())
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new scratch_effect())
+                          ->apply(new sepia_style())
                           ->getCanvas()
                           ->show();
           $contents = ob_get_contents(); //Instead, output above is saved to $contents
@@ -170,8 +174,39 @@ require_once ("JerryDatabase.class.inc");
 
         $canvas = new Canvas(file_path.$file_name);
         $transformation = new Transformation($canvas);
-        $image = $transformation->resize(new Dimension(176,140))
-                        ->apply(new paint_enhance())
+        $image = $transformation->apply(new scratch_effect())
+                        ->apply(new sepia_style())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
+    public function cartoon ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new paint_enhance())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new paint_enhance())
                         ->getCanvas()
                         ->save(file_path.$new_img_name.'.'.$this->type);
         // $this->store_photo_with_effect($new_img_name,$image);

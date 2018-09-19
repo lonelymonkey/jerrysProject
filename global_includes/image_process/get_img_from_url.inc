@@ -14,6 +14,10 @@ class get_img_from_url
     // $img_online = file_get_contents($url);
     // $url = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260";
     // $test = 'http://jerry_project.local/image_process/html/index.html';
+    if (strlen($url)>1900) {
+      // code...
+      throw new Exception(2);
+    }
     $url_info = pathinfo($url);
     if (!isset($url_info["extension"])) {
       throw new Exception(0);

@@ -7,6 +7,7 @@ use Jaguar\Canvas,
         Jaguar\Action\Color\Grayscale,
         Jaguar\Action\Color\Boost,
         Jaguar\Action\Color\Gamma,
+        Jaguar\Action\Color\Sepia,
         Jaguar\Action\GraySketchy,
         Jaguar\Action\Sketchy,
         Jaguar\Action\Posterize,
@@ -117,6 +118,26 @@ if (!class_exists('color_sketch')) {
                   $transformation = new Transformation($canvas);
                   $transformation
                                   ->apply(new Gamma(4));
+          }
+
+  }
+}
+if (!class_exists('sepia_style')) {
+  class sepia_style extends AbstractAction
+  {
+
+          /**
+           * Apply Pencil Action
+           *
+           * @param CanvasInterface $canvas
+           */
+          protected function doApply(CanvasInterface $canvas)
+          {
+
+
+                  $transformation = new Transformation($canvas);
+                  $transformation
+                                  ->apply(new Sepia());
           }
 
   }

@@ -79,6 +79,10 @@ try {
         $response['errMsg'] = "The file size may be too big, Please choose a differnt file";
         $response['status'] = -2;
         break;
+      case '2':
+        $response['errMsg'] = "The URL is too large";
+        $response['status'] = -2;
+        break;
       default:
         $response['errMsg'] = $e->getMessage();
         break;
