@@ -120,8 +120,9 @@ body:after {
 }
 
 .layout_title{
-  font-size: 35px;
+  font-size: 50px;
   text-align: center;
+  font-weight: bold;
 }
 .upload_icon{
   height: 170px;
