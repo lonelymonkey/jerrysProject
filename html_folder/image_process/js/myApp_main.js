@@ -25,7 +25,13 @@
     sketch : "Sketch",
     pencil : "Pencil",
     coal_draw :"Coal Draw",
-    old_school : "Old School"
+    old_school : "Old School",
+    Vintage : "Vintage",
+    Vintage_beam : "Enhance Beam",
+    Canvas : 'Canvas',
+    velvet : "Velvet",
+    Brush : "Brush"
+
 
   }
   myApp.effect_data = {};
@@ -132,21 +138,48 @@
     });
 
   }
+  function bind_third_laryer_ui(){
+    $('.effect_list_second_layer_container').click(function(){
+      var select_third_id = $(this).attr('id');
+      console.log("test tst tst select_third_id",select_third_id);
+
+
+      $('.second_layer_feature_title').html(select_third_id);
+      $(".effect_list_option_selection").hide("slide", {direction: "left"}, "fast");
+      $('.effect_list_option_third_layer').show("slide", {direction: "right"}, "fast");
+    });
+  }
   function bind_feature_ui (){
     $(`.effect_list_container`).click(function (){
       var select_feature_id = $(this).attr('id');
       var frame = '';
       var select_feature = Object.keys(myApp.effect_data.small_image[select_feature_id]);
-      for (var i = 0; i < select_feature.length; i++) {
-        console.log("select img data",myApp.effect_data.small_image[select_feature_id][select_feature[i]]);
-        frame = frame + `<div class = "effect_list_container" onclick = "myApp.proess_select_effect('${select_feature[i]}')" id = "${select_feature[i]}">
-                          <div class = "effect_list_option_icon" >
-                            <img class = "effect_list_option_icon_image" src = "${myApp.effect_data.small_image[select_feature_id][select_feature[i]]}">
-                          </div>
-                          <div class = "effect_list_option_title">${dic[select_feature[i]]}</div>
-                        </div>`;
+      if (select_feature_id == "box") {
+        for (var i = 0; i < select_feature.length; i++) {
+          // console.log("select img data",myApp.effect_data.small_image[select_feature_id][select_feature[i]]);
+          frame = frame + `<div class = "effect_list_second_layer_container effect_list_container_ui" id = "${select_feature[i]}">
+                            <div class = "effect_list_option_icon" >
+                              <img class = "effect_list_option_icon_image" src = "${myApp.effect_data.small_image[select_feature_id][select_feature[i]]["demo"]}">
+                            </div>
+                            <div class = "effect_list_option_title">${select_feature[i]}</div>
+                          </div>`;
+        }
+        $('.effect_list_options_container').html(frame);
+        bind_third_laryer_ui();
+      }else {
+        for (var i = 0; i < select_feature.length; i++) {
+          console.log("select img data",myApp.effect_data.small_image[select_feature_id][select_feature[i]]);
+          frame = frame + `<div class = "effect_list_container effect_list_container_ui" onclick = "myApp.proess_select_effect('${select_feature[i]}')" id = "${select_feature[i]}">
+                            <div class = "effect_list_option_icon" >
+                              <img class = "effect_list_option_icon_image" src = "${myApp.effect_data.small_image[select_feature_id][select_feature[i]]}">
+                            </div>
+                            <div class = "effect_list_option_title">${dic[select_feature[i]]}</div>
+                          </div>`;
+        }
+        $('.effect_list_options_container').html(frame);
+
       }
-      $('.effect_list_options_container').html(frame);
+
       // $(`.process_preview_img_container`).html('<img src="' + response.data+ '" />');
 
       console.log($(this).attr('id'));
@@ -160,6 +193,10 @@
     $(".effect_list_option").show("slide", {direction: "left"}, "fast");
     $('.effect_list_option_selection').hide("slide", {direction: "right"}, "fast");
 
+  }
+  myApp.show_second_layer_list = function (){
+    $(".effect_list_option_selection").show("slide", {direction: "left"}, "fast");
+    $('.effect_list_option_third_layer').hide("slide", {direction: "right"}, "fast");
   }
   myApp.select_photo_page = function (){
     var frame = `
@@ -231,10 +268,20 @@
                         <button onclick = "myApp.show_parent_list()" id = "goback_to_parent_list">Back</button>
                         <label for = "goback_to_parent_list" class = "">
                           <div class = "go_back_pointer"><span class ='arrow_container'>&#9664;</span></div>
-                          <div class = "main_feature_title"></div>
+                          <div class = "main_feature_title feature_title"></div>
                         </label>
                       </div>
                       <div class = "effect_list_options_container"></div>
+                  </div>
+                  <div class = "effect_list_option_third_layer">
+                      <div class = "main_title_and_goback">
+                        <button onclick = "myApp.show_second_layer_list()" id = "goback_to_second_layer_list">Back</button>
+                        <label for = "goback_to_second_layer_list" class = "">
+                          <div class = "go_back_pointer"><span class ='arrow_container'>&#9664;</span></div>
+                          <div class = "second_layer_feature_title feature_title"></div>
+                        </label>
+                      </div>
+                      <div class = "effect_list_options_third_layer_container"></div>
                   </div>
                   <div class = "prohibed_layer"></div>
               </div>
@@ -263,23 +310,29 @@
   }
   function build_option_field (){
     var frame = `
-    <div class = "effect_list_container" id = "filter">
+    <div class = "effect_list_container effect_list_container_ui" id = "filter">
       <div class = "effect_list_option_icon" >
         <img class = "effect_list_option_icon_image" src = "../asset/filter.jpg">
       </div>
       <div class = "effect_list_option_title">Filter</div>
     </div>
-    <div class = "effect_list_container" id = "paint">
+    <div class = "effect_list_container effect_list_container_ui" id = "paint">
       <div class = "effect_list_option_icon">
         <img class = "effect_list_option_icon_image" src = "../asset/paint.jpg">
       </div>
       <div class = "effect_list_option_title">Paint</div>
     </div>
-    <div class = "effect_list_container" id = "sketch">
+    <div class = "effect_list_container effect_list_container_ui" id = "sketch">
       <div class = "effect_list_option_icon">
         <img class = "effect_list_option_icon_image" src = "../asset/sketch.jpg">
       </div>
       <div class = "effect_list_option_title">Sketch</div>
+    </div>
+    <div class = "effect_list_container effect_list_container_ui" id = "box">
+      <div class = "effect_list_option_icon">
+        <img class = "effect_list_option_icon_image" src = "../asset/box.jpg">
+      </div>
+      <div class = "effect_list_option_title">Box</div>
     </div>
     `;
     $(".effect_list_option").html(frame);

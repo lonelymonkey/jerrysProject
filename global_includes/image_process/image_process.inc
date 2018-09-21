@@ -6,8 +6,14 @@ use Jaguar\Canvas,
         Jaguar\Action\Color\Negate,
         Jaguar\Action\Color\Grayscale,
         Jaguar\Dimension,
+        Jaguar\Action\Preset\Dreamy,
+
         Jaguar\Color\RGBColor,
+        Jaguar\Box,
+        Jaguar\Action\BoxAction,
+        Jaguar\Coordinate,
         Jaguar\Transformation;
+
 require_once 'effect_lib.inc';
 ini_set('memory_limit', '256M');
 if (!class_exists('createimage')) {
@@ -75,6 +81,14 @@ require_once ("JerryDatabase.class.inc");
       $small_image["filter"]["fantasy"] = $this->fantasy ($file_name);
       $small_image["filter"]["scratch"] = $this->scratch ($file_name);
       $small_image["filter"]["old_school"] = $this->old_school ($file_name);
+      $small_image["filter"]["Vintage"] = $this->Vintage ($file_name);
+      $small_image["filter"]["Vintage_beam"] = $this->Vintage_beam ($file_name);
+      $small_image["filter"]["Canvas"] = $this->Canvas ($file_name);
+      $small_image["filter"]["velvet"] = $this->velvet ($file_name);
+
+
+
+
 
       //
       //
@@ -85,16 +99,166 @@ require_once ("JerryDatabase.class.inc");
       //
       $small_image["paint"]["cartoon"] = $this->cartoon ($file_name);
       $small_image["paint"]["contrast"] = $this->contrast ($file_name);
+      $small_image["paint"]["Brush"] = $this->contrast ($file_name);
+
       //
       $small_image["sketch"]["sketch"] = $this->sketch ($file_name);
       $small_image["sketch"]["pencil"] = $this->pencil ($file_name);
       $small_image["sketch"]["coal_draw"] = $this->coal_draw ($file_name);
+
+      $small_image["box"]["2X2"]["demo"] = $this->demo_twoXtwo ($file_name);
+      $small_image["box"]["3X3"]["demo"] = $this->demo_3X3 ($file_name);
+      $small_image["box"]["4X4"]["demo"] = $this->coal_draw ($file_name);
+
+
       // $small_image["sketch"]["pencil_gray"] = $this->pencil_gray ($file_name);
 
 
       $this->size_flag = false;
 
       return $small_image;
+
+
+    }
+    public function demo_twoXtwo ($file_name){
+        $gray = new Dreamy();
+        $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+        if ($this->size_flag) {
+          ob_start(); // Let's start output buffering.
+            $canvas = new Canvas(file_path.$file_name);
+            $w = $canvas->getWidth();
+            $h = $canvas->getHeight();
+
+            $box1 = new Box(
+                  new Dimension($w / 2, $h / 2)
+                  , new Coordinate(0, 0)
+            );
+            $box2 = new Box(
+                            new Dimension($w / 2, $h / 2)
+                            , new Coordinate($w / 2, $h / 2)
+            );
+            $transformation = new Transformation($canvas);
+            $transformation ->apply(new BoxAction($gray, $box1))
+                            ->apply(new BoxAction($gray, $box2))
+                            ->resize(new Dimension(176,140))
+                            ->getCanvas()
+                            ->show();
+            $contents = ob_get_contents(); //Instead, output above is saved to $contents
+          ob_end_clean(); //End the output buffer.
+          $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+          return $base64;
+        }else {
+          $new_img_name = $this->effect_img_store($file_name);
+          $canvas = new Canvas(file_path.$file_name);
+          $w = $canvas->getWidth();
+          $h = $canvas->getHeight();
+
+          $box1 = new Box(
+                new Dimension($w / 2, $h / 2)
+                , new Coordinate(0, 0)
+          );
+          $box2 = new Box(
+                          new Dimension($w / 2, $h / 2)
+                          , new Coordinate($w / 2, $h / 2)
+          );
+          $transformation = new Transformation($canvas);
+          $transformation ->apply(new BoxAction(new Grayscale(), $box1))
+                          ->apply(new BoxAction(new Grayscale(), $box2))
+                          ->getCanvas()
+                          ->save(file_path.$new_img_name.'.'.$this->type);
+          // $this->store_photo_with_effect($new_img_name,$image);
+          $effect_applied['id'] = $new_img_name;
+          $effect_applied['type'] = $this->type;
+          $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+          return $effect_applied;
+        }
+    }
+    public function demo_3X3 ($file_name){
+      $image = $this->get_image($file_name);
+      $gray = new Dreamy();
+
+        // $canvas->save('rename.jpeg');
+        if ($this->size_flag) {
+          ob_start(); // Let's start output buffering.
+            $canvas = new Canvas(file_path.$file_name);
+            $w = $canvas->getWidth();
+            $h = $canvas->getHeight();
+
+            $box1 = new Box(
+                  new Dimension($w / 3, $h / 3)
+                  , new Coordinate(0, 0)
+            );
+            $box2 = new Box(
+                            new Dimension($w / 3, $h / 3)
+                            , new Coordinate($w * (2/3), 0)
+            );
+            $box3 = new Box(
+                            new Dimension($w / 3, $h / 3)
+                            , new Coordinate($w * (1/3), $h * (1/3))
+            );
+            $box4 = new Box(
+                            new Dimension($w / 3, $h / 3)
+                            , new Coordinate(0, $h * (2/3))
+            );
+            $box5 = new Box(
+                            new Dimension($w / 3, $h / 3)
+                            , new Coordinate($w * (2/3), $h * (2/3))
+            );
+            $transformation = new Transformation($canvas);
+            $transformation ->apply(new BoxAction($gray, $box1))
+                            ->apply(new BoxAction($gray, $box2))
+                            ->apply(new BoxAction($gray, $box3))
+                            ->apply(new BoxAction($gray, $box4))
+                            ->apply(new BoxAction($gray, $box5))
+                            ->resize(new Dimension(176,140))
+                            ->getCanvas()
+                            ->show();
+            $contents = ob_get_contents(); //Instead, output above is saved to $contents
+          ob_end_clean(); //End the output buffer.
+          $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+          return $base64;
+        }else {
+          $new_img_name = $this->effect_img_store($file_name);
+          $canvas = new Canvas(file_path.$file_name);
+          $w = $canvas->getWidth();
+          $h = $canvas->getHeight();
+
+          $box1 = new Box(
+                new Dimension($w / 3, $h / 3)
+                , new Coordinate(0, 0)
+          );
+          $box2 = new Box(
+                          new Dimension($w / 3, $h / 3)
+                          , new Coordinate($w * (2/3), 0)
+          );
+          $box3 = new Box(
+                          new Dimension($w / 3, $h / 3)
+                          , new Coordinate($w * (1/3), $h * (1/3))
+          );
+          $box4 = new Box(
+                          new Dimension($w / 3, $h / 3)
+                          , new Coordinate(0, $h * (2/3))
+          );
+          $box5 = new Box(
+                          new Dimension($w / 3, $h / 3)
+                          , new Coordinate($w * (2/3), $h * (2/3))
+          );
+          $transformation = new Transformation($canvas);
+          $transformation ->apply(new BoxAction(new Grayscale(), $box1))
+                          ->apply(new BoxAction(new Grayscale(), $box2))
+                          ->apply(new BoxAction(new Grayscale(), $box3))
+                          ->apply(new BoxAction(new Grayscale(), $box4))
+                          ->apply(new BoxAction(new Grayscale(), $box5))
+                          ->getCanvas()
+                          ->save(file_path.$new_img_name.'.'.$this->type);
+          // $this->store_photo_with_effect($new_img_name,$image);
+          $effect_applied['id'] = $new_img_name;
+          $effect_applied['type'] = $this->type;
+          $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+          return $effect_applied;
+        }
 
 
     }
@@ -185,6 +349,130 @@ require_once ("JerryDatabase.class.inc");
         return $effect_applied;
       }
     }
+    public function Vintage ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new Vintage_effect())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new Vintage_effect())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
+    public function velvet ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new velvet_effect())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new velvet_effect())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
+    public function Canvas ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new canvas_effect())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new canvas_effect())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
+    public function Vintage_beam ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new Vintage_beam_effect())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new Vintage_beam_effect())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
     public function cartoon ($file_name){
       $image = $this->get_image($file_name);
 
@@ -207,6 +495,37 @@ require_once ("JerryDatabase.class.inc");
         $canvas = new Canvas(file_path.$file_name);
         $transformation = new Transformation($canvas);
         $image = $transformation->apply(new paint_enhance())
+                        ->getCanvas()
+                        ->save(file_path.$new_img_name.'.'.$this->type);
+        // $this->store_photo_with_effect($new_img_name,$image);
+        $effect_applied['id'] = $new_img_name;
+        $effect_applied['type'] = $this->type;
+        $effect_applied["url"] = public_path.$new_img_name.".".$this->type;
+        return $effect_applied;
+      }
+    }
+    public function Brush ($file_name){
+      $image = $this->get_image($file_name);
+
+        // $canvas->save('rename.jpeg');
+      if ($this->size_flag) {
+        ob_start(); // Let's start output buffering.
+          $canvas = new Canvas(file_path.$file_name);
+          $transformation = new Transformation($canvas);
+          $transformation->resize(new Dimension(176,140))
+                          ->apply(new paint_sharp())
+                          ->getCanvas()
+                          ->show();
+          $contents = ob_get_contents(); //Instead, output above is saved to $contents
+        ob_end_clean(); //End the output buffer.
+        $base64 = 'data:image/' . $this->type . ';base64,' . base64_encode($contents);
+        return $base64;
+      }else {
+        $new_img_name = $this->effect_img_store($file_name);
+
+        $canvas = new Canvas(file_path.$file_name);
+        $transformation = new Transformation($canvas);
+        $image = $transformation->apply(new paint_sharp())
                         ->getCanvas()
                         ->save(file_path.$new_img_name.'.'.$this->type);
         // $this->store_photo_with_effect($new_img_name,$image);

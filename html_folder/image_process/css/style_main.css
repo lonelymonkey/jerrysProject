@@ -86,6 +86,7 @@ body:after {
   height: 100%;
   color: white;
   float: left;
+  overflow: auto;
 }
 .prohibed_layer{
   position: absolute;
@@ -167,7 +168,7 @@ body:after {
     font-size: 23px;
     margin-right: 12px;
 }
-.effect_list_container{
+.effect_list_container_ui{
   width: 225px;
   margin: auto;
   margin-bottom: 30px;
@@ -189,7 +190,7 @@ body:after {
   border-style: groove;
   border-radius: 1px;
   border-color: #d5cbcb;
-  height: 650px;
+  height: 675px;
   max-width: 90%;
   background-color: #c8cacd;
   min-width: 1080px;
@@ -209,7 +210,8 @@ body:after {
   margin:auto;
   width: 50%;
 }
-.main_feature_title{
+
+.feature_title{
   display: inline-block;
 }
 .main_title_and_goback{
@@ -250,4 +252,19 @@ body:after {
     position: relative;
     top: 50px;
     font-weight: bold;
+}
+.effect_list_option_third_layer{
+  display: none;
+  width: inherit;
+  height: inherit;
+  float: right;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: auto;
+}
+#goback_to_second_layer_list{
+  display: none;
+  margin: 0px;
+
 }

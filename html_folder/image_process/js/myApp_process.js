@@ -15,15 +15,9 @@
         <div class = "back_next_container">
           <div class = "process_next_back_button process_back" onclick = "myApp.process_go_back()">Change Photo...</div>
           <div>
-            <a id = "process_download_img" href="" download></download>
-              <label for = "process_download_img" class = "download_label"><i class="fa fa-download"></i></label>
-            </a>
             <div id = "previous_effect_container">
-
             </div>
           </div>
-
-
         </div>
       </div>
       <div class = "process_input_preview" >
@@ -35,6 +29,11 @@
             </div>
         </div>
       </div>
+      <div class = "process_dwnload_button_placeholder">
+        <a id = "process_download_img" href="" download></download>
+          <label for = "process_download_img" class = "download_label"><i class="fa fa-download"></i> Download</label>
+        </a>
+      </div>
     </div>
     `;
     $(`.main_photo_container`).html(process_frame);
@@ -45,7 +44,7 @@
   myApp.process_view_previous_effect = function (url){
     var frame = '';
     console.log("previous_effect_photo.length ",previous_effect_photo.length );
-    if (previous_effect_photo.length > 5) {
+    if (previous_effect_photo.length > 9) {
       previous_effect_photo.shift();
       console.log("previous_effect_photo.length ",previous_effect_photo.length );
 
@@ -62,33 +61,9 @@
 
   }
   myApp.process_show_big_previous_effect = function (url){
-    var view = `
-    <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
+    $('.process_preview_img_container').html(`<img id = "main_preview_image_field" src = "${url}">`);
+    $(`#process_download_img`).attr('href',url);
 
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body" >
-                <div>
-                    <div id="previous_effect_view">
-                      <img class = "previous_preview_img_placeholder" src = "${url}">
-                    </div>
-                </div>
-                <div>
-                  <a id = "process_download_previous_img" href="${url}" download></download>
-                    <label for = "process_download_previous_img" class = "download_label download_label_previous btn"><i class="fa fa-download"></i>Download</label>
-                  </a>
-                </div>
-            </div>
-          </div>
-
-        </div>
-      </div>`;
-      $("#modal_field").html(view);
   }
   myApp.process_go_back = function (){
     console.log("going back to previous page");
@@ -120,15 +95,20 @@
 
   }
   myApp.proess_select_effect = function (effect_name){
-    $('.process_img_loading_layer').show();
-    $('.prohibed_layer').show();
-    $('.process_scroll_bar').hide();
-    switch (effect_name) {
-      case "smooth":
-        myApp.process_scroll_bar(effect_name);
-        break;
-      default:
-      myApp_ajax.effect(effect_name);
+    console.log("current selected effect",effect_name);
+    console.log("myApp_ajax.previous_effect",myApp_ajax.previous_effect);
+
+    if (myApp_ajax.previous_effect != effect_name) {
+      $('.process_img_loading_layer').show();
+      $('.prohibed_layer').show();
+      $('.process_scroll_bar').hide();
+      switch (effect_name) {
+        case "smooth":
+          myApp.process_scroll_bar(effect_name);
+          break;
+        default:
+        myApp_ajax.effect(effect_name);
+      }
 
     }
 

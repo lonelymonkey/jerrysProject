@@ -6,31 +6,35 @@
     apiUrl : '../ajax/data.php',
   };
 
-
+  myApp_ajax.previous_effect = "";
   myApp_ajax.original_location = "";
   myApp_ajax.file_name = "";
   myApp_ajax.effect = function(effect) {
       // var file_name = "test.jpg";
       buildString = JSON.stringify(myApp_ajax.file_name);
-      console.log(effect);
-      $.ajax({
-        method : 'POST',
-        dataType : 'json',
-        url : config.apiUrl,
-        data : { function : effect, data : buildString },
-        success : function(response) {
-          console.log(response);
-          // $(`.process_preview_img_container`).html('<img src="' + response.data+ '" />');
-          // $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${myApp_ajax.original_location}" alt="your sdfsdfimage" />`);
-          $('.process_preview_img_container').html(`<img id = "main_preview_image_field" src = "../uploads/${response.data.id}.${response.data.type}">`);
-          console.log("finish update");
-          $(`#process_download_img`).attr('href',response.data.url);
-          myApp.process_view_previous_effect(response.data.url);
-          $('.process_img_loading_layer').hide();
-          $('.prohibed_layer').hide();
 
-        }
-      });
+        $.ajax({
+          method : 'POST',
+          dataType : 'json',
+          url : config.apiUrl,
+          data : { function : effect, data : buildString },
+          success : function(response) {
+            myApp_ajax.previous_effect = effect;
+            console.log(response);
+            // $(`.process_preview_img_container`).html('<img src="' + response.data+ '" />');
+            // $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${myApp_ajax.original_location}" alt="your sdfsdfimage" />`);
+            $('.process_preview_img_container').html(`<img id = "main_preview_image_field" src = "../uploads/${response.data.id}.${response.data.type}">`);
+            console.log("finish update");
+            // myApp_ajax.file_name = `${response.data.id}.${response.data.type}`;
+            $(`#process_download_img`).attr('href',response.data.url);
+            myApp.process_view_previous_effect(response.data.url);
+            $('.process_img_loading_layer').hide();
+            $('.prohibed_layer').hide();
+          }
+        });
+
+      console.log(effect);
+
     }
   myApp_ajax.all_effect = function(file_name,url){
     buildString = JSON.stringify(myApp_ajax.file_name);
@@ -40,7 +44,7 @@
       url : config.apiUrl,
       data : { function :  "preview_effect", data : buildString },
       success : function(response) {
-        setTimeout(function(){
+
           console.log(response);
           var effect_list = Object.keys(response.data);
           myApp.effect_data.small_image = response.data;
@@ -48,7 +52,7 @@
           $('.loading_layer').hide();
           myApp.process_ui(file_name);
           $(`#process_download_img`).attr('href',url);
-        }, 1500);
+
 
         // myApp.process_preview_display(response.data,effect_list);
       }
@@ -112,7 +116,7 @@
   }
   myApp_ajax.upload_from_url = function (url){
     $('.loading_layer').show();
-    
+
     // var test_url = "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?cs=srgb&dl=beauty-bloom-blue-67636.jpg&fm=jpg"
     url_to_send = JSON.stringify(url);
      $.ajax({
