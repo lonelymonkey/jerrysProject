@@ -108,7 +108,7 @@ require_once ("JerryDatabase.class.inc");
 
       $small_image["box"]["2X2"]["demo"] = $this->demo_twoXtwo ($file_name);
       $small_image["box"]["3X3"]["demo"] = $this->demo_3X3 ($file_name);
-      $small_image["box"]["4X4"]["demo"] = $this->coal_draw ($file_name);
+      // $small_image["box"]["4X4"]["demo"] = $this->coal_draw ($file_name);
 
 
       // $small_image["sketch"]["pencil_gray"] = $this->pencil_gray ($file_name);
@@ -121,7 +121,7 @@ require_once ("JerryDatabase.class.inc");
 
     }
     public function demo_twoXtwo ($file_name){
-        $gray = new Dreamy();
+        $effect = new Grayscale();
         $image = $this->get_image($file_name);
 
         // $canvas->save('rename.jpeg');
@@ -140,8 +140,8 @@ require_once ("JerryDatabase.class.inc");
                             , new Coordinate($w / 2, $h / 2)
             );
             $transformation = new Transformation($canvas);
-            $transformation ->apply(new BoxAction($gray, $box1))
-                            ->apply(new BoxAction($gray, $box2))
+            $transformation ->apply(new BoxAction($effect, $box1))
+                            ->apply(new BoxAction($effect, $box2))
                             ->resize(new Dimension(176,140))
                             ->getCanvas()
                             ->show();
@@ -177,7 +177,7 @@ require_once ("JerryDatabase.class.inc");
     }
     public function demo_3X3 ($file_name){
       $image = $this->get_image($file_name);
-      $gray = new Dreamy();
+      $effect = new Grayscale();
 
         // $canvas->save('rename.jpeg');
         if ($this->size_flag) {
@@ -207,11 +207,11 @@ require_once ("JerryDatabase.class.inc");
                             , new Coordinate($w * (2/3), $h * (2/3))
             );
             $transformation = new Transformation($canvas);
-            $transformation ->apply(new BoxAction($gray, $box1))
-                            ->apply(new BoxAction($gray, $box2))
-                            ->apply(new BoxAction($gray, $box3))
-                            ->apply(new BoxAction($gray, $box4))
-                            ->apply(new BoxAction($gray, $box5))
+            $transformation ->apply(new BoxAction($effect, $box1))
+                            ->apply(new BoxAction($effect, $box2))
+                            ->apply(new BoxAction($effect, $box3))
+                            ->apply(new BoxAction($effect, $box4))
+                            ->apply(new BoxAction($effect, $box5))
                             ->resize(new Dimension(176,140))
                             ->getCanvas()
                             ->show();

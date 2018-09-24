@@ -328,13 +328,13 @@
       </div>
       <div class = "effect_list_option_title">Sketch</div>
     </div>
-    <div class = "effect_list_container effect_list_container_ui" id = "box">
-      <div class = "effect_list_option_icon">
-        <img class = "effect_list_option_icon_image" src = "../asset/box.jpg">
-      </div>
-      <div class = "effect_list_option_title">Box</div>
-    </div>
     `;
+    // <div class = "effect_list_container effect_list_container_ui" id = "box">
+    //   <div class = "effect_list_option_icon">
+    //     <img class = "effect_list_option_icon_image" src = "../asset/box.jpg">
+    //   </div>
+    //   <div class = "effect_list_option_title">Box</div>
+    // </div>
     $(".effect_list_option").html(frame);
   }
   myApp.load = function(cfg){
