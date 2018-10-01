@@ -25,7 +25,7 @@
             // $(`.process_preview_img_container`).html(`<img id="main_preview_image_field" src="${myApp_ajax.original_location}" alt="your sdfsdfimage" />`);
             $('.process_preview_img_container').html(`<img id = "main_preview_image_field" src = "../uploads/${response.data.id}.${response.data.type}">`);
             console.log("finish update");
-            // myApp_ajax.file_name = `${response.data.id}.${response.data.type}`;
+            myApp_ajax.file_name = `${response.data.id}.${response.data.type}`;
             $(`#process_download_img`).attr('href',response.data.url);
             myApp.process_view_previous_effect(response.data.url);
             $('.process_img_loading_layer').hide();
