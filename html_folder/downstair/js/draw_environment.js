@@ -19,6 +19,8 @@
     // console.log("paddle_x[index]",paddle_x[index]);
     if (myApp.character.x >paddle_x[index] && myApp.character.x < paddle_x[index]+stair_length) {
       console.log("not falling cuz it stands on the stair");
+      // COMBAK: if ball stand on the stair, change the ball's y axis alone with moving draw_environment
+      // // COMBAK: otherwise, the ball will not stay on the moving stair
       // myApp.character.y = paddle_y[index];
       return false;
     }else {
@@ -62,6 +64,14 @@
     }else {
       console.log("falling cuz not stair");
       falling ();
+    }
+    if (myApp.character.y > myApp.canvas.height) {
+      var r = confirm("Game Over ! restart ?");
+      if (r) {
+        document.location.reload();
+      }else {
+
+      }
     }
   }
 
