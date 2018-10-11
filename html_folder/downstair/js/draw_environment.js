@@ -13,7 +13,7 @@
 
   function load_variables (){
     myApp.canvas = $('#myCanvas')[0];
-    console.log(myApp.canvas.width);
+    // console.log(myApp.canvas.width);
     myApp.ctx = myApp.canvas.getContext('2d');
     myApp.x_coordinate = [200,250,267,300,120,400,450,125]
     myApp.y_coordinate = [900,800,700,600,500,1000,400,300]
@@ -48,26 +48,28 @@
           myApp.y_coordinate.push(new_y);
       }
     }
-    console.log("myApp.character.y before the check",myApp.character.y);
+    // console.log("myApp.character.y before the check",myApp.character.y);
 
     y_onstair = check_y_axis();
-    console.log("y_onstair",y_onstair);
+    // console.log("y_onstair",y_onstair);
     if(y_onstair[0]){
       x_onstair = check_x_axis(y_onstair[1]);
       if (x_onstair) {
-        console.log("falling x not in the stair range");
+        // console.log("falling x not in the stair range");
         falling ();
       }else {
         myApp.character.y = myApp.character.y-myApp.dy;
       }
     }else {
-      console.log("falling cuz not stair");
+      // console.log("falling cuz not stair");
       falling ();
     }
-    console.log("myApp.character.y after the check",myApp.character.y);
+    // console.log("myApp.character.y after the check",myApp.character.y);
 
     if (myApp.character.y > myApp.canvas.height) {
+      alert("Game Over");
       document.location.reload();
+      clearInterval(myApp.game);
 
     }
     // console.log(myApp.y_coordinate);
@@ -77,12 +79,12 @@
     // console.log("myApp.character.x",myApp.character.x);
     // console.log("paddle_x[index]",paddle_x[index]);
     if (myApp.character.x >myApp.x_coordinate[index] && myApp.character.x < myApp.x_coordinate[index]+myApp.paddleWidth) {
-      console.log("not falling cuz it stands on the stair");
+      // console.log("not falling cuz it stands on the stair");
       // COMBAK: if ball stand on the stair, change the ball's y axis alone with moving draw_environment
       // // COMBAK: otherwise, the ball will not stay on the moving stair
       // myApp.character.vy = 0;
-      console.log("myApp.character.y",myApp.character.y);
-      console.log('myApp.y_coordinate[index]',myApp.y_coordinate[index]);
+      // console.log("myApp.character.y",myApp.character.y);
+      // console.log('myApp.y_coordinate[index]',myApp.y_coordinate[index]);
 
       return false;
     }else {
@@ -91,9 +93,9 @@
   }
   function check_y_axis (){
     for (var i = 0; i < myApp.y_coordinate.length; i++) {
-      console.log("myApp.character.y + myApp.character.radius",myApp.character.y + myApp.character.radius);
-      console.log("-10",myApp.y_coordinate[i] -10 );
-      console.log("+10",myApp.y_coordinate[i] +10 );
+      // console.log("myApp.character.y + myApp.character.radius",myApp.character.y + myApp.character.radius);
+      // console.log("-10",myApp.y_coordinate[i] -10 );
+      // console.log("+10",myApp.y_coordinate[i] +10 );
 
       if (myApp.character.y + myApp.character.radius < myApp.y_coordinate[i] + 10 && myApp.character.y + myApp.character.radius > myApp.y_coordinate[i] - 10) {
         return [true,i];
