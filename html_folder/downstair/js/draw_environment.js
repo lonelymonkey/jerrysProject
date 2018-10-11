@@ -6,7 +6,7 @@
 
   myApp.paddleHeight = 20;
   myApp.paddleWidth = 150;
-  var new_y = 1000;
+  var new_y = 800;
   var new_x =0;
   myApp.dy = 2.5;
   myApp.fps = 10;
