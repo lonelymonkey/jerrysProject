@@ -4,8 +4,8 @@
 (function(myApp){
   // var canvas = document.getElementById("myCanvas");
 
-  myApp.paddleHeight = 10;
-  myApp.paddleWidth = 75;
+  myApp.paddleHeight = 20;
+  myApp.paddleWidth = 150;
   var new_y = 1000;
   var new_x =0;
   myApp.dy = 2.5;
@@ -39,7 +39,7 @@
           myApp.x_coordinate.splice(i,1);
           // console.log('myApp.x_coordinate',myApp.x_coordinate);
           // console.log("myApp.y_coordinate",myApp.y_coordinate);
-          new_x = 20 + Math.random()*490;
+          new_x = 20 + Math.random()*850;
           // console.log("new x = ",new_x);
           // console.log("last element ",myApp.x_coordinate[myApp.x_coordinate.length-1]);
           var boundary_high = myApp.x_coordinate[myApp.x_coordinate.length-1] +85;
