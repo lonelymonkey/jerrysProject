@@ -3,20 +3,38 @@
 }
 (function(myApp){
   // var canvas = document.getElementById("myCanvas");
-
-  myApp.paddleHeight = 20;
-  myApp.paddleWidth = 150;
+  // global variables
   var new_y = 800;
+  var type_stair = 0;
   var new_x =0;
   myApp.dy = 2.5;
   myApp.fps = 10;
+  // stair object
+  myApp.stair1 = {
+    stair_height : 20,
+    stair_width  : 150,
+    color : "#0095DD",
+    draw: function(x,y) {
+      // console.log("test 2");
+        myApp.ctx.beginPath();
+        myApp.ctx.rect(x,y, this.stair_width, this.stair_height);
+        myApp.ctx.fillStyle = this.color;
+        myApp.ctx.fill();
+        myApp.ctx.closePath();
+
+    }
+  }
+  myApp.paddleHeight = 20;
+  myApp.paddleWidth = 150;
+
+  myApp.x_coordinate = [200,250,267,300,120,400,450,125]
+  myApp.y_coordinate = [900,800,700,600,500,1000,400,300]
 
   function load_variables (){
     myApp.canvas = $('#myCanvas')[0];
     // console.log(myApp.canvas.width);
     myApp.ctx = myApp.canvas.getContext('2d');
-    myApp.x_coordinate = [200,250,267,300,120,400,450,125]
-    myApp.y_coordinate = [900,800,700,600,500,1000,400,300]
+
   }
 
   function draw_everything (){
@@ -25,11 +43,8 @@
     myApp.ctx.clearRect(0, 0, myApp.canvas.width, myApp.canvas.height);
     myApp.character.draw();
     for (var i = 0; i < myApp.x_coordinate.length; i++) {
-      myApp.ctx.beginPath();
-      myApp.ctx.rect(myApp.x_coordinate[i], myApp.y_coordinate[i], myApp.paddleWidth, myApp.paddleHeight);
-      myApp.ctx.fillStyle = "#0095DD";
-      myApp.ctx.fill();
-      myApp.ctx.closePath();
+      myApp.stair1.draw(myApp.x_coordinate[i],myApp.y_coordinate[i]);
+
     }
     // console.log(dy);
     for (var i = 0; i < myApp.y_coordinate.length; i++) {
@@ -42,8 +57,8 @@
           new_x = 20 + Math.random()*850;
           // console.log("new x = ",new_x);
           // console.log("last element ",myApp.x_coordinate[myApp.x_coordinate.length-1]);
-          var boundary_high = myApp.x_coordinate[myApp.x_coordinate.length-1] +85;
-          var boundary_low = myApp.x_coordinate[myApp.x_coordinate.length-1] -85;
+          // var boundary_high = myApp.stair1.x_coordinate[myApp.stair1.x_coordinate.length-1] +85;
+          // var boundary_low = myApp.stair1.x_coordinate[myApp.stair1.x_coordinate.length-1] -85;
           myApp.x_coordinate.push(new_x);
           myApp.y_coordinate.push(new_y);
       }
@@ -78,13 +93,7 @@
   function check_x_axis (index){
     // console.log("myApp.character.x",myApp.character.x);
     // console.log("paddle_x[index]",paddle_x[index]);
-    if (myApp.character.x >myApp.x_coordinate[index] && myApp.character.x < myApp.x_coordinate[index]+myApp.paddleWidth) {
-      // console.log("not falling cuz it stands on the stair");
-      // COMBAK: if ball stand on the stair, change the ball's y axis alone with moving draw_environment
-      // // COMBAK: otherwise, the ball will not stay on the moving stair
-      // myApp.character.vy = 0;
-      // console.log("myApp.character.y",myApp.character.y);
-      // console.log('myApp.y_coordinate[index]',myApp.y_coordinate[index]);
+    if (myApp.character.x >myApp.x_coordinate[index] && myApp.character.x < myApp.x_coordinate[index]+myApp.stair1.stair_width) {
 
       return false;
     }else {
@@ -111,7 +120,7 @@
   }
   myApp.load = function (){
     load_variables();
-    // console.log(myApp.x_coordinate);
+    console.log("new structure of stairs");
     myApp.character_load_variable();
     myApp.game = setInterval(draw_everything, myApp.fps);
   }
