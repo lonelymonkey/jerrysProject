@@ -3,7 +3,7 @@
 }
 (function(myApp){
   myApp.character = {
-    x: 100,
+    x: 400,
     y: 100,
     vy :0.1,
     radius: 25,
