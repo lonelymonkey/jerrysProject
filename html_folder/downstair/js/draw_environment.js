@@ -6,9 +6,10 @@
   // global variables
   var new_y = 800;
   var new_x = 0;
-  var life = 3;
+  myApp.life = 100;
   var type_stair = [0,3,0,1,3,0,2,0];
   var small_stair_width = 75;
+  myApp.add_life = false;
   myApp.dy = 2.5;
   myApp.fps = 10;
   // stair object
@@ -71,8 +72,6 @@
     myApp.character.draw();
     for (var i = 0; i < myApp.x_coordinate.length; i++) {
       myApp.stair1.draw(myApp.x_coordinate[i],myApp.y_coordinate[i],type_stair[i]);
-
-
     }
     // console.log(dy);
     for (var i = 0; i < myApp.y_coordinate.length; i++) {
@@ -115,12 +114,23 @@
       if (x_onstair) {
         // console.log("falling x not in the stair range");
         falling ();
+        myApp.add_life = false;
       }else {
         myApp.character.y = myApp.character.y-myApp.dy;
+        if(!myApp.add_life){
+          if(myApp.life < 100){
+            myApp.life = myApp.life +2;
+            myApp.add_life = true;
+            console.log("life is not 100, life is ",myApp.life);
+          }
+
+        }
       }
     }else {
       // console.log("falling cuz not stair");
       falling ();
+      myApp.add_life = false;
+
     }
     // console.log("myApp.character.y after the check",myApp.character.y);
 
@@ -130,23 +140,16 @@
       clearInterval(myApp.game);
 
     }
-    if (myApp.character.y - myApp.character.radius  +5< 0) {
-        alert("Game Over");
-        document.location.reload();
-        clearInterval(myApp.game);
+
+    if (myApp.character.y - myApp.character.radius < 0) {
+      myApp.life = myApp.life - 1;
+      console.log("number of life ", myApp.life);
     }
-    // COMBAK:
-    // if (myApp.character.y + myApp.character.radius < 0) {
-    //   life = life - 1;
-    //
-    //   console.log("number of life ", life);
-    //   setTimeout(function(){}, 3000);
-    // }
-    // if (life == 0) {
-    //   alert("Game Over");
-    //   document.location.reload();
-    //   clearInterval(myApp.game);
-    // }
+    if (myApp.life == 0) {
+      alert("Game Over");
+      document.location.reload();
+      clearInterval(myApp.game);
+    }
     // console.log(myApp.y_coordinate);
 
   }
@@ -189,7 +192,7 @@
   }
   myApp.load = function (){
     load_variables();
-    console.log("official version");
+    console.log("official version with life");
     myApp.character_load_variable();
     myApp.game = setInterval(draw_everything, myApp.fps);
   }
