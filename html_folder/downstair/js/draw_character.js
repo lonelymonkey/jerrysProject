@@ -18,36 +18,6 @@
       myApp.character_moving();
     }
   };
-  myApp.drawPaddle = function (){
-    myApp.ctx.beginPath();
-    myApp.ctx.rect(myApp.paddleX, myApp.canvas.height-myApp.paddleHeight, myApp.paddleWidth, myApp.paddleHeight);
-    myApp.ctx.fillStyle = "#0095DD";
-    myApp.ctx.fill();
-    myApp.ctx.closePath();
-  }
-  myApp.character_load_variable = function (){
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
-  }
-  function keyDownHandler(e) {
-      if(e.keyCode == 39) {
-        // console.log("right pressed");
-          myApp.rightPressed = true;
-      }
-      else if(e.keyCode == 37) {
-        // console.log("left pressed");
-
-          myApp.leftPressed = true;
-      }
-  }
-  function keyUpHandler(e) {
-      if(e.keyCode == 39) {
-          myApp.rightPressed = false;
-      }
-      else if(e.keyCode == 37) {
-          myApp.leftPressed = false;
-      }
-  }
   myApp.character_moving = function (){
         // console.log("myApp.rightPressed",myApp.rightPressed);
         // console.log("myApp.rightPressed",myApp.rightPressed);

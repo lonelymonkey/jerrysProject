@@ -135,10 +135,15 @@
     // console.log("myApp.character.y after the check",myApp.character.y);
 
     if (myApp.character.y > myApp.canvas.height) {
-      alert("Game Over");
-      document.location.reload();
-      clearInterval(myApp.game);
-
+      var r = confirm("Game Over ! restart ?");
+      if (r) {
+        document.location.reload();
+        clearInterval(myApp.game);
+      }else {
+        clearInterval(myApp.game);
+        // COMBAK: go to homepage feature (after implement staring page);
+        console.log("go to home page");
+      }
     }
 
     if (myApp.character.y - myApp.character.radius < 0) {
@@ -146,9 +151,16 @@
       console.log("number of life ", myApp.life);
     }
     if (myApp.life == 0) {
-      alert("Game Over");
-      document.location.reload();
-      clearInterval(myApp.game);
+      var r = confirm("Game Over ! restart ?");
+      if (r) {
+        document.location.reload();
+        clearInterval(myApp.game);
+      }else {
+        // COMBAK: go to homepage feature (after implement staring page);
+        console.log("go to home page");
+        clearInterval(myApp.game);
+
+      }
     }
     // console.log(myApp.y_coordinate);
 
@@ -165,7 +177,7 @@
       actual_stair_width = myApp.stair1.stair_width
     }
 
-    if (myApp.character.x >myApp.x_coordinate[index] && myApp.character.x < myApp.x_coordinate[index]+actual_stair_width) {
+    if (myApp.character.x + myApp.character.radius >myApp.x_coordinate[index] && myApp.character.x - myApp.character.radius< myApp.x_coordinate[index]+actual_stair_width) {
 
       return false;
     }else {
@@ -178,7 +190,7 @@
       // console.log("-10",myApp.y_coordinate[i] -10 );
       // console.log("+10",myApp.y_coordinate[i] +10 );
 
-      if (myApp.character.y + myApp.character.radius < myApp.y_coordinate[i] + 10 && myApp.character.y + myApp.character.radius > myApp.y_coordinate[i] - 10) {
+      if (myApp.character.y + myApp.character.radius < myApp.y_coordinate[i] + 5 && myApp.character.y + myApp.character.radius > myApp.y_coordinate[i] - 5) {
         return [true,i];
       }
     }
@@ -190,10 +202,11 @@
     myApp.character.vy *= .99;
     myApp.character.vy += .075;
   }
+
   myApp.load = function (){
     load_variables();
     console.log("official version with life");
-    myApp.character_load_variable();
+    myApp.controller_load_variable();
     myApp.game = setInterval(draw_everything, myApp.fps);
   }
 
